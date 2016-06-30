@@ -16,6 +16,7 @@ const main       = 'index.js';
 const buildDir   = 'build';
 const libDir     = 'lib';
 const testDir    = 'test';
+const distDir    = 'dist';
 const sources    = [path.join(libDir, '**', '*.js')];
 const tests      = [path.join(testDir, '**', '*.js')];
 const buildTests = tests.map(v => path.join(buildDir, v));
@@ -38,6 +39,7 @@ gulp.task('build:lib', ['clean:lib'], function () {
   return gulp.src(sources)
     .pipe(babel())
     .pipe(gulp.dest(path.join(buildDir, libDir)))
+    .pipe(gulp.dest(path.join(distDir)))
     .pipe(concat(main))
     .pipe(gulp.dest(path.join(__dirname)));
 });
