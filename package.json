@@ -4,7 +4,9 @@
   "description": "Tools for NodeJS",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/.bin/_mocha -w -R dot --compilers=js:babel-register --recursive test"
+    "test": "./node_modules/.bin/gulp test",
+    "start": "./node_modules/.bin/gulp watch:test",
+    "build": "./node_modules/.bin/gulp build"
   },
   "repository": {
     "type": "git",
@@ -36,9 +38,10 @@
     "gulp-babel": "^6.1.2",
     "gulp-clean": "^0.3.2",
     "gulp-concat": "^2.6.0",
-    "mocha": "^2.5.3"
+    "gulp-mocha": "^2.2.0"
   },
   "dependencies": {
+    "colors": "^1.1.2",
     "path": "^0.12.7"
   }
 }
