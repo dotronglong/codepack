@@ -1,6 +1,6 @@
 {
   "name": "codepack",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Tools for NodeJS",
   "main": "index.js",
   "scripts": {
