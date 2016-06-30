@@ -4,7 +4,13 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+var _classCallCheck2 = require('babel-runtime/helpers/classCallCheck');
+
+var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+
+var _createClass2 = require('babel-runtime/helpers/createClass');
+
+var _createClass3 = _interopRequireDefault(_createClass2);
 
 var _class = require('./class');
 
@@ -12,14 +18,12 @@ var _class2 = _interopRequireDefault(_class);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
 var Singleton = function () {
   function Singleton() {
-    _classCallCheck(this, Singleton);
+    (0, _classCallCheck3.default)(this, Singleton);
   }
 
-  _createClass(Singleton, null, [{
+  (0, _createClass3.default)(Singleton, null, [{
     key: 'getInstance',
     value: function getInstance() {
       if (typeof this.instance === 'undefined') {
@@ -40,7 +44,6 @@ var Singleton = function () {
       return new this();
     }
   }]);
-
   return Singleton;
 }();
 

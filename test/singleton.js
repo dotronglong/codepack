@@ -1,5 +1,5 @@
-import {Singleton} from '../lib/singleton';
-import {Class} from '../lib/class';
+import Singleton from '../lib/singleton';
+import Class from '../lib/class';
 var expect = require('chai').expect;
 
 class A extends Singleton {}

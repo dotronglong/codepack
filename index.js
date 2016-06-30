@@ -1,3 +1,4 @@
+require("babel-polyfill");
 const distDir  = 'dist';
 function include(file, name) {
   const package = require('./' + distDir + '/' + file);

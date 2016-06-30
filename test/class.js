@@ -1,4 +1,4 @@
-import {Class} from '../lib/class';
+import Class from '../lib/class';
 var expect = require('chai').expect;
 
 class A {
