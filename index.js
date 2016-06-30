@@ -1,6 +1,7 @@
 const distDir  = 'dist';
-function include(path) {
-  return require('./', distDir, path);
+function include(file, name) {
+  const package = require('./' + distDir + '/' + file);
+  return typeof name === 'undefined' ? package.default : package[name];
 }
 
 module.exports = {

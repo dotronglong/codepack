@@ -14,7 +14,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 var INSTANCEOF_PROPERTY_NAME = '__implements';
 
-var Class = exports.Class = function () {
+var Class = function () {
   function Class() {
     _classCallCheck(this, Class);
   }
@@ -105,3 +105,5 @@ var Class = exports.Class = function () {
 
   return Class;
 }();
+
+exports.default = Class;

@@ -40,8 +40,6 @@ gulp.task('build:lib', ['clean:lib'], function () {
     .pipe(babel())
     .pipe(gulp.dest(path.join(buildDir, libDir)))
     .pipe(gulp.dest(path.join(distDir)))
-    .pipe(concat(main))
-    .pipe(gulp.dest(path.join(__dirname)));
 });
 gulp.task('build:test', ['clean:test'], function () {
   return gulp.src(tests)
