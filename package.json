@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/hapibird/codepack.git"
+    "url": "git+https://github.com/dotronglong/codepack.git"
   },
   "keywords": [
     "code",
@@ -26,9 +26,9 @@
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/hapibird/codepack/issues"
+    "url": "https://github.com/dotronglong/codepack/issues"
   },
-  "homepage": "https://github.com/hapibird/codepack#readme",
+  "homepage": "https://github.com/dotronglong/codepack#readme",
   "devDependencies": {
     "babel-preset-es2015": "^6.9.0",
     "chai": "^3.5.0",
