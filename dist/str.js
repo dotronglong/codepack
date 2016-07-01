@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -8,40 +8,24 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var Descriptor = function () {
-  function Descriptor() {
-    var name = arguments.length <= 0 || arguments[0] === undefined ? '' : arguments[0];
-    var content = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
-
-    _classCallCheck(this, Descriptor);
-
-    this.name = name;
-    this.content = content;
+var Str = function () {
+  function Str() {
+    _classCallCheck(this, Str);
   }
 
-  _createClass(Descriptor, [{
-    key: 'getName',
-    value: function getName() {
-      return this.name;
+  _createClass(Str, null, [{
+    key: "lcfirst",
+    value: function lcfirst(string) {
+      return string.charAt(0).toLowerCase() + string.slice(1);
     }
   }, {
-    key: 'setName',
-    value: function setName(name) {
-      this.name = name;
-    }
-  }, {
-    key: 'getContent',
-    value: function getContent() {
-      return this.content;
-    }
-  }, {
-    key: 'setContent',
-    value: function setContent(content) {
-      this.content = content;
+    key: "ucfirst",
+    value: function ucfirst(string) {
+      return string.charAt(0).toUpperCase() + string.slice(1);
     }
   }]);
 
-  return Descriptor;
+  return Str;
 }();
 
-exports.default = Descriptor;
+exports.default = Str;

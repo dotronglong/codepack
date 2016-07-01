@@ -6,7 +6,10 @@ function include(file, name) {
 }
 
 module.exports = {
+  Bag: include('bag'),
   Class: include('class'),
   Module: include('module'),
+  ModuleDescriptor: include('module/descriptor'),
+  Str: include('str'),
   Singleton: include('singleton')
 };

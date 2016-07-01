@@ -1,5 +1,4 @@
 require('babel-register');
-require('babel-polyfill');
 const gulp   = require('gulp');
 const path   = require('path');
 const babel  = require('gulp-babel');
@@ -38,9 +37,7 @@ gulp.task('clean:test', function () {
 gulp.task('build', ['build:lib', 'build:test']);
 gulp.task('build:lib', ['clean:lib'], function () {
   return gulp.src(sources)
-    .pipe(babel({
-      plugins: ['transform-runtime']
-    }))
+    .pipe(babel())
     .pipe(gulp.dest(path.join(buildDir, libDir)))
     .pipe(gulp.dest(path.join(distDir)))
 });

@@ -4,17 +4,11 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _classCallCheck2 = require('babel-runtime/helpers/classCallCheck');
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+var _class = require('./class');
 
-var _createClass2 = require('babel-runtime/helpers/createClass');
-
-var _createClass3 = _interopRequireDefault(_createClass2);
-
-var _promise = require('babel-runtime/core-js/promise');
-
-var _promise2 = _interopRequireDefault(_promise);
+var _class2 = _interopRequireDefault(_class);
 
 var _descriptor = require('./module/descriptor');
 
@@ -30,10 +24,12 @@ var _path2 = _interopRequireDefault(_path);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var NOT_IN_ARRAY = -1;
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+var NOT_IN_ARRAY = -1;
+var basePath = '';
 var scanForFiles = function scanForFiles(dir, only) {
-  return new _promise2.default(function (resolve, reject) {
+  return new Promise(function (resolve, reject) {
     _fs2.default.readdir(dir, function (err, files) {
       var validFiles = [];
       files.forEach(function (file) {
@@ -50,7 +46,7 @@ var scanForFiles = function scanForFiles(dir, only) {
 };
 
 var scanForDirectories = function scanForDirectories(files) {
-  return new _promise2.default(function (resolve, reject) {
+  return new Promise(function (resolve, reject) {
     var promises = [];
     files.forEach(function (file) {
       promises.push(getFileInformation(file).then(function (stats) {
@@ -61,7 +57,7 @@ var scanForDirectories = function scanForDirectories(files) {
       }));
     });
     var directories = [];
-    _promise2.default.all(promises).then(function (files) {
+    Promise.all(promises).then(function (files) {
       files.forEach(function (file) {
         if (file !== null) {
           directories.push(file);
@@ -73,19 +69,19 @@ var scanForDirectories = function scanForDirectories(files) {
 };
 
 var getFileInformation = function getFileInformation(file) {
-  return new _promise2.default(function (resolve, reject) {
+  return new Promise(function (resolve, reject) {
     _fs2.default.stat(file, function (err, stats) {
       resolve(stats);
     });
   });
 };
 
-var requireModuleDescriptor = function requireModuleDescriptor(moduleName) {
-  return new _promise2.default(function (resolve, reject) {
-    var file = moduleName + '/descriptor.js';
+var requireModuleDescriptor = function requireModuleDescriptor(dir) {
+  return new Promise(function (resolve, reject) {
+    var file = dir + '/' + Module.config.descriptorFile;
     getFileInformation(file).then(function (stats) {
       if (stats.isFile()) {
-        resolve(require(_path2.default.join(Module.config.basePath, file)));
+        resolve(require(file));
       } else {
         return null;
       }
@@ -95,10 +91,10 @@ var requireModuleDescriptor = function requireModuleDescriptor(moduleName) {
 
 var Module = function () {
   function Module() {
-    (0, _classCallCheck3.default)(this, Module);
+    _classCallCheck(this, Module);
   }
 
-  (0, _createClass3.default)(Module, null, [{
+  _createClass(Module, null, [{
     key: 'add',
     value: function add(module) {
       if (module instanceof _descriptor2.default) {
@@ -120,20 +116,30 @@ var Module = function () {
       }
     }
   }, {
+    key: 'clean',
+    value: function clean() {
+      _class2.default.cleanProperties(this, ['config']);
+    }
+  }, {
     key: 'scan',
     value: function scan(dir, only) {
-      return new _promise2.default(function (resolve, reject) {
+      dir = typeof dir === 'undefined' || dir === null ? this.config.basePath : dir;
+      only = typeof only === 'undefined' ? [] : only;
+      return new Promise(function (resolve, reject) {
         var files = [];
         scanForFiles(dir, only).then(function (files) {
+          files = files.map(function (v) {
+            return _path2.default.join(dir, v);
+          });
           return scanForDirectories(files);
         }).then(function (dirs) {
           var promises = [];
-          dirs.forEach(function (file) {
-            promises.push(requireModuleDescriptor(dir + '/' + file).then(function (module) {
+          dirs.forEach(function (dir) {
+            promises.push(requireModuleDescriptor(dir).then(function (module) {
               return module;
             }));
           });
-          _promise2.default.all(promises).then(function (modules) {
+          Promise.all(promises).then(function (modules) {
             modules.forEach(function (module) {
               Module.add(module);
             });
@@ -143,11 +149,13 @@ var Module = function () {
       });
     }
   }]);
+
   return Module;
 }();
 
 exports.default = Module;
 
 Module.config = {
-  basePath: _path2.default.join(process.env.PWD)
+  basePath: _path2.default.join(process.env.PWD),
+  descriptorFile: 'descriptor.js'
 };
