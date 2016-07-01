@@ -56,7 +56,7 @@ gulp.task('test', ['build'], function () {
       reporter: 'dot'
     }))
     .on('error', function (e) {
-      console.log('[ERROR] '.red + e.message.blue);
+      console.log('[ERROR] '.red + e.stack.red);
       this.emit(e);
     });
 });
