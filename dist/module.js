@@ -30,16 +30,16 @@ var _path2 = _interopRequireDefault(_path);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var TYPE_DIR = 'dir';
-var TYPE_FILE = 'file';
+var NOT_IN_ARRAY = -1;
 
-var scanForFiles = function scanForFiles(dir) {
+var scanForFiles = function scanForFiles(dir, only) {
   return new _promise2.default(function (resolve, reject) {
     _fs2.default.readdir(dir, function (err, files) {
       var validFiles = [];
       files.forEach(function (file) {
-        // make sure file does not contain "." at the beginning
-        if (file.match(/^\./)) {
+        // make sure file does not contain "." at the beginning,
+        // and if only is enabled, only require files are returned
+        if (file.match(/^\./) || only.length && only.indexOf(file) === NOT_IN_ARRAY) {
           return;
         }
         validFiles.push(file);
@@ -80,6 +80,19 @@ var getFileInformation = function getFileInformation(file) {
   });
 };
 
+var requireModuleDescriptor = function requireModuleDescriptor(moduleName) {
+  return new _promise2.default(function (resolve, reject) {
+    var file = moduleName + '/descriptor.js';
+    getFileInformation(file).then(function (stats) {
+      if (stats.isFile()) {
+        resolve(require(_path2.default.join(Module.config.basePath, file)));
+      } else {
+        return null;
+      }
+    });
+  });
+};
+
 var Module = function () {
   function Module() {
     (0, _classCallCheck3.default)(this, Module);
@@ -109,11 +122,24 @@ var Module = function () {
   }, {
     key: 'scan',
     value: function scan(dir, only) {
-      var files = [];
-      scanForFiles(dir).then(function (files) {
-        return scanForDirectories(files);
-      }).then(function (dirs) {
-        console.log(dirs);
+      return new _promise2.default(function (resolve, reject) {
+        var files = [];
+        scanForFiles(dir, only).then(function (files) {
+          return scanForDirectories(files);
+        }).then(function (dirs) {
+          var promises = [];
+          dirs.forEach(function (file) {
+            promises.push(requireModuleDescriptor(dir + '/' + file).then(function (module) {
+              return module;
+            }));
+          });
+          _promise2.default.all(promises).then(function (modules) {
+            modules.forEach(function (module) {
+              Module.add(module);
+            });
+            resolve(modules);
+          });
+        });
       });
     }
   }]);
@@ -121,3 +147,7 @@ var Module = function () {
 }();
 
 exports.default = Module;
+
+Module.config = {
+  basePath: _path2.default.join(process.env.PWD)
+};
