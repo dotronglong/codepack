@@ -56,6 +56,7 @@ gulp.task('test', ['build'], function () {
       reporter: 'dot'
     }))
     .on('error', function (e) {
+      if (typeof e.stack === 'undefined') return;
       console.log('[ERROR] '.red + e.stack.red);
       this.emit(e);
     });
