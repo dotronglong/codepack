@@ -4,6 +4,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -21,6 +23,42 @@ var Class = function () {
   }
 
   _createClass(Class, null, [{
+    key: 'methodExists',
+    value: function methodExists(object, method) {
+      return true;
+    }
+
+    /**
+     * @depreciated
+     * @param object
+     * @returns {*}
+     */
+
+  }, {
+    key: 'getMethods',
+    value: function getMethods(object) {
+      var _this = this;
+
+      if (typeof object.prototype === 'undefined') {
+        var _ret = function () {
+          var prototype = eval(object.constructor.name).prototype;
+          var methods = _this.getMethods(prototype);
+          if (typeof object[INSTANCEOF_PROPERTY_NAME] !== 'undefined') {
+            object[INSTANCEOF_PROPERTY_NAME].forEach(function (name) {
+              methods.concat(Class.getMethods(name));
+            });
+          }
+          return {
+            v: methods
+          };
+        }();
+
+        if ((typeof _ret === 'undefined' ? 'undefined' : _typeof(_ret)) === "object") return _ret.v;
+      } else {
+        return Object.getOwnPropertyNames(object.prototype).concat(Object.getOwnPropertySymbols(object.prototype));
+      }
+    }
+  }, {
     key: 'combine',
     value: function combine(baseClass) {
       for (var _len = arguments.length, mixins = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
@@ -39,18 +77,18 @@ var Class = function () {
             args[_key2] = arguments[_key2];
           }
 
-          var _this = _possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(_Combined)).call.apply(_Object$getPrototypeO, [this].concat(args)));
+          var _this2 = _possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(_Combined)).call.apply(_Object$getPrototypeO, [this].concat(args)));
 
           var classNames = [baseClass.name];
           mixins.forEach(function (mixin) {
             if (mixin.prototype.hasOwnProperty('init') === true) {
-              mixin.prototype.init.call(_this);
+              mixin.prototype.init.call(_this2);
             }
 
             classNames.push(mixin.name);
           });
-          _this[INSTANCEOF_PROPERTY_NAME] = classNames;
-          return _this;
+          _this2[INSTANCEOF_PROPERTY_NAME] = classNames;
+          return _this2;
         }
 
         return _Combined;
