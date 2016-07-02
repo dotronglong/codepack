@@ -4,8 +4,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
-
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -25,38 +23,28 @@ var Class = function () {
   _createClass(Class, null, [{
     key: 'methodExists',
     value: function methodExists(object, method) {
-      return true;
+      return this.getMethods(object).indexOf(method) !== NOT_IN_ARRAY;
     }
-
-    /**
-     * @depreciated
-     * @param object
-     * @returns {*}
-     */
-
   }, {
     key: 'getMethods',
     value: function getMethods(object) {
-      var _this = this;
-
+      var methods = [];
       if (typeof object.prototype === 'undefined') {
-        var _ret = function () {
-          var prototype = eval(object.constructor.name).prototype;
-          var methods = _this.getMethods(prototype);
-          if (typeof object[INSTANCEOF_PROPERTY_NAME] !== 'undefined') {
-            object[INSTANCEOF_PROPERTY_NAME].forEach(function (name) {
-              methods.concat(Class.getMethods(name));
+        // temporary not support this case
+        if (typeof object[INSTANCEOF_PROPERTY_NAME] !== 'undefined') {
+          object[INSTANCEOF_PROPERTY_NAME].forEach(function (o) {
+            Class.getMethods(o).forEach(function (name) {
+              if (name.match(/^(?:constructor|prototype|arguments|caller|name|bind|call|apply|toString|length)$/)) return;
+              if (methods.indexOf(name) === NOT_IN_ARRAY) {
+                methods.push(name);
+              }
             });
-          }
-          return {
-            v: methods
-          };
-        }();
-
-        if ((typeof _ret === 'undefined' ? 'undefined' : _typeof(_ret)) === "object") return _ret.v;
+          });
+        }
       } else {
-        return Object.getOwnPropertyNames(object.prototype).concat(Object.getOwnPropertySymbols(object.prototype));
+        methods = methods.concat(Object.getOwnPropertyNames(object.prototype), Object.getOwnPropertySymbols(object.prototype));
       }
+      return methods;
     }
   }, {
     key: 'combine',
@@ -77,18 +65,17 @@ var Class = function () {
             args[_key2] = arguments[_key2];
           }
 
-          var _this2 = _possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(_Combined)).call.apply(_Object$getPrototypeO, [this].concat(args)));
+          var _this = _possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(_Combined)).call.apply(_Object$getPrototypeO, [this].concat(args)));
 
-          var classNames = [baseClass.name];
+          _this[INSTANCEOF_PROPERTY_NAME] = [baseClass];
           mixins.forEach(function (mixin) {
             if (mixin.prototype.hasOwnProperty('init') === true) {
-              mixin.prototype.init.call(_this2);
+              mixin.prototype.init.call(_this);
             }
 
-            classNames.push(mixin.name);
+            _this[INSTANCEOF_PROPERTY_NAME].push(mixin);
           });
-          _this2[INSTANCEOF_PROPERTY_NAME] = classNames;
-          return _this2;
+          return _this;
         }
 
         return _Combined;
@@ -116,9 +103,9 @@ var Class = function () {
 
       if (object.hasOwnProperty(INSTANCEOF_PROPERTY_NAME)) {
         var targetName = typeof target === 'string' ? target : target.name;
-        var classNames = object[INSTANCEOF_PROPERTY_NAME];
-        for (var i = 0; i < classNames.length; i++) {
-          if (classNames[i] === targetName) {
+        var implementClasses = object[INSTANCEOF_PROPERTY_NAME];
+        for (var i = 0; i < implementClasses.length; i++) {
+          if (implementClasses[i].name === targetName) {
             return true;
           }
         }
@@ -138,7 +125,7 @@ var Class = function () {
         });
       }
 
-      object[INSTANCEOF_PROPERTY_NAME].push(typeof target === 'function' ? target.name : target);
+      object[INSTANCEOF_PROPERTY_NAME].push(target);
     }
   }, {
     key: 'cleanProperties',

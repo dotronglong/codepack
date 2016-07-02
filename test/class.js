@@ -31,6 +31,11 @@ describe('class.js', function() {
     expect(Class.instanceof(c, "A")).to.be.true;
     expect(Class.instanceof(c, "B")).to.be.true;
   });
+  it('[methodExists] should return true on "hello", "world", "helloWorld", and false on "hello_world"', function() {
+    expect(Class.methodExists(c, 'hello')).to.be.true
+    expect(Class.methodExists(c, 'world')).to.be.true
+    expect(Class.methodExists(C, 'helloWorld')).to.be.true
+  })
   it('[combine] should return "Hello World" which is a result from combination between A.hello() and B.world()', function() {
     expect(c.helloWorld()).to.equal('Hello World!');
   });

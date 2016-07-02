@@ -24,7 +24,7 @@ var Singleton = function () {
     value: function getInstance() {
       if (typeof this.instance === 'undefined') {
         this.instance = this.newInstance();
-        _class2.default.setInstanceof(this.instance, this.name);
+        _class2.default.setInstanceof(this.instance, this);
       }
 
       return this.instance;
