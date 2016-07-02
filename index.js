@@ -11,5 +11,7 @@ module.exports = {
   Module: include('module'),
   ModuleDescriptor: include('module/descriptor'),
   Str: include('str'),
-  Singleton: include('singleton')
+  Singleton: include('singleton'),
+
+  cli: include('cli')
 };

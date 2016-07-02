@@ -1,6 +1,6 @@
 {
   "name": "codepack",
-  "version": "1.0.13",
+  "version": "1.0.14",
   "description": "Tools for NodeJS",
   "main": "index.js",
   "scripts": {
@@ -41,7 +41,7 @@
     "gulp-mocha": "^2.2.0"
   },
   "dependencies": {
-    "colors": "^1.1.2",
+    "cli-color": "^1.1.0",
     "path": "^0.12.7"
   }
 }

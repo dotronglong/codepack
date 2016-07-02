@@ -8,14 +8,14 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var colors = require('colors');
+var clc = require('cli-color');
 
-var Console = function () {
-  function Console() {
-    _classCallCheck(this, Console);
+var cli = function () {
+  function cli() {
+    _classCallCheck(this, cli);
   }
 
-  _createClass(Console, null, [{
+  _createClass(cli, null, [{
     key: 'error',
     value: function error() {
       for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
@@ -59,17 +59,17 @@ var Console = function () {
         line = args.join(' ');
       }
 
-      this.NEW_LINE ? console.log(line[color]) : process.stdout.write(line[color]);
+      this.NEW_LINE ? console.log(clc[color](line)) : process.stdout.write(clc[color](line));
     }
   }]);
 
-  return Console;
+  return cli;
 }();
 
-Console.NEW_LINE = true;
-Console.COLOR_ERROR = 'red';
-Console.COLOR_WARNING = 'magenta';
-Console.COLOR_INFO = 'blue';
-Console.COLOR_SUCCESS = 'green';
+cli.NEW_LINE = true;
+cli.COLOR_ERROR = 'red';
+cli.COLOR_WARNING = 'magenta';
+cli.COLOR_INFO = 'blue';
+cli.COLOR_SUCCESS = 'green';
 
-exports.default = Console;
+exports.default = cli;

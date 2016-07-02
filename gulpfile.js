@@ -5,7 +5,7 @@ const babel  = require('gulp-babel');
 const clean  = require('gulp-clean');
 const mocha  = require('gulp-mocha');
 const concat = require('gulp-concat');
-const colors = require('colors');
+const clc    = require('cli-color');
 
 const handleError = function (error) {
   console.log(error);
@@ -54,7 +54,7 @@ gulp.task('test', ['build'], function () {
     }))
     .on('error', function (e) {
       if (typeof e.stack === 'undefined') return;
-      console.log('[ERROR] '.red + e.stack.red);
+      console.log(clc.red(`[ERROR] ${e.stack}`))
       this.emit(e);
     });
 });

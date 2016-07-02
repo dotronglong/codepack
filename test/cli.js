@@ -1,25 +1,25 @@
-import Console from '../lib/console';
+import cli from '../lib/cli';
 var expect = require('chai').expect;
 
-describe('console.js', function() {
+describe('cli.js', function() {
   beforeEach(() => {
-    Console.NEW_LINE = true;
+    cli.NEW_LINE = true;
   });
 
   it('[error] should print "." in red color', function() {
-    Console.NEW_LINE = false;
-    Console.error('.');
+    cli.NEW_LINE = false;
+    cli.error('.');
   });
   it('[success] should print "." in green color', function() {
-    Console.NEW_LINE = false;
-    Console.success('.');
+    cli.NEW_LINE = false;
+    cli.success('.');
   });
   it('[warning] should print "." in orange color', function() {
-    Console.NEW_LINE = false;
-    Console.warning('.');
+    cli.NEW_LINE = false;
+    cli.warning('.');
   });
   it('[info] should print "." in blue color', function() {
-    Console.NEW_LINE = false;
-    Console.info('.');
+    cli.NEW_LINE = false;
+    cli.info('.');
   });
 });
