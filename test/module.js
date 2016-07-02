@@ -35,4 +35,12 @@ describe('module.js', function () {
         expect(modules.length).to.equal(2);
       });
   });
+  it('[getModuleNames] should return the name of all added modules', function() {
+    let m1 = new ModuleDescriptor('Module_1')
+    let m2 = new ModuleDescriptor('Module_2')
+    let m3 = new ModuleDescriptor('Module_3')
+    Module.add(m1), Module.add(m2), Module.add(m3)
+    expect(Module.getModuleNames().length).to.equal(3)
+    expect(Module.getModuleNames()).to.deep.equal([m1.getName(), m2.getName(), m3.getName()])
+  });
 });

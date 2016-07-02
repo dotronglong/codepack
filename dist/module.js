@@ -125,6 +125,18 @@ var Module = function () {
       _class2.default.cleanProperties(this, ['config']);
     }
   }, {
+    key: 'getModuleNames',
+    value: function getModuleNames() {
+      return Object.keys(this);
+    }
+  }, {
+    key: 'all',
+    value: function all() {
+      return this.getModuleNames().map(function (v) {
+        return Module[v];
+      });
+    }
+  }, {
     key: 'scan',
     value: function scan(dir, only) {
       dir = typeof dir === 'undefined' || dir === null ? this.config.basePath : dir;
