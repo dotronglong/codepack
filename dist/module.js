@@ -125,8 +125,8 @@ var Module = function () {
       _class2.default.cleanProperties(this, ['config']);
     }
   }, {
-    key: 'getModuleNames',
-    value: function getModuleNames() {
+    key: 'names',
+    value: function names() {
       return Object.keys(this);
     }
   }, {
