@@ -81,7 +81,11 @@ var requireModuleDescriptor = function requireModuleDescriptor(dir) {
     var file = dir + '/' + Module.config.descriptorFile;
     getFileInformation(file).then(function (stats) {
       if (stats.isFile()) {
-        resolve(require(file));
+        try {
+          resolve(require(file));
+        } catch (e) {
+          reject(e);
+        }
       } else {
         return null;
       }
