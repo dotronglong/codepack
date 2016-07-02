@@ -3,17 +3,14 @@ import ModuleDescriptor from '../lib/module/descriptor';
 var expect = require('chai').expect;
 var path = require('path');
 
-describe('module.js', function () {
-  // Module.scan('.', ['lib', 'test'])
-  //   .then(() => {
-  //     console.log('come')
-  //     console.log(Module);
-  //   });
+class Core extends ModuleDescriptor {
 
+}
+describe('module.js', function () {
   const name = 'Core';
   let module;
   beforeEach(function () {
-    module = new ModuleDescriptor(name);
+    module = new Core(name);
     Module.clean();
   });
 
@@ -34,8 +31,8 @@ describe('module.js', function () {
   it('[scan] should add test/descriptor as a module', function() {
     Module.config.basePath = path.join(Module.config.basePath, 'test', 'module_descriptor');
     Module.scan()
-          .then((modules) => {
-            expect(modules.length).to.equal(2);
-          });
+      .then((modules) => {
+        expect(modules.length).to.equal(2);
+      });
   });
 });

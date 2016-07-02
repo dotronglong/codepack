@@ -82,7 +82,11 @@ var requireModuleDescriptor = function requireModuleDescriptor(dir) {
     getFileInformation(file).then(function (stats) {
       if (stats.isFile()) {
         try {
-          resolve(require(file));
+          var module = require(file);
+          if (typeof module.default === 'undefined') {
+            throw new Error('require ' + file + ' must return an object with default.');
+          }
+          resolve(module.default);
         } catch (e) {
           reject(e);
         }
@@ -101,11 +105,7 @@ var Module = function () {
   _createClass(Module, null, [{
     key: 'add',
     value: function add(module) {
-      if (module instanceof _descriptor2.default) {
-        this[module.getName()] = module;
-      } else {
-        throw new Error('module MUST be an instance of ModuleDescriptor');
-      }
+      this[module.getName()] = module;
     }
   }, {
     key: 'has',
@@ -149,6 +149,7 @@ var Module = function () {
             });
             resolve(modules);
           }).catch(function (e) {
+            console.log(e);
             reject(e);
           });
         });
@@ -161,7 +162,10 @@ var Module = function () {
 
 exports.default = Module;
 
-Module.config = {
-  basePath: _path2.default.join(process.env.PWD),
-  descriptorFile: 'descriptor.js'
-};
+Object.defineProperty(Module, 'config', {
+  enumerable: false,
+  value: {
+    basePath: _path2.default.join(process.env.PWD),
+    descriptorFile: 'descriptor.js'
+  }
+});
