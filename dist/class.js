@@ -115,6 +115,42 @@ var Class = function () {
 
       return object;
     }
+  }, {
+    key: 'defineProperty',
+    value: function defineProperty(object, name) {
+      var value = arguments.length <= 2 || arguments[2] === undefined ? null : arguments[2];
+      var enumerable = arguments.length <= 3 || arguments[3] === undefined ? true : arguments[3];
+      var writable = arguments.length <= 4 || arguments[4] === undefined ? true : arguments[4];
+      var configurable = arguments.length <= 5 || arguments[5] === undefined ? true : arguments[5];
+
+      Object.defineProperty(object, name, {
+        configurable: configurable,
+        enumerable: enumerable,
+        writable: writable,
+        value: value
+      });
+    }
+  }, {
+    key: 'definePropertyNotEnumerable',
+    value: function definePropertyNotEnumerable(object, name) {
+      var value = arguments.length <= 2 || arguments[2] === undefined ? null : arguments[2];
+
+      return this.defineProperty(object, name, value, false);
+    }
+  }, {
+    key: 'definePropertyNotWritable',
+    value: function definePropertyNotWritable(object, name) {
+      var value = arguments.length <= 2 || arguments[2] === undefined ? null : arguments[2];
+
+      return this.defineProperty(object, name, value, true, false);
+    }
+  }, {
+    key: 'definePropertyNotConfigurable',
+    value: function definePropertyNotConfigurable(object, name) {
+      var value = arguments.length <= 2 || arguments[2] === undefined ? null : arguments[2];
+
+      return this.defineProperty(object, name, value, true, true, false);
+    }
   }]);
 
   return Class;
