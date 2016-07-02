@@ -59,7 +59,8 @@ var cli = function () {
         line = args.join(' ');
       }
 
-      this.NEW_LINE ? console.log(clc[color](line)) : process.stdout.write(clc[color](line));
+      var msg = clc[color](line);
+      this.NEW_LINE ? console.log(msg) : process.stdout.write(msg);
     }
   }]);
 
