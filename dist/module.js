@@ -148,6 +148,8 @@ var Module = function () {
               Module.add(module);
             });
             resolve(modules);
+          }).catch(function (e) {
+            reject(e);
           });
         });
       });
