@@ -10,10 +10,6 @@ var _class = require('./class');
 
 var _class2 = _interopRequireDefault(_class);
 
-var _descriptor = require('./module/descriptor');
-
-var _descriptor2 = _interopRequireDefault(_descriptor);
-
 var _fs = require('fs');
 
 var _fs2 = _interopRequireDefault(_fs);
@@ -132,7 +128,7 @@ var Module = function () {
   }, {
     key: 'all',
     value: function all() {
-      return this.getModuleNames().map(function (v) {
+      return this.names().map(function (v) {
         return Module[v];
       });
     }
@@ -141,29 +137,23 @@ var Module = function () {
     value: function scan(dir, only) {
       dir = typeof dir === 'undefined' || dir === null ? this.config.basePath : dir;
       only = typeof only === 'undefined' ? [] : only;
-      return new Promise(function (resolve, reject) {
-        var files = [];
-        scanForFiles(dir, only).then(function (files) {
-          files = files.map(function (v) {
-            return _path2.default.join(dir, v);
+      var files = [];
+      return scanForFiles(dir, only).then(function (files) {
+        files = files.map(function (v) {
+          return _path2.default.join(dir, v);
+        });
+        return scanForDirectories(files);
+      }).then(function (dirs) {
+        var promises = [];
+        dirs.forEach(function (dir) {
+          promises.push(requireModuleDescriptor(dir));
+        });
+
+        return Promise.all(promises).then(function (modules) {
+          modules.forEach(function (module) {
+            Module.add(module);
           });
-          return scanForDirectories(files);
-        }).then(function (dirs) {
-          var promises = [];
-          dirs.forEach(function (dir) {
-            promises.push(requireModuleDescriptor(dir).then(function (module) {
-              return module;
-            }));
-          });
-          Promise.all(promises).then(function (modules) {
-            modules.forEach(function (module) {
-              Module.add(module);
-            });
-            resolve(modules);
-          }).catch(function (e) {
-            console.log(e);
-            reject(e);
-          });
+          return Module.all();
         });
       });
     }
@@ -174,10 +164,7 @@ var Module = function () {
 
 exports.default = Module;
 
-Object.defineProperty(Module, 'config', {
-  enumerable: false,
-  value: {
-    basePath: _path2.default.join(process.env.PWD),
-    descriptorFile: 'descriptor.js'
-  }
+_class2.default.definePropertyNotEnumerable(Module, 'config', {
+  basePath: _path2.default.join(process.env.PWD),
+  descriptorFile: 'descriptor.js'
 });

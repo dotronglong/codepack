@@ -32,7 +32,7 @@ describe('module.js', function () {
     Module.config.basePath = path.join(Module.config.basePath, 'test', 'module_descriptor');
     Module.scan()
       .then((modules) => {
-        expect(modules.length).to.equal(2);
+        expect(modules.length).to.equal(3);
       });
   });
   it('[names] should return the name of all added modules', function() {
