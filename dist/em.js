@@ -112,8 +112,6 @@ var EventManager = function () {
           break;
         }
       }
-
-      this.off(name);
     }
   }, {
     key: 'emit',
