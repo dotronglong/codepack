@@ -115,6 +115,15 @@ var EventManager = function () {
 
       this.off(name);
     }
+  }, {
+    key: 'emit',
+    value: function emit(name) {
+      for (var _len2 = arguments.length, args = Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
+        args[_key2 - 1] = arguments[_key2];
+      }
+
+      this.fire.apply(this, [name].concat(args));
+    }
   }]);
 
   return EventManager;

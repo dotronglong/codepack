@@ -58,4 +58,12 @@ describe('em.js', () => {
     events.fire('name', o)
     expect(o.text).to.equal('I am a runner')
   })
+  it('[emit] should act exactly same as [fire]', () => {
+    let o = {text: 'I'}
+    events.on('name', (obj) => {obj.text += ' am'}, EventManager.PRIORITY_LEAST)
+    events.on('name', (obj) => {obj.text += ' runner'}, EventManager.PRIORITY_HIGHER)
+    events.on('name', (obj) => {obj.text += ' a'}, EventManager.PRIORITY_NORMAL)
+    events.emit('name', o)
+    expect(o.text).to.equal('I am a runner')
+  })
 })
