@@ -43,10 +43,24 @@ var Request = function (_Message) {
   _createClass(Request, null, [{
     key: 'from',
     value: function from(resource) {
-      console.log(resource);
-      // const uriString = `${resource.headers[Message.HEADER_HOST]}${resource.url}`
-      // let request = new Request(resource.method, Uri.from(uriString), null, null, resource.headers)
-      // console.log(request)
+      var uriString = _uri2.default.SCHEME_HTTP + '://' + resource.headers[_message2.default.HEADER_HOST] + resource.url;
+      var request = new Request(resource.method, _uri2.default.from(uriString), null, null, resource.headers);
+      var getRequestBody = new Promise(function (resolve, reject) {
+        var body = [];
+        resource.on('error', function (err) {
+          reject(err);
+        }).on('data', function (chunk) {
+          body.push(chunk);
+        }).on('end', function () {
+          body = Buffer.concat(body).toString();
+          resolve(body);
+        });
+      });
+      getRequestBody.then(function (body) {
+        request.content = body;
+      });
+
+      return request;
     }
   }]);
 

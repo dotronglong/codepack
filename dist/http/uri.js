@@ -100,6 +100,14 @@ var Uri = function () {
       this._port = port;
     }
   }, {
+    key: 'path',
+    get: function get() {
+      return this._path;
+    },
+    set: function set(path) {
+      this._path = typeof path === 'undefined' ? '/' : path;
+    }
+  }, {
     key: 'userInfo',
     get: function get() {
       return this._user !== '' && this._pwd !== '' ? this._user + ':' + this._pwd : '';

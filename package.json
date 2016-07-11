@@ -6,7 +6,8 @@
   "scripts": {
     "test": "./node_modules/.bin/gulp test",
     "dev": "./node_modules/.bin/gulp watch:test",
-    "build": "./node_modules/.bin/gulp build"
+    "build": "./node_modules/.bin/gulp build",
+    "server": "./node_modules/.bin/gulp server"
   },
   "repository": {
     "type": "git",
@@ -38,7 +39,8 @@
     "gulp-babel": "^6.1.2",
     "gulp-clean": "^0.3.2",
     "gulp-concat": "^2.6.0",
-    "gulp-mocha": "^2.2.0"
+    "gulp-mocha": "^2.2.0",
+    "gulp-nodemon": "^2.1.0"
   },
   "dependencies": {
     "cli-color": "^1.1.0",
