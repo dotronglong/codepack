@@ -61,3 +61,6 @@ gulp.task('test', ['build'], function () {
 gulp.task('watch:test', ['test'], function () {
   gulp.watch([].concat(sources, tests), ['test']);
 });
+gulp.task('watch:build', ['build'], function () {
+  gulp.watch([].concat(sources, tests), ['build']);
+});

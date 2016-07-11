@@ -37,4 +37,7 @@ describe('bag.js', function() {
     bag.clean();
     expect(bag.all()).to.deep.equal({});
   });
+  it('[toString] should return a string which combine all keys and values', () => {
+    expect(bag.toString()).to.equal('a=hello&b=world&c=!')
+  })
 });

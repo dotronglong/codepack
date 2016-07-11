@@ -10,14 +10,6 @@ var _message = require('./message');
 
 var _message2 = _interopRequireDefault(_message);
 
-var _bag = require('../bag');
-
-var _bag2 = _interopRequireDefault(_bag);
-
-var _uri = require('./uri');
-
-var _uri2 = _interopRequireDefault(_uri);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -26,31 +18,67 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Request = function (_Message) {
-  _inherits(Request, _Message);
+var Response = function (_Message) {
+  _inherits(Response, _Message);
 
-  function Request(method, uri, params, content, headers) {
-    _classCallCheck(this, Request);
+  function Response(content) {
+    var headers = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
+    var statusCode = arguments.length <= 2 || arguments[2] === undefined ? Response.HTTP_OK : arguments[2];
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Request).call(this, content, headers));
+    _classCallCheck(this, Response);
 
-    _this.method = method;
-    _this.uri = uri;
-    _this.params = new _bag2.default(params);
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Response).call(this, content, headers));
+
+    _this.statusCode = statusCode;
     return _this;
   }
 
-  _createClass(Request, null, [{
-    key: 'from',
-    value: function from(resource) {
-      console.log(resource);
-      // const uriString = `${resource.headers[Message.HEADER_HOST]}${resource.url}`
-      // let request = new Request(resource.method, Uri.from(uriString), null, null, resource.headers)
-      // console.log(request)
+  _createClass(Response, [{
+    key: 'type',
+    value: function type(_type) {
+      this.headers.set(Response.HEADER_CONTENT_TYPE, _type);
     }
+
+    // send(reply) {
+    //   return new Promise((resolve, reject) => {
+    //     let response = reply().hold()
+    //
+    //     response.headers    = this.headers.all()
+    //     response.source     = this.content
+    //     response.statusCode = this.statusCode
+    //     try {
+    //       response.send()
+    //       resolve()
+    //     } catch (e) {
+    //       reject(e)
+    //     }
+    //   })
+    // }
+
   }]);
 
-  return Request;
+  return Response;
 }(_message2.default);
 
-exports.default = Request;
+exports.default = Response;
+
+Response.HTTP_OK = 200;
+Response.HTTP_CREATED = 201;
+Response.HTTP_ACCEPTED = 202;
+Response.HTTP_NO_CONTENT = 204;
+Response.HTTP_RESET_CONTENT = 205;
+Response.HTTP_MOVED_PERMANENTLY = 301;
+Response.HTTP_FOUND = 302;
+Response.HTTP_NOT_MODIFIED = 304;
+Response.HTTP_BAD_REQUEST = 400;
+Response.HTTP_UNAUTHORIZED = 401;
+Response.HTTP_FORBIDDEN = 403;
+Response.HTTP_NOT_FOUND = 404;
+Response.HTTP_METHOD_NOT_ALLOWED = 404;
+Response.HTTP_REQUEST_TIMEOUT = 408;
+Response.HTTP_TOO_MANY_REQUESTS = 429;
+Response.HTTP_INTERNAL_ERROR = 500;
+Response.HTTP_NOT_IMPLEMENTED = 501;
+Response.HTTP_BAD_GATEWAY = 502;
+Response.HTTP_SERVICE_UNAVAILABLE = 503;
+Response.HTTP_GATEWAY_TIMEOUT = 504;

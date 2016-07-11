@@ -65,6 +65,23 @@ var Bag = function () {
     value: function clean() {
       this.data = {};
     }
+  }, {
+    key: 'toString',
+    value: function toString() {
+      var keys = arguments.length <= 0 || arguments[0] === undefined ? null : arguments[0];
+      var delimiter = arguments.length <= 1 || arguments[1] === undefined ? '&' : arguments[1];
+
+      var data = this.data;
+      if (Array.isArray(keys)) {
+        data = this.only(keys);
+      }
+
+      var string = '';
+      Object.keys(data).forEach(function (k) {
+        string += (string === '' ? '' : delimiter) + (k + '=' + data[k]);
+      });
+      return string;
+    }
   }]);
 
   return Bag;

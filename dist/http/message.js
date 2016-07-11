@@ -16,33 +16,36 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 var Message = function () {
   function Message() {
-    var body = arguments.length <= 0 || arguments[0] === undefined ? '' : arguments[0];
+    var content = arguments.length <= 0 || arguments[0] === undefined ? '' : arguments[0];
     var headers = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
 
     _classCallCheck(this, Message);
 
-    this._body = body;
+    this.content = content;
     this.headers = new _bag2.default(headers);
+    this.resource = null;
   }
 
   _createClass(Message, [{
-    key: 'body',
-    get: function get() {
-      var body = this._body;
+    key: 'getContent',
+    value: function getContent() {
+      var content = this.content;
       var contentType = this.headers.get(Message.HEADER_CONTENT_TYPE, Message.CONTENT_JSON);
       switch (contentType) {
         case Message.CONTENT_JSON:
-          body = JSON.parse(body);
+          content = JSON.parse(content);
           break;
 
         default:
           break;
       }
 
-      return body;
-    },
-    set: function set(body) {
-      this._body = body;
+      return content;
+    }
+  }, {
+    key: 'from',
+    value: function from(resource) {
+      throw new Error('This method must be overridden');
     }
   }]);
 
@@ -52,6 +55,8 @@ var Message = function () {
 exports.default = Message;
 
 Message.HEADER_CONTENT_TYPE = 'content-type';
+Message.HEADER_USER_AGENT = 'user-agent';
+Message.HEADER_HOST = 'host';
 
 Message.CONTENT_XML = 'text/xml';
 Message.CONTENT_HTML = 'text/html';
