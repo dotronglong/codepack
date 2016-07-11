@@ -18,6 +18,10 @@ var _uri = require('./uri');
 
 var _uri2 = _interopRequireDefault(_uri);
 
+var _cli = require('../cli');
+
+var _cli2 = _interopRequireDefault(_cli);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -43,21 +47,19 @@ var Request = function (_Message) {
   _createClass(Request, null, [{
     key: 'from',
     value: function from(resource) {
-      var uriString = _uri2.default.SCHEME_HTTP + '://' + resource.headers[_message2.default.HEADER_HOST] + resource.url;
-      var request = new Request(resource.method, _uri2.default.from(uriString), null, null, resource.headers);
-      var getRequestBody = new Promise(function (resolve, reject) {
-        var body = [];
-        resource.on('error', function (err) {
-          reject(err);
-        }).on('data', function (chunk) {
-          body.push(chunk);
-        }).on('end', function () {
-          body = Buffer.concat(body).toString();
-          resolve(body);
-        });
-      });
-      getRequestBody.then(function (body) {
-        request.content = body;
+      var request = new Request();
+      request.method = resource.method;
+      request.uri = _uri2.default.from(_uri2.default.SCHEME_HTTP + '://' + resource.headers[_message2.default.HEADER_HOST] + resource.url);
+      request.headers = resource.headers;
+
+      var body = [];
+      resource.on('error', function (err) {
+        _cli2.default.error(err);
+      }).on('data', function (chunk) {
+        body.push(chunk);
+      }).on('end', function () {
+        request.body = Buffer.concat(body).toString();
+        console.log(request);
       });
 
       return request;

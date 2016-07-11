@@ -11,8 +11,8 @@ var http = require('http');
 
 var port = 3003;
 var server = http.createServer(function (request, response) {
-  console.log(request);
-  console.log(_request2.default.from(request));
+  // console.log(request)
+  _request2.default.from(request);
   // console.log('res -->', response)
   response.end('Okay!');
 });

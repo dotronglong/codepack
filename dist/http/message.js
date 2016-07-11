@@ -14,6 +14,31 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+var Body = function () {
+  function Body(content, type) {
+    _classCallCheck(this, Body);
+
+    this.content = content;
+    this.type = type;
+  }
+
+  _createClass(Body, [{
+    key: 'getContent',
+    value: function getContent() {
+      var content = this.content;
+      switch (this.type) {
+        case Message.CONTENT_JSON:
+          content = JSON.parse(content);
+          break;
+      }
+
+      return content;
+    }
+  }]);
+
+  return Body;
+}();
+
 var Message = function () {
   function Message() {
     var content = arguments.length <= 0 || arguments[0] === undefined ? '' : arguments[0];
@@ -21,28 +46,32 @@ var Message = function () {
 
     _classCallCheck(this, Message);
 
-    this.content = content;
-    this.headers = new _bag2.default(headers);
+    this.headers = headers;
+    this.body = content;
     this.resource = null;
   }
 
   _createClass(Message, [{
-    key: 'getContent',
-    value: function getContent() {
-      var content = this.content;
-      var contentType = this.headers.get(Message.HEADER_CONTENT_TYPE, Message.CONTENT_JSON);
-      switch (contentType) {
-        case Message.CONTENT_JSON:
-          content = JSON.parse(content);
-          break;
-
-        default:
-          break;
-      }
-
-      return content;
+    key: 'headers',
+    get: function get() {
+      return this._headers;
+    },
+    set: function set(headers) {
+      this._headers = new _bag2.default(headers);
     }
   }, {
+    key: 'body',
+    get: function get() {
+      return this._body;
+    },
+    set: function set(content) {
+      if (content instanceof Body) {
+        this._body = content;
+      } else {
+        this._body = new Body(content, this.headers.get(Message.HEADER_CONTENT_TYPE, Message.CONTENT_JSON));
+      }
+    }
+  }], [{
     key: 'from',
     value: function from(resource) {
       throw new Error('This method must be overridden');
