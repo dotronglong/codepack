@@ -12,4 +12,16 @@ describe('http/uri.js', () => {
     uri.pwd  = 'my_password'
     expect(uri.userInfo).to.equal(`${uri.user}:${uri.pwd}`)
   })
+  it('[parse] should parse an uri string, and return an instance of Uri', () => {
+    const string = 'https://user:pass@domain.com/some-path?key=value&other-key=other-value#my-fragment'
+    let uri = Uri.parse(string)
+    expect(uri.scheme).to.equal('https')
+    expect(uri.user).to.equal('user')
+    expect(uri.pwd).to.equal('pass')
+    expect(uri.host).to.equal('domain.com')
+    expect(uri.port).to.equal(443)
+    expect(uri.path).to.equal('/some-path')
+    expect(uri.query.all()).to.deep.equal({key: 'value', 'other-key': 'other-value'})
+    expect(uri.fragment).to.equal('my-fragment')
+  })
 })
