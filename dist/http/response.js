@@ -40,29 +40,33 @@ var Response = function (_Message) {
     }
   }, {
     key: 'send',
-    value: function send() {
-      this.resource.end(this.body.content);
-      // return new Promise((resolve, reject) => {
-      //   let response = reply().hold()
-      //
-      //   response.headers    = this.headers.all()
-      //   response.source     = this.content
-      //   response.statusCode = this.statusCode
-      //   try {
-      //     response.send()
-      //     resolve()
-      //   } catch (e) {
-      //     reject(e)
-      //   }
-      // })
+    value: function send(content) {
+      var _this2 = this;
+
+      if (typeof content !== 'undefined') {
+        this.body.content = content;
+      }
+
+      var headers = this.headers.all();
+      Object.keys(headers).forEach(function (key) {
+        _this2.resource.setHeader(key, headers[key]);
+      });
+
+      this.resource.statusCode = this.statusCode;
+      this.resource.end(this.body.toString(), 'utf-8');
     }
   }], [{
     key: 'from',
     value: function from(resource) {
       return new Promise(function (resolve, reject) {
-        var response = new Response();
-        // response.resource = resource
-        console.log(resource);
+        try {
+          var response = new Response();
+          response.resource = resource;
+          response.type(Response.DEFAULT_CONTENT_TYPE);
+          resolve(response);
+        } catch (e) {
+          reject(e);
+        }
       });
     }
   }]);
@@ -72,6 +76,7 @@ var Response = function (_Message) {
 
 exports.default = Response;
 
+Response.DEFAULT_CONTENT_TYPE = Response.CONTENT_JSON;
 Response.HTTP_OK = 200;
 Response.HTTP_CREATED = 201;
 Response.HTTP_ACCEPTED = 202;

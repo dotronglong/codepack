@@ -16,9 +16,17 @@ var _response = require('./response');
 
 var _response2 = _interopRequireDefault(_response);
 
+var _connection = require('./connection');
+
+var _connection2 = _interopRequireDefault(_connection);
+
 var _bag = require('../bag');
 
 var _bag2 = _interopRequireDefault(_bag);
+
+var _cli = require('../cli');
+
+var _cli2 = _interopRequireDefault(_cli);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -34,14 +42,14 @@ var Server = function () {
     _classCallCheck(this, Server);
 
     this.options = new _bag2.default(options);
-    this.server = null;
+    this.instance = null;
     this.request = null;
     this.response = null;
   }
 
   _createClass(Server, [{
     key: 'start',
-    value: function start(cb) {
+    value: function start(handleConnection) {
       var _this = this;
 
       return new Promise(function (resolve, reject) {
@@ -54,18 +62,18 @@ var Server = function () {
           backlog: backlog,
           url: 'http://' + (host === null ? os.hostname() : host) + ':' + port
         };
-        _this.server = http.createServer(function (req, res) {
+        _this.instance = http.createServer(function (req, res) {
           Promise.all([_request2.default.from(req), _response2.default.from(res)]).then(function (_ref) {
             var _ref2 = _slicedToArray(_ref, 2);
 
             var request = _ref2[0];
             var response = _ref2[1];
 
-            resolve(request, response);
+            handleConnection(new _connection2.default(request, response));
           }).catch(function (e) {
             reject(e);
           });
-        }).listen(port, host, backlog, cb);
+        }).listen(port, host, backlog, resolve);
       });
     }
   }]);
@@ -76,7 +84,7 @@ var Server = function () {
 exports.default = Server;
 
 Server.DEFAULT_BACKLOG = 511;
-Server.DEFAULT_PORT = 3000;
+Server.DEFAULT_PORT = 3333;
 Server.DEFAULT_HOST = null;
 Server.OPTION_PORT = 'port';
 Server.OPTION_HOST = 'host';

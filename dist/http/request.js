@@ -40,7 +40,7 @@ var Request = function (_Message) {
 
     _this.method = method;
     _this.uri = uri;
-    _this.params = new _bag2.default(params);
+    _this.resource = null;
     return _this;
   }
 
@@ -51,6 +51,7 @@ var Request = function (_Message) {
         try {
           (function () {
             var request = new Request();
+            request.resource = resource;
             request.method = resource.method;
             request.uri = _uri2.default.from(_uri2.default.SCHEME_HTTP + '://' + resource.headers[_message2.default.HEADER_HOST] + resource.url);
             request.headers = resource.headers;
