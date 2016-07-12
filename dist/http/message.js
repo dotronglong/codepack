@@ -71,11 +71,6 @@ var Message = function () {
         this._body = new Body(content, this.headers.get(Message.HEADER_CONTENT_TYPE, Message.CONTENT_JSON));
       }
     }
-  }], [{
-    key: 'from',
-    value: function from(resource) {
-      throw new Error('This method must be overridden');
-    }
   }]);
 
   return Message;

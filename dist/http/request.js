@@ -47,22 +47,28 @@ var Request = function (_Message) {
   _createClass(Request, null, [{
     key: 'from',
     value: function from(resource) {
-      var request = new Request();
-      request.method = resource.method;
-      request.uri = _uri2.default.from(_uri2.default.SCHEME_HTTP + '://' + resource.headers[_message2.default.HEADER_HOST] + resource.url);
-      request.headers = resource.headers;
+      return new Promise(function (resolve, reject) {
+        try {
+          (function () {
+            var request = new Request();
+            request.method = resource.method;
+            request.uri = _uri2.default.from(_uri2.default.SCHEME_HTTP + '://' + resource.headers[_message2.default.HEADER_HOST] + resource.url);
+            request.headers = resource.headers;
 
-      var body = [];
-      resource.on('error', function (err) {
-        _cli2.default.error(err);
-      }).on('data', function (chunk) {
-        body.push(chunk);
-      }).on('end', function () {
-        request.body = Buffer.concat(body).toString();
-        console.log(request);
+            var body = [];
+            resource.on('error', function (e) {
+              reject(e);
+            }).on('data', function (chunk) {
+              body.push(chunk);
+            }).on('end', function () {
+              request.body = Buffer.concat(body).toString();
+              resolve(request);
+            });
+          })();
+        } catch (e) {
+          reject(e);
+        }
       });
-
-      return request;
     }
   }]);
 

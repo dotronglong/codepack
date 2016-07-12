@@ -38,23 +38,33 @@ var Response = function (_Message) {
     value: function type(_type) {
       this.headers.set(Response.HEADER_CONTENT_TYPE, _type);
     }
-
-    // send(reply) {
-    //   return new Promise((resolve, reject) => {
-    //     let response = reply().hold()
-    //
-    //     response.headers    = this.headers.all()
-    //     response.source     = this.content
-    //     response.statusCode = this.statusCode
-    //     try {
-    //       response.send()
-    //       resolve()
-    //     } catch (e) {
-    //       reject(e)
-    //     }
-    //   })
-    // }
-
+  }, {
+    key: 'send',
+    value: function send() {
+      this.resource.end(this.body.content);
+      // return new Promise((resolve, reject) => {
+      //   let response = reply().hold()
+      //
+      //   response.headers    = this.headers.all()
+      //   response.source     = this.content
+      //   response.statusCode = this.statusCode
+      //   try {
+      //     response.send()
+      //     resolve()
+      //   } catch (e) {
+      //     reject(e)
+      //   }
+      // })
+    }
+  }], [{
+    key: 'from',
+    value: function from(resource) {
+      return new Promise(function (resolve, reject) {
+        var response = new Response();
+        // response.resource = resource
+        console.log(resource);
+      });
+    }
   }]);
 
   return Response;
