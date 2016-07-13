@@ -8,9 +8,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _bag = require('../bag');
+var _header = require('./header');
 
-var _bag2 = _interopRequireDefault(_bag);
+var _header2 = _interopRequireDefault(_header);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -37,13 +37,8 @@ var Body = function () {
       var contentType = typeof content === 'undefined' ? 'undefined' : _typeof(content);
       switch (contentType) {
         case TYPE_OBJECT:
-          try {
-
-            this.parsedContent = content;
-            this.rawContent = JSON.stringify(content);
-          } catch (e) {
-            console.log(e);
-          }
+          this.parsedContent = content;
+          this.rawContent = JSON.stringify(content);
           break;
         case TYPE_STRING:
           if (content === '') {
@@ -52,6 +47,9 @@ var Body = function () {
             this.parsedContent = JSON.parse(content);
           }
           this.rawContent = content;
+          break;
+        case TYPE_FUNCTION:
+          this.handleContentJson(content());
           break;
         default:
           break;
@@ -72,6 +70,9 @@ var Body = function () {
         case Message.CONTENT_JSON:
           this.handleContentJson(content);
           break;
+        default:
+          throw new Error('Invalid Body Content Type');
+          break;
       }
     }
   }]);
@@ -80,14 +81,17 @@ var Body = function () {
 }();
 
 var Message = function () {
-  function Message() {
-    var content = arguments.length <= 0 || arguments[0] === undefined ? '' : arguments[0];
-    var headers = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
-
+  function Message(headers, body) {
     _classCallCheck(this, Message);
 
-    this.headers = headers;
-    this.body = content;
+    if (typeof headers !== 'undefined') {
+      this.headers = headers;
+    }
+
+    if (typeof body !== 'undefined') {
+      this.body = body;
+    }
+
     this.resource = null;
   }
 
@@ -97,17 +101,18 @@ var Message = function () {
       return this._headers;
     },
     set: function set(headers) {
-      this._headers = new _bag2.default(headers);
+      this._headers = new _header2.default(headers);
     }
   }, {
     key: 'body',
     get: function get() {
       return this._body;
     },
-    set: function set(content) {
-      if (content instanceof Body) {
-        this._body = content;
+    set: function set(body) {
+      if (body instanceof Body) {
+        this._body = body;
       } else {
+        var content = body;
         this._body = new Body(content, this.headers.get(Message.HEADER_CONTENT_TYPE, Message.CONTENT_JSON));
       }
     }

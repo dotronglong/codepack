@@ -10,17 +10,9 @@ var _message = require('./message');
 
 var _message2 = _interopRequireDefault(_message);
 
-var _bag = require('../bag');
-
-var _bag2 = _interopRequireDefault(_bag);
-
 var _uri = require('./uri');
 
 var _uri2 = _interopRequireDefault(_uri);
-
-var _cli = require('../cli');
-
-var _cli2 = _interopRequireDefault(_cli);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -33,18 +25,25 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var Request = function (_Message) {
   _inherits(Request, _Message);
 
-  function Request(method, uri, params, content, headers) {
+  function Request(method, uri) {
     _classCallCheck(this, Request);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Request).call(this, content, headers));
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Request).call(this));
 
-    _this.method = method;
-    _this.uri = uri;
-    _this.resource = null;
+    _this.method = typeof method === 'undefined' ? Request.METHOD_GET : method;
+    _this.uri = typeof uri === 'undefined' ? null : uri;
     return _this;
   }
 
-  _createClass(Request, null, [{
+  _createClass(Request, [{
+    key: 'query',
+    get: function get() {
+      return this.uri.query;
+    },
+    set: function set(query) {
+      this.uri.query = query;
+    }
+  }], [{
     key: 'from',
     value: function from(resource) {
       return new Promise(function (resolve, reject) {
@@ -62,8 +61,12 @@ var Request = function (_Message) {
             }).on('data', function (chunk) {
               body.push(chunk);
             }).on('end', function () {
-              request.body = Buffer.concat(body).toString();
-              resolve(request);
+              try {
+                request.body = Buffer.concat(body).toString();
+                resolve(request);
+              } catch (e) {
+                reject(e);
+              }
             });
           })();
         } catch (e) {
@@ -77,3 +80,11 @@ var Request = function (_Message) {
 }(_message2.default);
 
 exports.default = Request;
+
+Request.METHOD_GET = 'GET';
+Request.METHOD_POST = 'POST';
+Request.METHOD_PUT = 'PUT';
+Request.METHOD_PATCH = 'PATCH';
+Request.METHOD_DELETE = 'DELETE';
+Request.METHOD_HEAD = 'HEAD';
+Request.METHOD_OPTION = 'OPTION';

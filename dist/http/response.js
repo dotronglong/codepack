@@ -21,13 +21,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var Response = function (_Message) {
   _inherits(Response, _Message);
 
-  function Response(content) {
-    var headers = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
+  function Response() {
+    var headers = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+    var body = arguments.length <= 1 || arguments[1] === undefined ? '' : arguments[1];
     var statusCode = arguments.length <= 2 || arguments[2] === undefined ? Response.HTTP_OK : arguments[2];
 
     _classCallCheck(this, Response);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Response).call(this, content, headers));
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Response).call(this, headers, body));
 
     _this.statusCode = statusCode;
     return _this;
@@ -36,7 +37,7 @@ var Response = function (_Message) {
   _createClass(Response, [{
     key: 'type',
     value: function type(_type) {
-      this.headers.set(Response.HEADER_CONTENT_TYPE, _type);
+      this.headers.set(_message2.default.HEADER_CONTENT_TYPE, _type);
     }
   }, {
     key: 'send',
@@ -53,7 +54,7 @@ var Response = function (_Message) {
       });
 
       this.resource.statusCode = this.statusCode;
-      this.resource.end(this.body.toString(), 'utf-8');
+      this.resource.end(this.body.toString());
     }
   }], [{
     key: 'from',

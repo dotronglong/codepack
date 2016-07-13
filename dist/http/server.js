@@ -24,10 +24,6 @@ var _bag = require('../bag');
 
 var _bag2 = _interopRequireDefault(_bag);
 
-var _cli = require('../cli');
-
-var _cli2 = _interopRequireDefault(_cli);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -49,7 +45,7 @@ var Server = function () {
 
   _createClass(Server, [{
     key: 'start',
-    value: function start(handleConnection) {
+    value: function start(handleConnection, handleError) {
       var _this = this;
 
       return new Promise(function (resolve, reject) {
@@ -71,7 +67,7 @@ var Server = function () {
 
             handleConnection(new _connection2.default(request, response));
           }).catch(function (e) {
-            reject(e);
+            handleError(e);
           });
         }).listen(port, host, backlog, resolve);
       });
