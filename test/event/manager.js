@@ -39,21 +39,24 @@ describe('event/manager.js', () => {
   it('[fire] run in parallel', () => {
     event.parallel = true
     event.tasks = []
-    em.on(name, (e) => {
+    em.on(name, (e, done) => {
       setTimeout(() => {
         e.tasks.push(300)
+        done()
       }, 300)
+    }).done((e) => {
+      console.log(300)
     })
-    em.on(name, (e) => {
+    em.once(name, (e, done) => {
       setTimeout(() => {
         e.tasks.push(100)
-        console.log(e.tasks)
+        done()
       }, 100)
+    }).done((e) => {
+      console.log(100)
     })
-    em.on(`${name}:completed`, (e) => {
-      console.log(e.tasks)
-      expect(e.tasks).to.deep.equal([100, 300])
-    })
+
+    em.fire(event)
     em.fire(event)
   })
 
