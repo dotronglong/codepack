@@ -43,6 +43,7 @@
     "gulp-nodemon": "^2.1.0"
   },
   "dependencies": {
+    "async": "^2.0.0",
     "cli-color": "^1.1.0",
     "path": "^0.12.7"
   }
