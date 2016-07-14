@@ -4,8 +4,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
-
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _header = require('./header');
@@ -16,105 +14,35 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var TYPE_OBJECT = 'object';
-var TYPE_FUNCTION = 'function';
-var TYPE_STRING = 'string';
-
-var Body = function () {
-  function Body() {
-    var content = arguments.length <= 0 || arguments[0] === undefined ? '' : arguments[0];
-    var type = arguments[1];
-
-    _classCallCheck(this, Body);
-
-    this.type = type;
-    this.content = content;
-  }
-
-  _createClass(Body, [{
-    key: 'handleContentJson',
-    value: function handleContentJson(content) {
-      var contentType = typeof content === 'undefined' ? 'undefined' : _typeof(content);
-      switch (contentType) {
-        case TYPE_OBJECT:
-          this.parsedContent = content;
-          this.rawContent = JSON.stringify(content);
-          break;
-        case TYPE_STRING:
-          if (content === '') {
-            this.parsedContent = {};
-          } else {
-            this.parsedContent = JSON.parse(content);
-          }
-          this.rawContent = content;
-          break;
-        case TYPE_FUNCTION:
-          this.handleContentJson(content());
-          break;
-        default:
-          break;
-      }
-    }
-  }, {
-    key: 'toString',
-    value: function toString() {
-      return this.rawContent;
-    }
-  }, {
-    key: 'content',
-    get: function get() {
-      return this.parsedContent;
-    },
-    set: function set(content) {
-      switch (this.type) {
-        case Message.CONTENT_JSON:
-          this.handleContentJson(content);
-          break;
-        default:
-          throw new Error('Invalid Body Content Type');
-          break;
-      }
-    }
-  }]);
-
-  return Body;
-}();
-
 var Message = function () {
-  function Message(headers, body) {
+  function Message() {
+    var headers = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+
     _classCallCheck(this, Message);
 
-    if (typeof headers !== 'undefined') {
-      this.headers = headers;
-    }
-
-    if (typeof body !== 'undefined') {
-      this.body = body;
-    }
-
+    this.headers = headers;
     this.resource = null;
   }
 
   _createClass(Message, [{
+    key: 'on',
+    value: function on(event, callback) {
+      if (this.resource !== null) {
+        this.resource.on(event, callback);
+      }
+    }
+  }, {
     key: 'headers',
     get: function get() {
       return this._headers;
     },
     set: function set(headers) {
-      this._headers = new _header2.default(headers);
-    }
-  }, {
-    key: 'body',
-    get: function get() {
-      return this._body;
-    },
-    set: function set(body) {
-      if (body instanceof Body) {
-        this._body = body;
-      } else {
-        var content = body;
-        this._body = new Body(content, this.headers.get(Message.HEADER_CONTENT_TYPE, Message.CONTENT_JSON));
+      if (typeof headers === 'undefined') {
+        headers = {};
       }
+
+      this._headers = new _header2.default(headers);
+      this.type = this.headers.get(Message.HEADER_CONTENT_TYPE, Message.CONTENT_JSON);
     }
   }]);
 

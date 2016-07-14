@@ -22,16 +22,19 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+require('babel-polyfill');
+
 var Request = function (_Message) {
   _inherits(Request, _Message);
 
-  function Request(method, uri) {
+  function Request() {
     _classCallCheck(this, Request);
 
     var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Request).call(this));
 
-    _this.method = typeof method === 'undefined' ? Request.METHOD_GET : method;
-    _this.uri = typeof uri === 'undefined' ? null : uri;
+    _this.server = {};
+    _this.remote = {};
+
     return _this;
   }
 
@@ -45,35 +48,7 @@ var Request = function (_Message) {
     }
   }], [{
     key: 'from',
-    value: function from(resource) {
-      return new Promise(function (resolve, reject) {
-        try {
-          (function () {
-            var request = new Request();
-            request.resource = resource;
-            request.method = resource.method;
-            request.uri = _uri2.default.from(_uri2.default.SCHEME_HTTP + '://' + resource.headers[_message2.default.HEADER_HOST] + resource.url);
-            request.headers = resource.headers;
-
-            var body = [];
-            resource.on('error', function (e) {
-              reject(e);
-            }).on('data', function (chunk) {
-              body.push(chunk);
-            }).on('end', function () {
-              try {
-                request.body = Buffer.concat(body).toString();
-                resolve(request);
-              } catch (e) {
-                reject(e);
-              }
-            });
-          })();
-        } catch (e) {
-          reject(e);
-        }
-      });
-    }
+    value: function from(resource) {}
   }]);
 
   return Request;
