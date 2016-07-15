@@ -51,6 +51,18 @@ var Header = function (_Bag) {
     value: function remove(key) {
       _get(Object.getPrototypeOf(Header.prototype), 'remove', this).call(this, key.toLowerCase());
     }
+  }, {
+    key: 'replace',
+    value: function replace() {
+      var _this2 = this;
+
+      var data = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+
+      this.data = {};
+      Object.keys(data).forEach(function (k) {
+        return _this2.set(k.toLowerCase(), data[k]);
+      });
+    }
   }]);
 
   return Header;

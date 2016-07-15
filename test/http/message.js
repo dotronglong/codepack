@@ -1,14 +1,15 @@
-import Bag from '../../lib/bag'
-import Message from '../../lib/http/message'
 var expect = require('chai').expect
+import Message from '../../lib/http/message'
 
-describe('http/message.js', () => {
-  let message = new Message()
+describe('http/message.js',() => {
+  let message
   beforeEach(() => {
     message = new Message()
   })
 
-  it('[headers] should be an instance of Bag', () => {
-    expect(message.headers instanceof Bag).to.be.true
+  it('[getter:type] should return value of header content-type', () => {
+    expect(message.type).to.equal(Message.CONTENT_JSON)
+    message.headers.set(Message.HEADER_CONTENT_TYPE, Message.CONTENT_TEXT)
+    expect(message.type).to.equal(Message.CONTENT_TEXT)
   })
 })

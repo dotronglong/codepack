@@ -11,7 +11,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 var Event = function () {
   function Event() {
     var name = arguments.length <= 0 || arguments[0] === undefined ? '' : arguments[0];
-    var parallel = arguments.length <= 1 || arguments[1] === undefined ? true : arguments[1];
+    var parallel = arguments.length <= 1 || arguments[1] === undefined ? false : arguments[1];
 
     _classCallCheck(this, Event);
 

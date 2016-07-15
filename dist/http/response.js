@@ -31,15 +31,11 @@ var Response = function (_Message) {
     var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Response).call(this, headers, body));
 
     _this.statusCode = statusCode;
+    _this.statusMessage = null;
     return _this;
   }
 
   _createClass(Response, [{
-    key: 'type',
-    value: function type(_type) {
-      this.headers.set(_message2.default.HEADER_CONTENT_TYPE, _type);
-    }
-  }, {
     key: 'send',
     value: function send(content) {
       var _this2 = this;
@@ -50,25 +46,11 @@ var Response = function (_Message) {
 
       var headers = this.headers.all();
       Object.keys(headers).forEach(function (key) {
-        _this2.resource.setHeader(key, headers[key]);
+        return _this2.resource.setHeader(key, headers[key]);
       });
 
       this.resource.statusCode = this.statusCode;
       this.resource.end(this.body.toString());
-    }
-  }], [{
-    key: 'from',
-    value: function from(resource) {
-      return new Promise(function (resolve, reject) {
-        try {
-          var response = new Response();
-          response.resource = resource;
-          response.type(Response.DEFAULT_CONTENT_TYPE);
-          resolve(response);
-        } catch (e) {
-          reject(e);
-        }
-      });
     }
   }]);
 
@@ -77,7 +59,6 @@ var Response = function (_Message) {
 
 exports.default = Response;
 
-Response.DEFAULT_CONTENT_TYPE = Response.CONTENT_JSON;
 Response.HTTP_OK = 200;
 Response.HTTP_CREATED = 201;
 Response.HTTP_ACCEPTED = 202;
