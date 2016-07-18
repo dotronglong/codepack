@@ -24,6 +24,9 @@ var Body = function () {
 
     this.content = content;
     this.type = type;
+
+    this.rawContent = '';
+    this.parsedContent = {};
   }
 
   _createClass(Body, [{
