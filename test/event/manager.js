@@ -1,12 +1,18 @@
 import Event from '../../lib/event/event'
 import EventManager from '../../lib/event/manager'
+import Listener from '../../lib/event/listener'
 var expect = require('chai').expect
 
 describe('event/manager.js', () => {
-  let em, event, name = 'event_name', func = (e, done) => {done()}
+  let em,
+      event,
+      name = 'event_name',
+      func = (e, done) => {done()},
+      listener
   beforeEach(() => {
     em = new EventManager()
     event = new Event(name)
+    listener = new Listener(func)
   })
 
   it('[on] should allow to register an event listener', () => {
@@ -14,6 +20,21 @@ describe('event/manager.js', () => {
     em.on(name, func)
     expect(em.events[name].listeners.length).to.equal(1)
     expect(em.events[name].sorted).to.be.false
+  })
+
+  it('[off] should allow to remove an event listener', () => {
+    expect(em.events).to.deep.equal({})
+    em.on(name, func)
+    expect(em.events[name].listeners.length).to.equal(1)
+
+    em.off(name)
+    expect(em.events[name].listeners.length).to.equal(0)
+
+    em.on(name, func, 10)
+    em.on(name, func, 15)
+    expect(em.events[name].listeners.length).to.equal(2)
+    em.off(name, 15)
+    expect(em.events[name].listeners.length).to.equal(1)
   })
 
   it('[has] should return false, and true in the latter use', () => {
@@ -28,7 +49,7 @@ describe('event/manager.js', () => {
     expect(item.listeners.length).to.equal(1)
   })
 
-  it('[fire] should ring the bell', () => {
+  it('[emit] should ring the bell', () => {
     let bell = {ring: false}
     em.on(name, (e) => {e.bell.ring = true})
     event.bell = bell
@@ -56,7 +77,7 @@ describe('event/manager.js', () => {
     em.emit(event)
   })
 
-  it('[fire] run in series', () => {
+  it('[emit] run in series', () => {
     event.parallel = false
     event.tasks = []
     em.on(name, (e, done) => {
@@ -91,6 +112,20 @@ describe('event/manager.js', () => {
     em.emit(event)
     expect(em.events[name].listeners.length).to.equal(1)
     em.emit(event)
+    expect(em.events[name].listeners.length).to.equal(0)
+  })
+
+  it('[subscribe] should allow to subscribe a listener', () => {
+    em.subscribe(name, listener)
+    expect(em.events[name].listeners.length).to.equal(1)
+    expect(em.events[name].sorted).to.be.false
+  })
+
+  it('[unsubscribe] should allow to unsubscribe a listener', () => {
+    em.subscribe(name, listener)
+    expect(em.events[name].listeners.length).to.equal(1)
+
+    em.unsubscribe(name, listener)
     expect(em.events[name].listeners.length).to.equal(0)
   })
 })

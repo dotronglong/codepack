@@ -1,6 +1,6 @@
-var expect = require('chai').expect
 import Bag from '../../lib/bag'
 import Request from '../../lib/http/request'
+var expect = require('chai').expect
 var url = require('url')
 
 describe('http/request.js',() => {

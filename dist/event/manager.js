@@ -48,7 +48,7 @@ function onAsyncCompleted(event, err, results) {
 
     if (listener.limit === 0) {
       // remove this listener
-      this.events[event.name].listeners.splice(i, 1);
+      removeEventListener.apply(this, [event.name, i]);
     }
   }
 }
@@ -61,6 +61,9 @@ var getEventItem = function getEventItem() {
     sorted: sorted
   };
 };
+function removeEventListener(name, position) {
+  this.events[name].listeners.splice(position, 1);
+}
 
 var EventManager = function () {
   function EventManager() {
@@ -70,16 +73,40 @@ var EventManager = function () {
   }
 
   /**
-   * Bind a listener to event by name
+   * Subscribe a listener to Event Manager
    *
    * @param string name
-   * @param function|callable runner
-   * @param int priority
-   * @returns {Listener}
+   * @param Listener listener
    */
 
 
   _createClass(EventManager, [{
+    key: 'subscribe',
+    value: function subscribe(name, listener) {
+      if (!(listener instanceof _listener2.default)) {
+        throw new Error('[Event:subscribe] listener must be an instance of Event/Listener');
+      }
+      return this.on(name, listener.runner, listener.priority, listener.limit);
+    }
+  }, {
+    key: 'unsubscribe',
+    value: function unsubscribe(name, listener) {
+      if (!(listener instanceof _listener2.default)) {
+        throw new Error('[Event:subscribe] listener must be an instance of Event/Listener');
+      }
+      return this.off(name, listener.priority);
+    }
+
+    /**
+     * Bind a listener to event by name
+     *
+     * @param string name
+     * @param function|callable runner
+     * @param int priority
+     * @returns {Listener}
+     */
+
+  }, {
     key: 'on',
     value: function on(name, runner, priority, limit) {
       if (!this.has(name)) {
@@ -100,6 +127,24 @@ var EventManager = function () {
     key: 'twice',
     value: function twice(name, runner, priority) {
       return this.on(name, runner, priority, _listener2.default.LIMIT_TWICE);
+    }
+  }, {
+    key: 'off',
+    value: function off(name, priority) {
+      if (typeof priority === 'undefined') {
+        // remove all listeners of event's name
+        this.events[name] = getEventItem();
+      } else if (this.has(name)) {
+        var listeners = this.get(name).listeners;
+        for (var i = 0; i < listeners.length; i++) {
+          var listener = listeners[i];
+          if (listener.priority === priority) {
+            removeEventListener.apply(this, [name, i]);
+          }
+        }
+      } else {
+        throw new Error('[Event:off] event\'s name must be specified.');
+      }
     }
 
     /**
@@ -181,7 +226,7 @@ var EventManager = function () {
       var _this = this;
 
       if (!(event instanceof _event2.default)) {
-        throw new Error('[Event::fire] event must be an instance of Event');
+        throw new Error('[Event::emit] event must be an instance of Event');
       }
       var name = event.name;
       this.sort(name);
