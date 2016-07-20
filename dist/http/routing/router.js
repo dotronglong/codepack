@@ -8,10 +8,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _bag = require('../bag');
-
-var _bag2 = _interopRequireDefault(_bag);
-
 var _route = require('./route');
 
 var _route2 = _interopRequireDefault(_route);
@@ -30,8 +26,8 @@ var Router = function () {
   }
 
   _createClass(Router, [{
-    key: 'addRoute',
-    value: function addRoute(route) {
+    key: 'add',
+    value: function add(route) {
       if ((typeof route === 'undefined' ? 'undefined' : _typeof(route)) !== 'object') {
         throw new Error('[Router::addRoute] route must be an object');
       }
@@ -41,6 +37,18 @@ var Router = function () {
       }
 
       this.routes[route.name] = route;
+    }
+  }, {
+    key: 'has',
+    value: function has(name) {
+      return typeof this.routes[name] !== 'undefined';
+    }
+  }, {
+    key: 'remove',
+    value: function remove(name) {
+      if (this.has(name)) {
+        delete this.routes[name];
+      }
     }
   }]);
 
