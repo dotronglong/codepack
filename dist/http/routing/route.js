@@ -26,7 +26,8 @@ var Route = function () {
     var method = arguments.length <= 1 || arguments[1] === undefined ? _request2.default.METHOD_GET : arguments[1];
     var path = arguments.length <= 2 || arguments[2] === undefined ? '' : arguments[2];
     var host = arguments.length <= 3 || arguments[3] === undefined ? null : arguments[3];
-    var options = arguments.length <= 4 || arguments[4] === undefined ? {} : arguments[4];
+    var port = arguments.length <= 4 || arguments[4] === undefined ? null : arguments[4];
+    var options = arguments.length <= 5 || arguments[5] === undefined ? {} : arguments[5];
 
     _classCallCheck(this, Route);
 
@@ -34,10 +35,20 @@ var Route = function () {
     this.method = method;
     this.path = path;
     this.host = host;
+    this.port = port;
     this.options = options;
   }
 
   _createClass(Route, [{
+    key: 'match',
+    value: function match(path) {
+      var host = arguments.length <= 1 || arguments[1] === undefined ? null : arguments[1];
+      var port = arguments.length <= 2 || arguments[2] === undefined ? null : arguments[2];
+
+      var valid = true;
+      if (host !== null && typeof host === 'string' && host.match('/' + this.host + '/i')) {}
+    }
+  }, {
     key: 'options',
     get: function get() {
       return this._options;
@@ -66,7 +77,8 @@ var Route = function () {
       }
       if (typeof object.host !== 'undefined') {
         route.host = object.host;
-      }if (typeof object.options !== 'undefined') {
+      }
+      if (typeof object.options !== 'undefined') {
         route.options = object.options;
       }
 

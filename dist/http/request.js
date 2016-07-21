@@ -49,9 +49,18 @@ var Request = function (_Message) {
 
     var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Request).call(this));
 
-    _this.server = {};
-    _this.remote = {};
+    _this.server = {
+      host: null,
+      port: null,
+      address: null,
+      localAddress: null
+    };
+    _this.remote = {
+      address: null,
+      port: null
+    };
     _this.method = Request.METHOD_GET;
+    _this.path = '';
     _this.query = new _bag2.default();
     return _this;
   }

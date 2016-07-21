@@ -12,6 +12,10 @@ var _route = require('./route');
 
 var _route2 = _interopRequireDefault(_route);
 
+var _request = require('../request');
+
+var _request2 = _interopRequireDefault(_request);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -48,6 +52,32 @@ var Router = function () {
     value: function remove(name) {
       if (this.has(name)) {
         delete this.routes[name];
+      }
+    }
+  }, {
+    key: 'get',
+    value: function get(name) {
+      return this.has(name) ? this.routes[name] : null;
+    }
+  }, {
+    key: 'route',
+    value: function route(request) {
+      if (!(request instanceof _request2.default)) {
+        throw new Error('[Router::route] request must be an instance of Http/Request');
+      }
+
+      var host = request.server.host,
+          port = request.server.port,
+          path = request.path;
+
+      var names = Object.keys(this.routes);
+      for (var i = 0; i < names.length; i++) {
+        var route = this.get(names[i]);
+        if (route instanceof _route2.default) {
+          if (route.match(path, host, port)) {
+            return route;
+          }
+        }
       }
     }
   }]);
