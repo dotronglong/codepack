@@ -27,7 +27,8 @@ var Route = function () {
     var path = arguments.length <= 2 || arguments[2] === undefined ? '' : arguments[2];
     var host = arguments.length <= 3 || arguments[3] === undefined ? null : arguments[3];
     var port = arguments.length <= 4 || arguments[4] === undefined ? null : arguments[4];
-    var options = arguments.length <= 5 || arguments[5] === undefined ? {} : arguments[5];
+    var demands = arguments.length <= 5 || arguments[5] === undefined ? {} : arguments[5];
+    var options = arguments.length <= 6 || arguments[6] === undefined ? {} : arguments[6];
 
     _classCallCheck(this, Route);
 
@@ -36,7 +37,9 @@ var Route = function () {
     this.path = path;
     this.host = host;
     this.port = port;
+    this.demands = demands;
     this.options = options;
+    this.params = {};
   }
 
   _createClass(Route, [{
@@ -45,8 +48,35 @@ var Route = function () {
       var host = arguments.length <= 1 || arguments[1] === undefined ? null : arguments[1];
       var port = arguments.length <= 2 || arguments[2] === undefined ? null : arguments[2];
 
-      var valid = true;
-      if (host !== null && typeof host === 'string' && host.match('/' + this.host + '/i')) {}
+      this.preMatch();
+
+      if (host !== null && typeof host === 'string' && this.host !== null && host.match('/' + this.host + '/i') === null) {
+        return false;
+      }
+
+      if (port !== null) {
+        if (typeof port === 'string') {
+          port = parseInt(port);
+        } else if (typeof port === 'number') {
+          // do nothing
+        }
+        if (this.port !== null && this.port !== port) {
+          return false;
+        }
+      }
+
+      return this.postMatch();
+    }
+  }, {
+    key: 'preMatch',
+    value: function preMatch() {
+      var pattern = new RegExp(Route.MATCH_OPENING_TAG + '(\\w+)' + Route.MATCH_CLOSING_TAG, 'ig');
+      var matches = this.path.match(pattern);
+    }
+  }, {
+    key: 'postMatch',
+    value: function postMatch() {
+      return true;
     }
   }, {
     key: 'options',
@@ -90,3 +120,6 @@ var Route = function () {
 }();
 
 exports.default = Route;
+
+Route.MATCH_OPENING_TAG = '{';
+Route.MATCH_CLOSING_TAG = '}';

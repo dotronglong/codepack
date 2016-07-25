@@ -22,4 +22,13 @@ describe('http/routing/route.js', () => {
     route.options = options
     expect(route.options.get('hello')).to.equal('World')
   })
+
+  it('[preMatch] should perform pre-scanning for demands', () => {
+    route.path = '/accounts/{id}-{name}'
+    route.demands = {
+      id: '\d+',
+      name: '[a-zA-Z]'
+    }
+    route.preMatch()
+  })
 })
