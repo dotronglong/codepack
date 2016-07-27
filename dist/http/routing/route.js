@@ -4,9 +4,9 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
-
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
 
 var _request = require('../request');
 
@@ -19,6 +19,47 @@ var _bag2 = _interopRequireDefault(_bag);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var SRC_HOST = 'host';
+var SRC_PATH = 'path';
+
+function scanAndReplace(text, source, dest) {
+  if (text === null) {
+    // do nothing
+    return;
+  }
+
+  var o = Route.MATCH_OPENING_TAG,
+      c = Route.MATCH_CLOSING_TAG;
+
+  var pattern = o + '(\\w+)' + c,
+      matches = text.match(new RegExp(pattern, 'ig')),
+      args = Object.keys(source);
+
+  if (matches === null || !args.length || (typeof dest === 'undefined' ? 'undefined' : _typeof(dest)) !== 'object') {
+    // do nothing
+    return;
+  }
+
+  // loop matches to replace in text
+  matches.forEach(function (match) {
+    var replacement = /\w+/,
+        argument = match.replace(new RegExp(o + '|' + c, 'ig'), '');
+
+    for (var i = 0; i < args.length; i++) {
+      if (match === '' + o + args[i] + c) {
+        argument = args[i];
+        replacement = source[argument];
+        break;
+      }
+    }
+
+    text = text.replace(match, '(' + replacement + ')');
+    dest[argument] = null;
+  });
+
+  return text;
+}
 
 var Route = function () {
   function Route() {
@@ -39,7 +80,10 @@ var Route = function () {
     this.port = port;
     this.demands = demands;
     this.options = options;
-    this.params = {};
+    this._params = {};
+
+    this._params[SRC_HOST] = {};
+    this._params[SRC_PATH] = {};
   }
 
   _createClass(Route, [{
@@ -70,8 +114,8 @@ var Route = function () {
   }, {
     key: 'preMatch',
     value: function preMatch() {
-      var pattern = new RegExp(Route.MATCH_OPENING_TAG + '(\\w+)' + Route.MATCH_CLOSING_TAG, 'ig');
-      var matches = this.path.match(pattern);
+      this.host = scanAndReplace(this.host, this.demands, this._params[SRC_HOST]);
+      this.path = scanAndReplace(this.path, this.demands, this._params[SRC_PATH]);
     }
   }, {
     key: 'postMatch',
@@ -91,6 +135,11 @@ var Route = function () {
           this._options = new _bag2.default(options);
         }
       }
+    }
+  }, {
+    key: 'params',
+    get: function get() {
+      return Object.assign({}, this._params[SRC_HOST], this._params[SRC_PATH]);
     }
   }], [{
     key: 'from',

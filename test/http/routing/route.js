@@ -26,9 +26,10 @@ describe('http/routing/route.js', () => {
   it('[preMatch] should perform pre-scanning for demands', () => {
     route.path = '/accounts/{id}-{name}'
     route.demands = {
-      id: '\d+',
+      // id: /\d+/,
       name: '[a-zA-Z]'
     }
     route.preMatch()
+    // console.log(route.params, route.path)
   })
 })
