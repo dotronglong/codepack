@@ -24,12 +24,42 @@ describe('http/routing/route.js', () => {
   })
 
   it('[preMatch] should perform pre-scanning for demands', () => {
+    route.host = '{country}.domain.com'
     route.path = '/accounts/{id}-{name}'
     route.demands = {
-      // id: /\d+/,
-      name: '[a-zA-Z]'
+      id: /\d+/,
+      name: '[a-zA-Z]+',
+      country: /^[a-z]{2}/
     }
     route.preMatch()
-    // console.log(route.params, route.path)
+    expect(route.params).to.deep.equal({country: null, id: null, name: null})
+  })
+
+  it('[postMatch] should reset host, path', () => {
+    route.reservedHost = 'sample'
+    route.reservedPath = 'sample'
+    route.postMatch()
+    expect(route.host).to.equal('sample')
+    expect(route.path).to.equal('sample')
+    expect(route.reservedHost).to.be.null
+    expect(route.reservedPath).to.be.null
+  })
+
+  it('[match] should return false at the first, and true in the latter', () => {
+    route.host = '{country}.domain.com'
+    route.path = '/accounts/{id}-{name}'
+    route.demands = {
+      id: /\d+/,
+      name: '[a-zA-Z]+',
+      country: /[a-z]{2}/
+    }
+    let path = '/accounts/1988-longdo'
+
+    expect(route.match(path, 'vn1.domain.com')).to.be.false
+    expect(route.params).to.deep.equal({id: '1988', name: 'longdo', country: null})
+
+    route.demands.country = /^[a-z]{2}/
+    expect(route.match(path, 'vn.domain.com')).to.be.true
+    expect(route.params).to.deep.equal({id: '1988', name: 'longdo', country: 'vn'})
   })
 })

@@ -54,11 +54,38 @@ function scanAndReplace(text, source, dest) {
       }
     }
 
+    if ((typeof replacement === 'undefined' ? 'undefined' : _typeof(replacement)) === 'object' && replacement instanceof RegExp) {
+      replacement = replacement.toString();
+      replacement = replacement.replace(/^\/(.*)\/[a-z]*$/ig, '$1');
+    }
+
     text = text.replace(match, '(' + replacement + ')');
     dest[argument] = null;
   });
 
   return text;
+}
+
+function matchAndApply(text, pattern, dest) {
+  if (typeof text === 'undefined' || typeof pattern === 'undefined') {
+    return false;
+  }
+
+  if (text === null) {
+    return true;
+  }
+
+  var matches = text.match(pattern);
+  if (matches === null) {
+    return false;
+  }
+
+  var args = Object.keys(dest);
+  for (var i = 1; i < matches.length; i++) {
+    dest[args[i - 1]] = matches[i];
+  }
+
+  return true;
 }
 
 var Route = function () {
@@ -81,9 +108,6 @@ var Route = function () {
     this.demands = demands;
     this.options = options;
     this._params = {};
-
-    this._params[SRC_HOST] = {};
-    this._params[SRC_PATH] = {};
   }
 
   _createClass(Route, [{
@@ -94,33 +118,38 @@ var Route = function () {
 
       this.preMatch();
 
-      if (host !== null && typeof host === 'string' && this.host !== null && host.match('/' + this.host + '/i') === null) {
-        return false;
-      }
+      var isHostMatched = matchAndApply(host, this.host, this._params[SRC_HOST]),
+          isPathMatched = matchAndApply(path, this.path, this._params[SRC_PATH]);
 
-      if (port !== null) {
-        if (typeof port === 'string') {
-          port = parseInt(port);
-        } else if (typeof port === 'number') {
-          // do nothing
-        }
-        if (this.port !== null && this.port !== port) {
-          return false;
-        }
-      }
+      this.postMatch();
 
-      return this.postMatch();
+      return isHostMatched && isPathMatched;
     }
   }, {
     key: 'preMatch',
     value: function preMatch() {
+      this.cleanUp();
+
+      this.reservedHost = this.host;
+      this.reservedPath = this.path;
+
       this.host = scanAndReplace(this.host, this.demands, this._params[SRC_HOST]);
       this.path = scanAndReplace(this.path, this.demands, this._params[SRC_PATH]);
     }
   }, {
     key: 'postMatch',
     value: function postMatch() {
-      return true;
+      this.host = this.reservedHost;
+      this.path = this.reservedPath;
+
+      this.reservedHost = null;
+      this.reservedPath = null;
+    }
+  }, {
+    key: 'cleanUp',
+    value: function cleanUp() {
+      this._params[SRC_HOST] = {};
+      this._params[SRC_PATH] = {};
     }
   }, {
     key: 'options',
