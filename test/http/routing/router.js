@@ -34,4 +34,30 @@ describe('http/routing/router.js', () => {
     router.remove(name)
     expect(router.has(name)).to.be.false
   })
+  
+  it('[route] should return appropriate route', () => {
+    let request = new Request()
+    request.server.host = 'vn.domain.com'
+    request.path = '/accounts/1988-longdo'
+    let route_1 = Route.from({
+      name: 'user_account_id',
+      host: '{country}.domain.com',
+      path: '/accounts/{id}',
+      demands: {
+        id: /\d+/
+      }
+    })
+    let route_2 = Route.from({
+      name: 'user_account_name',
+      host: '{country}.domain.com',
+      path: '/accounts/{id}-{name}',
+      demands: {
+        id: /\d+/
+      }
+    })
+    router.add(route_1)
+    router.add(route_2)
+    route = router.route(request)
+    expect(route.name).to.equal('user_account_name')
+  })
 })

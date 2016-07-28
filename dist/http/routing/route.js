@@ -119,11 +119,12 @@ var Route = function () {
       this.preMatch();
 
       var isHostMatched = matchAndApply(host, this.host, this._params[SRC_HOST]),
-          isPathMatched = matchAndApply(path, this.path, this._params[SRC_PATH]);
+          isPathMatched = matchAndApply(path, this.path, this._params[SRC_PATH]),
+          isPortMatched = this.port === null || port !== null && port === this.port ? true : false;
 
       this.postMatch();
 
-      return isHostMatched && isPathMatched;
+      return isHostMatched && isPathMatched && isPortMatched;
     }
   }, {
     key: 'preMatch',
@@ -186,8 +187,14 @@ var Route = function () {
       if (typeof object.host !== 'undefined') {
         route.host = object.host;
       }
+      if (typeof object.port !== 'undefined') {
+        route.port = object.port;
+      }
       if (typeof object.options !== 'undefined') {
         route.options = object.options;
+      }
+      if (typeof object.demands !== 'undefined') {
+        route.demands = object.demands;
       }
 
       return route;
