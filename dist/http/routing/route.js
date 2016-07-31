@@ -88,6 +88,15 @@ function matchAndApply(text, pattern, dest) {
   return true;
 }
 
+function validateRegExp(target) {
+  if ((typeof target === 'undefined' ? 'undefined' : _typeof(target)) === 'object' && target instanceof RegExp) {
+    target = target.toString();
+  }
+
+  // consider to check for string only?
+  return '^' + target + '$';
+}
+
 var Route = function () {
   function Route() {
     var name = arguments.length <= 0 || arguments[0] === undefined ? '' : arguments[0];
@@ -107,7 +116,7 @@ var Route = function () {
     this.port = port;
     this.demands = demands;
     this.options = options;
-    this._params = {};
+    this.params = {};
   }
 
   _createClass(Route, [{
@@ -134,8 +143,8 @@ var Route = function () {
       this.reservedHost = this.host;
       this.reservedPath = this.path;
 
-      this.host = scanAndReplace(this.host, this.demands, this._params[SRC_HOST]);
-      this.path = scanAndReplace(this.path, this.demands, this._params[SRC_PATH]);
+      this.host = scanAndReplace(validateRegExp(this.host), this.demands, this._params[SRC_HOST]);
+      this.path = scanAndReplace(validateRegExp(this.path), this.demands, this._params[SRC_PATH]);
     }
   }, {
     key: 'postMatch',
@@ -170,6 +179,9 @@ var Route = function () {
     key: 'params',
     get: function get() {
       return Object.assign({}, this._params[SRC_HOST], this._params[SRC_PATH]);
+    },
+    set: function set(params) {
+      this._params = params;
     }
   }], [{
     key: 'from',
