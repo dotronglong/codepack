@@ -36,7 +36,7 @@ describe('http/routing/router.js', () => {
   
   it('[route] should return appropriate route', () => {
     let request = new Request()
-    request.server.host = 'vn.domain.com'
+    request.host = 'vn.domain.com'
     request.path = '/accounts/1988-longdo'
     let route_1 = Route.from({
       name: 'user_account_id',

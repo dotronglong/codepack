@@ -71,6 +71,7 @@ var Router = function () {
         var route = this.get(names[i]);
         if (route instanceof _route2.default) {
           if (route.match(request)) {
+            request.params = Object.assign(route.params, route.matches);
             return route;
           }
         }

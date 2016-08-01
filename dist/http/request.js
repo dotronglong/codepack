@@ -24,6 +24,15 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+var REQUEST_HOST = 'host';
+var REQUEST_PORT = 'port';
+var REQUEST_PATH = 'path';
+var REQUEST_METHOD = 'method';
+var REQUEST_ADDRESS = 'address';
+var REQUEST_LOCAL_ADDRESS = 'localAddress';
+var REQUEST_CLIENT_ADDRESS = 'address';
+var REQUEST_CLIENT_PORT = 'port';
+
 var parseQueryString = function parseQueryString(string) {
   var query = {};
   var args = string.match(/(&|^)([\w|\-]+=[\w|\-]+)/gi);
@@ -45,27 +54,90 @@ var Request = function (_Message) {
   function Request() {
     _classCallCheck(this, Request);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Request).call(this));
-
-    _this.server = {
-      host: null,
-      port: null,
-      address: null,
-      localAddress: null
-    };
-    _this.remote = {
-      address: null,
-      port: null
-    };
-    _this.method = Request.METHOD_GET;
-    _this.path = '';
-    _this.query = new _bag2.default();
-    return _this;
+    return _possibleConstructorReturn(this, Object.getPrototypeOf(Request).apply(this, arguments));
   }
 
   _createClass(Request, [{
+    key: 'server',
+    get: function get() {
+      if (typeof this._server === 'undefined') {
+        this._server = new _bag2.default({
+          host: null,
+          port: null,
+          path: '',
+          method: null,
+          address: null,
+          localAddress: null
+        });
+      }
+
+      return this._server;
+    },
+    set: function set(server) {
+      if ((typeof server === 'undefined' ? 'undefined' : _typeof(server)) === 'object') {
+        this.server.replace(server);
+      } else {
+        throw new Error('[Request::server] Input server must be an JSON object.');
+      }
+    }
+  }, {
+    key: 'client',
+    get: function get() {
+      if (typeof this._client === 'undefined') {
+        this._client = new _bag2.default({
+          address: null,
+          port: null
+        });
+      }
+
+      return this._client;
+    },
+    set: function set(client) {
+      if ((typeof client === 'undefined' ? 'undefined' : _typeof(client)) === 'object') {
+        this.client.replace(client);
+      } else {
+        throw new Error('[Request::client] Input client must be an JSON object.');
+      }
+    }
+  }, {
+    key: 'host',
+    get: function get() {
+      return this.server.get(REQUEST_HOST);
+    },
+    set: function set(host) {
+      this.server.set(REQUEST_HOST, host);
+    }
+  }, {
+    key: 'port',
+    get: function get() {
+      return this.server.get(REQUEST_PORT);
+    },
+    set: function set(port) {
+      this.server.set(REQUEST_PORT, port);
+    }
+  }, {
+    key: 'path',
+    get: function get() {
+      return this.server.get(REQUEST_PATH, '');
+    },
+    set: function set(path) {
+      this.server.set(REQUEST_PATH, path);
+    }
+  }, {
+    key: 'method',
+    get: function get() {
+      return this.server.get(REQUEST_METHOD, Request.METHOD_GET);
+    },
+    set: function set(method) {
+      this.server.set(REQUEST_METHOD, method);
+    }
+  }, {
     key: 'query',
     get: function get() {
+      if (typeof this._query === 'undefined') {
+        this._query = new _bag2.default();
+      }
+
       return this._query;
     },
     set: function set(query) {
@@ -78,6 +150,38 @@ var Request = function (_Message) {
           this._query = new _bag2.default(query);
         }
       }
+    }
+  }, {
+    key: 'params',
+    get: function get() {
+      if (typeof this._params === 'undefined') {
+        this._params = new _bag2.default();
+      }
+
+      return this._params;
+    },
+    set: function set(params) {
+      this.params.replace(params);
+    }
+  }, {
+    key: 'serverAddress',
+    get: function get() {
+      return this.server.get(REQUEST_ADDRESS);
+    }
+  }, {
+    key: 'localAddress',
+    get: function get() {
+      return this.server.get(REQUEST_LOCAL_ADDRESS);
+    }
+  }, {
+    key: 'clientAddress',
+    get: function get() {
+      return this.client.get(REQUEST_CLIENT_ADDRESS);
+    }
+  }, {
+    key: 'clientPort',
+    get: function get() {
+      return this.client.get(REQUEST_CLIENT_PORT);
     }
   }]);
 

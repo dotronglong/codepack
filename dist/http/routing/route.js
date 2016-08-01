@@ -101,7 +101,8 @@ var Route = function () {
     var host = arguments.length <= 3 || arguments[3] === undefined ? null : arguments[3];
     var port = arguments.length <= 4 || arguments[4] === undefined ? null : arguments[4];
     var demands = arguments.length <= 5 || arguments[5] === undefined ? {} : arguments[5];
-    var options = arguments.length <= 6 || arguments[6] === undefined ? {} : arguments[6];
+    var params = arguments.length <= 6 || arguments[6] === undefined ? {} : arguments[6];
+    var options = arguments.length <= 7 || arguments[7] === undefined ? {} : arguments[7];
 
     _classCallCheck(this, Route);
 
@@ -111,6 +112,7 @@ var Route = function () {
     this.host = host;
     this.port = port;
     this.demands = demands;
+    this.params = params;
     this.options = options;
     this.matches = {};
   }
@@ -121,8 +123,8 @@ var Route = function () {
       this.preMatch();
 
       var method = request.method,
-          host = request.server.host,
-          port = request.server.port,
+          host = request.host,
+          port = request.port,
           path = request.path;
 
       var isMatched = false;

@@ -58,10 +58,10 @@ describe('http/routing/route.js', () => {
     request.path = '/accounts/1988-longdo'
     request.method = 'GET'
 
-    request.server.host = 'vn1.domain.com'
+    request.host = 'vn1.domain.com'
     expect(route.match(request)).to.be.false
 
-    request.server.host = 'vn.domain.com'
+    request.host = 'vn.domain.com'
     expect(route.match(request)).to.be.true
     expect(route.matches).to.deep.equal({id: '1988', name: 'longdo', country: 'vn'})
   })
