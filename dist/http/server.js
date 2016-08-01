@@ -67,7 +67,7 @@ var Server = function () {
 
             handleConnection(new _connection2.default(request, response));
           }).catch(function (e) {
-            handleError(e);
+            return handleError(e);
           });
         }).listen(port, host, backlog, resolve);
       });
