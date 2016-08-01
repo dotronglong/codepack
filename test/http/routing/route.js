@@ -1,5 +1,6 @@
 import Route from '../../../lib/http/routing/route'
 import Bag from '../../../lib/bag'
+import Request from '../../../lib/http/request'
 var expect = require('chai').expect
 
 describe('http/routing/route.js', () => {
@@ -32,7 +33,7 @@ describe('http/routing/route.js', () => {
       country: /^[a-z]{2}/
     }
     route.preMatch()
-    expect(route.params).to.deep.equal({country: null, id: null, name: null})
+    expect(route.matches).to.deep.equal({country: null, id: null, name: null})
   })
 
   it('[postMatch] should reset host, path', () => {
@@ -53,13 +54,15 @@ describe('http/routing/route.js', () => {
       name: '[a-zA-Z]+',
       country: /[a-z]{2}/
     }
-    let path = '/accounts/1988-longdo'
+    let request = new Request()
+    request.path = '/accounts/1988-longdo'
+    request.method = 'GET'
 
-    expect(route.match(path, 'vn1.domain.com')).to.be.false
-    expect(route.params).to.deep.equal({id: '1988', name: 'longdo', country: null})
+    request.server.host = 'vn1.domain.com'
+    expect(route.match(request)).to.be.false
 
-    route.demands.country = /^[a-z]{2}/
-    expect(route.match(path, 'vn.domain.com')).to.be.true
-    expect(route.params).to.deep.equal({id: '1988', name: 'longdo', country: 'vn'})
+    request.server.host = 'vn.domain.com'
+    expect(route.match(request)).to.be.true
+    expect(route.matches).to.deep.equal({id: '1988', name: 'longdo', country: 'vn'})
   })
 })

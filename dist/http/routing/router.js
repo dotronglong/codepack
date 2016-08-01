@@ -66,15 +66,11 @@ var Router = function () {
         throw new Error('[Router::route] request must be an instance of Http/Request');
       }
 
-      var host = request.server.host,
-          port = request.server.port,
-          path = request.path;
-
       var names = Object.keys(this.routes);
       for (var i = 0; i < names.length; i++) {
         var route = this.get(names[i]);
         if (route instanceof _route2.default) {
-          if (route.match(path, host, port)) {
+          if (route.match(request)) {
             return route;
           }
         }

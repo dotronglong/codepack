@@ -1,7 +1,6 @@
 import Router from '../../../lib/http/routing/router'
 import Route from '../../../lib/http/routing/route'
 import Request from '../../../lib/http/request'
-import Bag from '../../../lib/bag'
 var expect = require('chai').expect
 
 describe('http/routing/router.js', () => {
@@ -59,5 +58,10 @@ describe('http/routing/router.js', () => {
     router.add(route_2)
     route = router.route(request)
     expect(route.name).to.equal('user_account_name')
+    expect(route.matches).to.deep.equal({
+      country: 'vn',
+      id: '1988',
+      name: 'longdo'
+    })
   })
 })

@@ -8,10 +8,6 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
 
-var _request = require('../request');
-
-var _request2 = _interopRequireDefault(_request);
-
 var _bag = require('../../bag');
 
 var _bag2 = _interopRequireDefault(_bag);
@@ -100,7 +96,7 @@ function validateRegExp(target) {
 var Route = function () {
   function Route() {
     var name = arguments.length <= 0 || arguments[0] === undefined ? '' : arguments[0];
-    var method = arguments.length <= 1 || arguments[1] === undefined ? _request2.default.METHOD_GET : arguments[1];
+    var methods = arguments.length <= 1 || arguments[1] === undefined ? null : arguments[1];
     var path = arguments.length <= 2 || arguments[2] === undefined ? '' : arguments[2];
     var host = arguments.length <= 3 || arguments[3] === undefined ? null : arguments[3];
     var port = arguments.length <= 4 || arguments[4] === undefined ? null : arguments[4];
@@ -110,30 +106,33 @@ var Route = function () {
     _classCallCheck(this, Route);
 
     this.name = name;
-    this.method = method;
+    this.methods = methods;
     this.path = path;
     this.host = host;
     this.port = port;
     this.demands = demands;
     this.options = options;
-    this.params = {};
+    this.matches = {};
   }
 
   _createClass(Route, [{
     key: 'match',
-    value: function match(path) {
-      var host = arguments.length <= 1 || arguments[1] === undefined ? null : arguments[1];
-      var port = arguments.length <= 2 || arguments[2] === undefined ? null : arguments[2];
-
+    value: function match(request) {
       this.preMatch();
 
-      var isHostMatched = matchAndApply(host, this.host, this._params[SRC_HOST]),
-          isPathMatched = matchAndApply(path, this.path, this._params[SRC_PATH]),
-          isPortMatched = this.port === null || port !== null && port === this.port ? true : false;
+      var method = request.method,
+          host = request.server.host,
+          port = request.server.port,
+          path = request.path;
+
+      var isMatched = false;
+      if ((this.methods === null || this.methods.indexOf(method) >= 0) && matchAndApply(host, this.host, this._matches[SRC_HOST]) && matchAndApply(path, this.path, this._matches[SRC_PATH]) && (this.port === null || port !== null && port === this.port)) {
+        isMatched = true;
+      }
 
       this.postMatch();
 
-      return isHostMatched && isPathMatched && isPortMatched;
+      return isMatched;
     }
   }, {
     key: 'preMatch',
@@ -143,8 +142,8 @@ var Route = function () {
       this.reservedHost = this.host;
       this.reservedPath = this.path;
 
-      this.host = scanAndReplace(validateRegExp(this.host), this.demands, this._params[SRC_HOST]);
-      this.path = scanAndReplace(validateRegExp(this.path), this.demands, this._params[SRC_PATH]);
+      this.host = scanAndReplace(validateRegExp(this.host), this.demands, this._matches[SRC_HOST]);
+      this.path = scanAndReplace(validateRegExp(this.path), this.demands, this._matches[SRC_PATH]);
     }
   }, {
     key: 'postMatch',
@@ -158,8 +157,20 @@ var Route = function () {
   }, {
     key: 'cleanUp',
     value: function cleanUp() {
-      this._params[SRC_HOST] = {};
-      this._params[SRC_PATH] = {};
+      this._matches[SRC_HOST] = {};
+      this._matches[SRC_PATH] = {};
+    }
+  }, {
+    key: 'methods',
+    get: function get() {
+      return this._methods;
+    },
+    set: function set(methods) {
+      if (methods !== null && Array.isArray(methods) === false) {
+        methods = [methods];
+      }
+
+      this._methods = methods;
     }
   }, {
     key: 'options',
@@ -176,12 +187,12 @@ var Route = function () {
       }
     }
   }, {
-    key: 'params',
+    key: 'matches',
     get: function get() {
-      return Object.assign({}, this._params[SRC_HOST], this._params[SRC_PATH]);
+      return Object.assign({}, this._matches[SRC_HOST], this._matches[SRC_PATH]);
     },
-    set: function set(params) {
-      this._params = params;
+    set: function set(matches) {
+      this._matches = matches;
     }
   }], [{
     key: 'from',
@@ -190,8 +201,8 @@ var Route = function () {
       if (typeof object.name !== 'undefined') {
         route.name = object.name;
       }
-      if (typeof object.method !== 'undefined') {
-        route.method = object.method;
+      if (typeof object.methods !== 'undefined') {
+        route.methods = object.methods;
       }
       if (typeof object.path !== 'undefined') {
         route.path = object.path;
