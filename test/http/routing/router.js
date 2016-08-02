@@ -63,5 +63,10 @@ describe('http/routing/router.js', () => {
       id: '1988',
       name: 'longdo'
     })
+    expect(request.params.all()).to.deep.equal({
+      country: 'vn',
+      id: '1988',
+      name: 'longdo'
+    })
   })
 })
