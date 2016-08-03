@@ -10,6 +10,14 @@ var _bag = require('./bag');
 
 var _bag2 = _interopRequireDefault(_bag);
 
+var _collection = require('./collection');
+
+var _collection2 = _interopRequireDefault(_collection);
+
+var _manager = require('./event/manager');
+
+var _manager2 = _interopRequireDefault(_manager);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -19,12 +27,28 @@ var App = function () {
     _classCallCheck(this, App);
 
     this.options = options;
-    this.servers = [];
+    this.servers = new _collection2.default();
+    this.plugins = new _collection2.default();
+    this.events = new _manager2.default();
   }
 
   _createClass(App, [{
+    key: 'register',
+    value: function register(plugin) {
+      this.plugins.add(plugin);
+    }
+  }, {
+    key: 'setUp',
+    value: function setUp() {}
+  }, {
+    key: 'tearDown',
+    value: function tearDown() {}
+  }, {
     key: 'run',
-    value: function run() {}
+    value: function run() {
+      this.setUp();
+      this.tearDown();
+    }
   }, {
     key: 'options',
     get: function get() {
