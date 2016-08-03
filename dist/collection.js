@@ -63,6 +63,14 @@ var Collection = function () {
           break;
       }
     }
+
+    /**
+     * Check whether or not an item exists in collection
+     *
+     * @param {*} item
+     * @returns {boolean}
+     */
+
   }, {
     key: 'has',
     value: function has(item) {
