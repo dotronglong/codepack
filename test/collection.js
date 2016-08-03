@@ -55,4 +55,23 @@ describe('collection.js', () => {
       {b: 6}
     ])
   })
+
+  it('[find] should return expected items', () => {
+    col.add(5).add({a: 5, b: 6}).add({a: 5}).add({b: 6})
+    expect(col.find({b: 6}).all()).to.deep.equal([
+      {a: 5, b: 6},
+      {b: 6}
+    ])
+  })
+
+  it('[has] should return true if item exists in collection', () => {
+    col.add(5).add({a: 5, b: 6}).add({a: 5}).add({b: 6})
+
+    expect(col.has(6)).to.be.false
+    expect(col.has(5)).to.be.true
+
+    expect(col.has({a: 7, b: 6})).to.be.false
+    expect(col.has({a: 5, b: 6})).to.be.true
+    expect(col.has({b: 6})).to.be.true
+  })
 })

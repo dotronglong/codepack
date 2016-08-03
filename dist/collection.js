@@ -63,6 +63,31 @@ var Collection = function () {
           break;
       }
     }
+  }, {
+    key: 'has',
+    value: function has(item) {
+      if (this.items.length) {
+        for (var i = 0; i < this.items.length; i++) {
+          switch (typeof item === 'undefined' ? 'undefined' : _typeof(item)) {
+            case 'object':
+              try {
+                assert.deepEqual(item, this.items[i]);
+                return true;
+              } catch (e) {
+                // do nothing
+              }
+              break;
+            default:
+              if (item === this.items[i]) {
+                return true;
+              }
+              break;
+          }
+        }
+      }
+
+      return false;
+    }
 
     /**
      * Add an item to collection
@@ -101,10 +126,10 @@ var Collection = function () {
     value: function find(query) {
       var keys = Object.keys(query);
       if (keys.length === 0) {
-        return;
+        return null;
       }
 
-      var items = new this();
+      var items = new Collection();
       this.items.forEach(function (item) {
         var isMatched = true;
         for (var i = 0; i < keys.length; i++) {
