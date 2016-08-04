@@ -22,6 +22,34 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+var Plugin = function () {
+  function Plugin(app) {
+    _classCallCheck(this, Plugin);
+
+    this.app = app;
+  }
+
+  /**
+   * Call when application is booting
+   */
+
+
+  _createClass(Plugin, [{
+    key: 'onBoot',
+    value: function onBoot() {}
+
+    /**
+     * Call when application is booted
+     */
+
+  }, {
+    key: 'onReady',
+    value: function onReady() {}
+  }]);
+
+  return Plugin;
+}();
+
 var App = function () {
   function App(options) {
     _classCallCheck(this, App);
@@ -39,10 +67,18 @@ var App = function () {
     }
   }, {
     key: 'setUp',
-    value: function setUp() {}
+    value: function setUp() {
+      this.plugins.forEach(function (plugin) {
+        return plugin.onBoot();
+      });
+    }
   }, {
     key: 'tearDown',
-    value: function tearDown() {}
+    value: function tearDown() {
+      this.plugins.forEach(function (plugin) {
+        return plugin.onReady();
+      });
+    }
   }, {
     key: 'run',
     value: function run() {
@@ -67,3 +103,5 @@ var App = function () {
 }();
 
 exports.default = App;
+
+App.Plugin = Plugin;
