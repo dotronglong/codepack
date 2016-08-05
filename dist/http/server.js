@@ -4,6 +4,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _bag = require('../bag');
@@ -48,20 +50,20 @@ var Server = function () {
   }, {
     key: 'start',
     value: function start() {
-      return this.server.listen(this.port, this.host, this.backlog, this.callback);
+      return this.kernel.listen(this.port, this.host, this.backlog, this.callback);
     }
   }, {
     key: 'close',
     value: function close() {
-      this.server.close();
+      this.kernel.close();
     }
   }, {
-    key: 'server',
+    key: 'kernel',
     get: function get() {
-      throw new Error('Derived class must implement getter of server property.');
+      return this._kernel;
     },
-    set: function set(server) {
-      this._server = server;
+    set: function set(kernel) {
+      this._kernel = kernel;
     }
   }]);
 
@@ -83,13 +85,13 @@ var Http = function (_Server) {
   }
 
   _createClass(Http, [{
-    key: 'server',
+    key: 'kernel',
     get: function get() {
-      if (typeof this._server === 'undefined') {
-        this._server = http.createServer();
+      if (typeof this._kernel === 'undefined') {
+        this._kernel = http.createServer();
       }
 
-      return this._server;
+      return _get(Object.getPrototypeOf(Http.prototype), 'kernel', this);
     }
   }]);
 
@@ -115,9 +117,13 @@ var Https = function (_Server2) {
   }
 
   _createClass(Https, [{
-    key: 'server',
+    key: 'kernel',
     get: function get() {
-      return https.createServer(this.options.all());
+      if (typeof this._kernel === 'undefined') {
+        this._kernel = https.createServer(this.options.all());
+      }
+
+      return _get(Object.getPrototypeOf(Https.prototype), 'kernel', this);
     }
   }]);
 

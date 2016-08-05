@@ -11,15 +11,16 @@ describe('http/server.js', () => {
   })
 
   it('[get server] should return appropriate server instance', () => {
-    expect(httpServer.server instanceof http.Server).to.be.true
-    expect(httpsServer.server instanceof https.Server).to.be.true
+    expect(httpServer.kernel instanceof http.Server).to.be.true
+    expect(httpsServer.kernel instanceof https.Server).to.be.true
   })
 
   it('[start] should start server correctly', () => {
     httpServer.port = 3333
     httpServer.callback = () => {
-      const port = httpServer.server.address().port
-      httpServer.close()
+    httpServer.kernel.on('request', (req) => {console.log(req)})
+      const port = httpServer.kernel.address().port
+      // httpServer.close()
       expect(port).to.equal(3333)
     }
     httpServer.start()
