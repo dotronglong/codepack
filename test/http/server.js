@@ -20,7 +20,7 @@ describe('http/server.js', () => {
     httpServer.callback = () => {
     httpServer.kernel.on('request', (req) => {console.log(req)})
       const port = httpServer.kernel.address().port
-      // httpServer.close()
+      httpServer.close()
       expect(port).to.equal(3333)
     }
     httpServer.start()
