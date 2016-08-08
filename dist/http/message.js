@@ -12,6 +12,10 @@ var _header = require('./header');
 
 var _header2 = _interopRequireDefault(_header);
 
+var _bag = require('../bag');
+
+var _bag2 = _interopRequireDefault(_bag);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -111,6 +115,9 @@ var Message = function () {
     set: function set(headers) {
       if (typeof headers === 'undefined') {
         headers = {};
+      }
+      if ((typeof headers === 'undefined' ? 'undefined' : _typeof(headers)) === 'object' && headers instanceof _bag2.default) {
+        headers = headers.all();
       }
 
       this._headers = new _header2.default(headers);

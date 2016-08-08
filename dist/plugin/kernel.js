@@ -34,6 +34,8 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+var HEADER_HOST = 'host';
+
 var Kernel = function (_Plugin) {
   _inherits(Kernel, _Plugin);
 
@@ -67,15 +69,32 @@ var Kernel = function (_Plugin) {
     key: 'setUpRequest',
     value: function setUpRequest(req) {
       var request = new _request2.default();
-      request.server = {
-        host: ''
-      };
+      request.resource = req;
+      request.headers = req.headers;
+      request.method = req.method;
+      request.path = req.url;
+
+      this.setUpRequestHost(request);
+
       return request;
+    }
+  }, {
+    key: 'setUpRequestHost',
+    value: function setUpRequestHost(request) {
+      var host = request.headers.get(HEADER_HOST);
+      var matches = host.match(/^(\w+):?(\d+)?$/i);
+      if (matches !== null) {
+        request.host = matches[1];
+        if (typeof matches[2] !== 'undefined') {
+          request.port = matches[2];
+        }
+      }
     }
   }, {
     key: 'setUpResponse',
     value: function setUpResponse(res) {
       var response = new _response2.default();
+      response.resource = res;
       return response;
     }
   }, {

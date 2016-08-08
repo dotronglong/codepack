@@ -16,6 +16,14 @@ var _message = require('./message');
 
 var _message2 = _interopRequireDefault(_message);
 
+var _header = require('./header');
+
+var _header2 = _interopRequireDefault(_header);
+
+var _collection = require('../collection');
+
+var _collection2 = _interopRequireDefault(_collection);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -32,6 +40,14 @@ var REQUEST_ADDRESS = 'address';
 var REQUEST_LOCAL_ADDRESS = 'localAddress';
 var REQUEST_CLIENT_ADDRESS = 'address';
 var REQUEST_CLIENT_PORT = 'port';
+
+var types = {
+  'application/json': 'json',
+  'application/xml': 'xml',
+  'text/plain': 'text',
+  'text/html': 'html',
+  'text/xml': 'xml'
+};
 
 var parseQueryString = function parseQueryString(string) {
   var query = {};
@@ -183,6 +199,21 @@ var Request = function (_Message) {
     get: function get() {
       return this.client.get(REQUEST_CLIENT_PORT);
     }
+  }, {
+    key: 'type',
+    get: function get() {
+      if (typeof this._type === 'undefined') {
+        var matches = this.headers.get(_header2.default.CONTENT_TYPE, Request.DEFAULT_TYPE).match(/^([a-zA-z\/-]+)/i);
+
+        if (matches !== null && Object.keys(types).indexOf(matches[1]) > -1) {
+          this._type = types[matches[1]];
+        } else {
+          this._type = null;
+        }
+      }
+
+      return this._type;
+    }
   }]);
 
   return Request;
@@ -197,3 +228,7 @@ Request.METHOD_PATCH = 'PATCH';
 Request.METHOD_DELETE = 'DELETE';
 Request.METHOD_HEAD = 'HEAD';
 Request.METHOD_OPTION = 'OPTION';
+
+Request.DEFAULT_METHOD = 'GET';
+Request.DEFAULT_PATH = '/';
+Request.DEFAULT_TYPE = 'application/json';

@@ -69,3 +69,5 @@ var Header = function (_Bag) {
 }(_bag2.default);
 
 exports.default = Header;
+
+Header.CONTENT_TYPE = 'content-type';

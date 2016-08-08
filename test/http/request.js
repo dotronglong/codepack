@@ -68,4 +68,13 @@ describe('http/request.js',() => {
     request.host = 'some-host'
     expect(request.server.get('host')).to.equal('some-host')
   })
+
+  it('[get type] should return a string/null', () => {
+    request.headers.set('content-type', 'application/json; charset=utf-8')
+    expect(request.type).to.equal('json')
+
+    request = new Request()
+    request.headers.set('content-type', 'text/xml')
+    expect(request.type).to.equal('xml')
+  })
 })
