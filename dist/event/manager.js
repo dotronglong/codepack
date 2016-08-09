@@ -203,7 +203,7 @@ var EventManager = function () {
      * Get event item
      *
      * @param string name
-     * @returns {{listeners, sorted}}
+     * @returns {*}
      */
 
   }, {

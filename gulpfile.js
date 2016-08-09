@@ -78,7 +78,3 @@ gulp.task('server', ['build:lib'], function () {
     tasks: ['build:lib']
   })
 })
-gulp.task('doc', function (cb) {
-  gulp.src(['README.md', 'build/**/*.js'])
-    .pipe(jsdoc(cb));
-});
