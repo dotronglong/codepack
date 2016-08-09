@@ -16,23 +16,21 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var RequestEvent = function (_Event) {
-  _inherits(RequestEvent, _Event);
+var ResponseEvent = function (_Event) {
+  _inherits(ResponseEvent, _Event);
 
-  function RequestEvent() {
-    var connection = arguments.length <= 0 || arguments[0] === undefined ? null : arguments[0];
-    var server = arguments.length <= 1 || arguments[1] === undefined ? null : arguments[1];
+  function ResponseEvent() {
+    var response = arguments.length <= 0 || arguments[0] === undefined ? null : arguments[0];
 
-    _classCallCheck(this, RequestEvent);
+    _classCallCheck(this, ResponseEvent);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(RequestEvent).call(this, 'http.incoming_request', false));
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(ResponseEvent).call(this, 'http.outgoing_response', false));
 
-    _this.connection = connection;
-    _this.server = server;
+    _this.response = response;
     return _this;
   }
 
-  return RequestEvent;
+  return ResponseEvent;
 }(_event2.default);
 
-exports.default = RequestEvent;
+exports.default = ResponseEvent;

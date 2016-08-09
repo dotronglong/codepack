@@ -7,6 +7,7 @@ const mocha   = require('gulp-mocha')
 const concat  = require('gulp-concat')
 const clc     = require('cli-color')
 const nodemon = require('gulp-nodemon')
+var jsdoc     = require('gulp-jsdoc3')
 
 const handleError = function (error) {
   console.log(error)
@@ -77,3 +78,7 @@ gulp.task('server', ['build:lib'], function () {
     tasks: ['build:lib']
   })
 })
+gulp.task('doc', function (cb) {
+  gulp.src(['README.md', 'build/**/*.js'])
+    .pipe(jsdoc(cb));
+});

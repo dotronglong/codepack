@@ -129,7 +129,7 @@ var Request = function (_Message) {
       return this.server.get(REQUEST_PORT);
     },
     set: function set(port) {
-      this.server.set(REQUEST_PORT, port);
+      this.server.set(REQUEST_PORT, parseInt(port));
     }
   }, {
     key: 'path',

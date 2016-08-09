@@ -18,9 +18,9 @@ var _connection = require('../http/connection');
 
 var _connection2 = _interopRequireDefault(_connection);
 
-var _plugin = require('../plugin');
+var _app = require('../app');
 
-var _plugin2 = _interopRequireDefault(_plugin);
+var _app2 = _interopRequireDefault(_app);
 
 var _request3 = require('../http/event/request');
 
@@ -36,8 +36,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var HEADER_HOST = 'host';
 
-var Kernel = function (_Plugin) {
-  _inherits(Kernel, _Plugin);
+var Kernel = function (_App$Plugin) {
+  _inherits(Kernel, _App$Plugin);
 
   function Kernel() {
     _classCallCheck(this, Kernel);
@@ -61,34 +61,29 @@ var Kernel = function (_Plugin) {
 
       server.kernel.on('request', function (req, res) {
         var connection = _this3.setUpConnection(req, res),
-            event = new _request4.default(connection);
+            event = new _request4.default(connection, server);
         _this3.app.events.emit(event);
       });
     }
   }, {
     key: 'setUpRequest',
-    value: function setUpRequest(req) {
+    value: function setUpRequest(resource) {
       var request = new _request2.default();
-      request.resource = req;
-      request.headers = req.headers;
-      request.method = req.method;
-      request.path = req.url;
+      request.resource = resource;
+      request.headers = resource.headers;
+      request.method = resource.method;
+      request.path = resource.url;
 
-      this.setUpRequestHost(request);
-
-      return request;
-    }
-  }, {
-    key: 'setUpRequestHost',
-    value: function setUpRequestHost(request) {
       var host = request.headers.get(HEADER_HOST);
-      var matches = host.match(/^(\w+):?(\d+)?$/i);
+      var matches = host.match(/^([\w\.-]+):?(\d+)?$/i);
       if (matches !== null) {
         request.host = matches[1];
         if (typeof matches[2] !== 'undefined') {
           request.port = matches[2];
         }
       }
+
+      return request;
     }
   }, {
     key: 'setUpResponse',
@@ -107,6 +102,6 @@ var Kernel = function (_Plugin) {
   }]);
 
   return Kernel;
-}(_plugin2.default);
+}(_app2.default.Plugin);
 
 exports.default = Kernel;

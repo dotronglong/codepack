@@ -7,7 +7,8 @@
     "test": "./node_modules/.bin/gulp test",
     "dev": "./node_modules/.bin/gulp watch:test",
     "build": "./node_modules/.bin/gulp build",
-    "server": "./node_modules/.bin/gulp server"
+    "server": "./node_modules/.bin/gulp server",
+    "doc": "./node_modules/.bin/gulp doc"
   },
   "repository": {
     "type": "git",
@@ -39,8 +40,10 @@
     "gulp-babel": "^6.1.2",
     "gulp-clean": "^0.3.2",
     "gulp-concat": "^2.6.0",
+    "gulp-jsdoc3": "^0.3.0",
     "gulp-mocha": "^2.2.0",
-    "gulp-nodemon": "^2.1.0"
+    "gulp-nodemon": "^2.1.0",
+    "jsdoc": "^3.4.0"
   },
   "dependencies": {
     "async": "^2.0.0",

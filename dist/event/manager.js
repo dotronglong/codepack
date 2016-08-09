@@ -24,7 +24,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-function onAsyncCompleted(event, err, results) {
+function onAsyncCompleted(event, err) {
   var listeners = this.events[event.name].listeners;
   var total = listeners.length;
   for (var i = 0; i < total; i++) {
@@ -75,8 +75,8 @@ var EventManager = function () {
   /**
    * Subscribe a listener to Event Manager
    *
-   * @param string name
-   * @param Listener listener
+   * @param {string} name
+   * @param {Listener} listener
    */
 
 
@@ -100,9 +100,9 @@ var EventManager = function () {
     /**
      * Bind a listener to event by name
      *
-     * @param string name
-     * @param function|callable runner
-     * @param int priority
+     * @param {string} name
+     * @param {function|callable} runner
+     * @param {int} priority
      * @returns {Listener}
      */
 
@@ -150,8 +150,8 @@ var EventManager = function () {
     /**
      * Sort event listeners by priority
      *
-     * @param string name
-     * @param string type
+     * @param {string} name
+     * @param {string} type
      */
 
   }, {
@@ -189,7 +189,7 @@ var EventManager = function () {
     /**
      * Check whether event's name has been registered yet
      *
-     * @param name
+     * @param {string} name
      * @returns {boolean}
      */
 
@@ -215,8 +215,8 @@ var EventManager = function () {
     /**
      * Emit an event
      *
-     * @param string name
-     * @param Event event
+     * @param {string} name
+     * @param {Event} event
      * @throws Error An error exception will be thrown when event is not an instance of Event
      */
 
