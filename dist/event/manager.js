@@ -65,6 +65,10 @@ function removeEventListener(name, position) {
   this.events[name].listeners.splice(position, 1);
 }
 
+/**
+ * Manage, emit events
+ */
+
 var EventManager = function () {
   function EventManager() {
     _classCallCheck(this, EventManager);
@@ -75,8 +79,8 @@ var EventManager = function () {
   /**
    * Subscribe a listener to Event Manager
    *
-   * @param {string} name
-   * @param {Listener} listener
+   * @param {String} name Name of event to subscribe
+   * @param {Listener} listener A listener object to handle incoming event
    */
 
 
@@ -86,24 +90,33 @@ var EventManager = function () {
       if (!(listener instanceof _listener2.default)) {
         throw new Error('[Event:subscribe] listener must be an instance of Event/Listener');
       }
-      return this.on(name, listener.runner, listener.priority, listener.limit);
+      this.on(name, listener.runner, listener.priority, listener.limit);
     }
+
+    /**
+     * Unsubsribe a listener
+     *
+     * @param {String} name Name of event to unsubscribe
+     * @param {Listener} listener Listener to unsubscribe
+     */
+
   }, {
     key: 'unsubscribe',
     value: function unsubscribe(name, listener) {
       if (!(listener instanceof _listener2.default)) {
         throw new Error('[Event:subscribe] listener must be an instance of Event/Listener');
       }
-      return this.off(name, listener.priority);
+      this.off(name, listener.priority);
     }
 
     /**
-     * Bind a listener to event by name
+     * Register an event handler
      *
-     * @param {string} name
-     * @param {function|callable} runner
-     * @param {int} priority
-     * @returns {Listener}
+     * @param {String} name Name of event to listen
+     * @param {Function} runner Callback to handle incoming event
+     * @param {Number} priority Higher priority handler will be call later than the others
+     * @param {Number} limit Number of times to be run. Default is null to ignore limit
+     * @returns {Listener} Listener instance of registration
      */
 
   }, {
@@ -118,16 +131,46 @@ var EventManager = function () {
 
       return listener;
     }
+
+    /**
+     * Register an one time handler of a specific event
+     *
+     * @param {String} name Name of event to listen
+     * @param {Function} runner Callback to handle incoming event
+     * @param {Number} priority Higher priority handler will be call later than the others
+     * @returns {Listener} Listener instance of registration
+     */
+
   }, {
     key: 'once',
     value: function once(name, runner, priority) {
       return this.on(name, runner, priority, _listener2.default.LIMIT_ONCE);
     }
+
+    /**
+     * Register an twice times handler of a specific event
+     *
+     * @param {String} name Name of event to listen
+     * @param {Function} runner Callback to handle incoming event
+     * @param {Number} priority Higher priority handler will be call later than the others
+     * @returns {Listener} Listener instance of registration
+     */
+
   }, {
     key: 'twice',
     value: function twice(name, runner, priority) {
       return this.on(name, runner, priority, _listener2.default.LIMIT_TWICE);
     }
+
+    /**
+     * Remove event's listeners
+     *
+     * @param {String} name Name of event to remove its listeners
+     * @param {Number} priority Priority of handler to remove. In case this parameter is undefined,
+     *                          it will remove all handlers
+     * @throws {Error} If name of event is not specified
+     */
+
   }, {
     key: 'off',
     value: function off(name, priority) {
@@ -150,8 +193,8 @@ var EventManager = function () {
     /**
      * Sort event listeners by priority
      *
-     * @param {string} name
-     * @param {string} type
+     * @param {String} name Name of event to sort
+     * @param {String} type Sorting type, <b>asc</b> or desc
      */
 
   }, {
@@ -187,10 +230,10 @@ var EventManager = function () {
     }
 
     /**
-     * Check whether event's name has been registered yet
+     * Check whether or not event's name has been registered
      *
-     * @param {string} name
-     * @returns {boolean}
+     * @param {String} name
+     * @returns {Boolean}
      */
 
   }, {
@@ -200,10 +243,10 @@ var EventManager = function () {
     }
 
     /**
-     * Get event item
+     * Get event's listeners for a specific event by name
      *
-     * @param string name
-     * @returns {*}
+     * @param {String} name
+     * @returns {Object} A returned object with format {listeners: listeners, sorted: sorted}
      */
 
   }, {
@@ -213,11 +256,9 @@ var EventManager = function () {
     }
 
     /**
-     * Emit an event
+     * Emit (Fire) an event
      *
-     * @param {string} name
-     * @param {Event} event
-     * @throws Error An error exception will be thrown when event is not an instance of Event
+     * @param {Event} event Event to be fired
      */
 
   }, {
@@ -264,3 +305,6 @@ var EventManager = function () {
 }();
 
 exports.default = EventManager;
+
+EventManager.SORT_ASCENDING = 'asc';
+EventManager.SORT_DESCENDING = 'desc';

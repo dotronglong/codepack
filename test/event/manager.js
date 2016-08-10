@@ -3,6 +3,7 @@ import EventManager from '../../lib/event/manager'
 import Listener from '../../lib/event/listener'
 var expect = require('chai').expect
 
+/** @test {EventManager} */
 describe('event/manager.js', () => {
   let em,
       event,
