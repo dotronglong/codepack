@@ -47,9 +47,9 @@ var Header = function (_Bag) {
       _get(Object.getPrototypeOf(Header.prototype), 'set', this).call(this, key.toLowerCase(), value);
     }
   }, {
-    key: 'remove',
-    value: function remove(key) {
-      _get(Object.getPrototypeOf(Header.prototype), 'remove', this).call(this, key.toLowerCase());
+    key: 'delete',
+    value: function _delete(key) {
+      _get(Object.getPrototypeOf(Header.prototype), 'delete', this).call(this, key.toLowerCase());
     }
   }, {
     key: 'replace',

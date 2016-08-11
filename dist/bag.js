@@ -16,6 +16,11 @@ var Bag = function () {
   }
 
   _createClass(Bag, [{
+    key: 'size',
+    value: function size() {
+      return this.length;
+    }
+  }, {
     key: 'replace',
     value: function replace() {
       var data = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
@@ -25,7 +30,7 @@ var Bag = function () {
   }, {
     key: 'has',
     value: function has(key) {
-      return typeof this.data[key] !== 'undefined';
+      return !(typeof this.data[key] === 'undefined');
     }
   }, {
     key: 'get',
@@ -40,9 +45,22 @@ var Bag = function () {
       this.data[key] = value;
     }
   }, {
-    key: 'remove',
-    value: function remove(key) {
+    key: 'delete',
+    value: function _delete(key) {
       delete this.data[key];
+    }
+  }, {
+    key: 'forEach',
+    value: function forEach(callback, target) {
+      var _this = this;
+
+      this.keys.forEach(function (key) {
+        if (typeof target === 'undefined') {
+          callback(key, _this.data[key]);
+        } else {
+          callback.apply(target, [key, _this.data[key]]);
+        }
+      });
     }
   }, {
     key: 'all',
@@ -52,11 +70,11 @@ var Bag = function () {
   }, {
     key: 'only',
     value: function only(keys) {
-      var _this = this;
+      var _this2 = this;
 
       var values = {};
       keys.forEach(function (key) {
-        values[key] = _this.get(key);
+        values[key] = _this2.get(key);
       });
       return values;
     }
@@ -81,6 +99,41 @@ var Bag = function () {
         string += (string === '' ? '' : delimiter) + (k + '=' + data[k]);
       });
       return string;
+    }
+  }, {
+    key: Symbol.iterator,
+    value: function value() {
+      var size = this.size(),
+          keys = this.keys,
+          values = this.values;
+      var position = 0;
+
+      return {
+        next: function next() {
+          return position < size ? { value: [keys[position], values[position++]], done: false } : { done: true };
+        }
+      };
+    }
+  }, {
+    key: 'length',
+    get: function get() {
+      return this.keys.length;
+    }
+  }, {
+    key: 'keys',
+    get: function get() {
+      return Object.keys(this.data);
+    }
+  }, {
+    key: 'values',
+    get: function get() {
+      var _this3 = this;
+
+      var values = [];
+      this.keys.forEach(function (key) {
+        return values.push(_this3.data[key]);
+      });
+      return values;
     }
   }]);
 
