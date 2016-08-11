@@ -8,7 +8,37 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-function iterator(keys, values) {
+function copy() {
+  return Object.assign.apply(Object, arguments);
+}
+
+function keys(source) {
+  return Object.keys(source);
+}
+
+function values(source) {
+  var values = [];
+  keys(source).forEach(function (key) {
+    return values.push(source[key]);
+  });
+  return values;
+}
+
+function iterator() {
+  var _keys = void 0,
+      _values = void 0;
+  if (this instanceof Bag) {
+    _keys = this.keys, _values = this.values;
+  } else {
+    _keys = keys(this), _values = values(this);
+  }
+  this[Symbol.iterator] = function () {
+    return loop(_keys, _values);
+  };
+  return this;
+}
+
+function loop(keys, values) {
   var length = keys.length;
   var position = 0;
 
@@ -27,6 +57,7 @@ var Bag = function () {
     _classCallCheck(this, Bag);
 
     this.replace(data);
+    iterator.apply(this);
   }
 
   _createClass(Bag, [{
@@ -39,7 +70,7 @@ var Bag = function () {
     value: function replace() {
       var data = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
 
-      this.data = Object.assign({}, data);
+      this.data = copy({}, data);
     }
   }, {
     key: 'has',
@@ -64,19 +95,6 @@ var Bag = function () {
       delete this.data[key];
     }
   }, {
-    key: 'forEach',
-    value: function forEach(callback, target) {
-      var _this = this;
-
-      this.keys.forEach(function (key) {
-        if (typeof target === 'undefined') {
-          callback(key, _this.data[key]);
-        } else {
-          callback.apply(target, [key, _this.data[key]]);
-        }
-      });
-    }
-  }, {
     key: 'all',
     value: function all() {
       return this.data;
@@ -84,13 +102,13 @@ var Bag = function () {
   }, {
     key: 'only',
     value: function only(keys) {
-      var _this2 = this;
+      var _this = this;
 
-      var values = {};
+      var items = {};
       keys.forEach(function (key) {
-        return values[key] = _this2.data[key];
+        return items[key] = _this.data[key];
       });
-      return values;
+      return items;
     }
   }, {
     key: 'clear',
@@ -103,21 +121,37 @@ var Bag = function () {
       var keys = arguments.length <= 0 || arguments[0] === undefined ? null : arguments[0];
       var delimiter = arguments.length <= 1 || arguments[1] === undefined ? '&' : arguments[1];
 
-      var data = this.data;
+      var data = [],
+          string = '';
+
       if (Array.isArray(keys)) {
         data = this.only(keys);
+      } else {
+        data = copy({}, this.data);
       }
 
-      var string = '';
       Object.keys(data).forEach(function (k) {
         string += (string === '' ? '' : delimiter) + (k + '=' + data[k]);
       });
       return string;
     }
   }, {
-    key: Symbol.iterator,
-    value: function value() {
-      return iterator(this.keys, this.values);
+    key: 'forEach',
+    value: function forEach(callback, target) {
+      var _this2 = this;
+
+      this.keys.forEach(function (key) {
+        if (typeof target === 'undefined') {
+          callback(key, _this2.data[key]);
+        } else {
+          callback.apply(target, [key, _this2.data[key]]);
+        }
+      });
+    }
+  }, {
+    key: 'entries',
+    value: function entries(keys) {
+      return iterator.apply(typeof keys === 'undefined' ? this : this.only(keys));
     }
   }, {
     key: 'length',
@@ -127,18 +161,12 @@ var Bag = function () {
   }, {
     key: 'keys',
     get: function get() {
-      return Object.keys(this.data);
+      return keys(this.data);
     }
   }, {
     key: 'values',
     get: function get() {
-      var _this3 = this;
-
-      var values = [];
-      this.keys.forEach(function (key) {
-        return values.push(_this3.data[key]);
-      });
-      return values;
+      return values(this.data);
     }
   }]);
 

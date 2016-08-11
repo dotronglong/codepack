@@ -74,4 +74,21 @@ describe('bag.js', function() {
     expect(keys).to.deep.equal(['a', 'b', 'c'])
     expect(values).to.deep.equal(['hello', 'world', '!'])
   })
+  it('[entries] should return an iterator object', () => {
+    let keys = [], values = []
+    for (let [key, value] of bag.entries()) {
+      keys.push(key)
+      values.push(value)
+    }
+    expect(keys).to.deep.equal(['a', 'b', 'c'])
+    expect(values).to.deep.equal(['hello', 'world', '!'])
+
+    keys = [], values = []
+    for (let [key, value] of bag.entries(['b', 'c'])) {
+      keys.push(key)
+      values.push(value)
+    }
+    expect(keys).to.deep.equal(['b', 'c'])
+    expect(values).to.deep.equal(['world', '!'])
+  })
 })
