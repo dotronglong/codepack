@@ -8,6 +8,20 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+function iterator(keys, values) {
+  var length = keys.length;
+  var position = 0;
+
+  return {
+    next: function next() {
+      return position < length ? {
+        value: [keys[position], values[position++]],
+        done: false
+      } : { done: true };
+    }
+  };
+}
+
 var Bag = function () {
   function Bag(data) {
     _classCallCheck(this, Bag);
@@ -74,13 +88,13 @@ var Bag = function () {
 
       var values = {};
       keys.forEach(function (key) {
-        values[key] = _this2.get(key);
+        return values[key] = _this2.data[key];
       });
       return values;
     }
   }, {
-    key: 'clean',
-    value: function clean() {
+    key: 'clear',
+    value: function clear() {
       this.data = {};
     }
   }, {
@@ -103,16 +117,7 @@ var Bag = function () {
   }, {
     key: Symbol.iterator,
     value: function value() {
-      var size = this.size(),
-          keys = this.keys,
-          values = this.values;
-      var position = 0;
-
-      return {
-        next: function next() {
-          return position < size ? { value: [keys[position], values[position++]], done: false } : { done: true };
-        }
-      };
+      return iterator(this.keys, this.values);
     }
   }, {
     key: 'length',

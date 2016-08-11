@@ -49,8 +49,8 @@ describe('bag.js', function() {
   it('[only] should return {a: \'hello\', b: \'world\'} when getting only values of keys "a" and "b"', function() {
     expect(bag.only(['a', 'b'])).to.deep.equal({a: 'hello', b: 'world'})
   })
-  it('[clean] should remove all values of bag', () => {
-    bag.clean()
+  it('[clear] should remove all values of bag', () => {
+    bag.clear()
     expect(bag.all()).to.deep.equal({})
   })
   it('[toString] should return a string which combine all keys and values', () => {
