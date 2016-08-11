@@ -15,6 +15,17 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 var INSTANCEOF_PROPERTY_NAME = '__implements';
 var NOT_IN_ARRAY = -1;
 
+function copy(target, source) {
+  var all = arguments.length <= 2 || arguments[2] === undefined ? false : arguments[2];
+
+  Object.getOwnPropertyNames(source).concat(Object.getOwnPropertySymbols(source)).forEach(function (prop) {
+    if (all === false && prop.match(/^(?:constructor|prototype|arguments|caller|name|bind|call|apply|toString|length)$/)) {
+      return;
+    }
+    Object.defineProperty(target, prop, Object.getOwnPropertyDescriptor(source, prop));
+  });
+}
+
 var Class = function () {
   function Class() {
     _classCallCheck(this, Class);
@@ -80,16 +91,10 @@ var Class = function () {
 
         return _Combined;
       }(baseClass);
-      var copyProps = function copyProps(target, source) {
-        Object.getOwnPropertyNames(source).concat(Object.getOwnPropertySymbols(source)).forEach(function (prop) {
-          if (prop.match(/^(?:constructor|prototype|arguments|caller|name|bind|call|apply|toString|length)$/)) return;
-          Object.defineProperty(target, prop, Object.getOwnPropertyDescriptor(source, prop));
-        });
-      };
 
       mixins.forEach(function (mixin) {
-        copyProps(base.prototype, mixin.prototype);
-        copyProps(base, mixin);
+        copy(base.prototype, mixin.prototype);
+        copy(base, mixin);
       });
 
       return base;

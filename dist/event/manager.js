@@ -194,7 +194,7 @@ var EventManager = function () {
      * Sort event listeners by priority
      *
      * @param {String} name Name of event to sort
-     * @param {String} type Sorting type, <b>asc</b> or desc
+     * @param {String} type Sorting type, asc or desc
      */
 
   }, {
