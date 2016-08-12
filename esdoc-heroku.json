@@ -1,0 +1,11 @@
+{
+  "source": "./lib",
+  "destination": "./",
+  "index": "./README.md",
+  "test": {
+    "type": "mocha",
+    "source": "./test"
+  },
+  "coverage": true,
+  "includeSource": true
+}
