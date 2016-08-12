@@ -55,13 +55,19 @@ gulp.task('test', ['build'], function () {
     .pipe(mocha({
       reporter: 'dot'
     }))
+})
+gulp.task('test:force', ['build'], function () {
+  gulp.src(buildTests)
+    .pipe(mocha({
+      reporter: 'dot'
+    }))
     .on('error', function (e) {
       if (typeof e.stack === 'undefined') return
       console.log(clc.red(`[ERROR] ${e.stack}`))
       this.emit(e)
     })
 })
-gulp.task('watch:test', ['test'], function () {
+gulp.task('watch:test', ['test:force'], function () {
   gulp.watch([].concat(sources, tests), ['test'])
 })
 gulp.task('watch:build', ['build'], function () {
