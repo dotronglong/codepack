@@ -16,7 +16,19 @@ var PRIORITY_LOW = 1;
 var PRIORITY_NORMAL = 5;
 var PRIORITY_HIGH = 10;
 
+/**
+ * Event Listener
+ *
+ * Process event when it is emitted by the EventManager
+ */
+
 var Listener = function () {
+  /**
+   * Constructor
+   * @param {function} runner Callback function to process event, it would receive an event as input
+   * @param {number} priority Determine the order of listener in running queue
+   * @param {number} limit Define if this listen could only run at a specific times
+   */
   function Listener(runner) {
     var priority = arguments.length <= 1 || arguments[1] === undefined ? PRIORITY_NORMAL : arguments[1];
     var limit = arguments.length <= 2 || arguments[2] === undefined ? LIMIT_NONE : arguments[2];
@@ -28,12 +40,26 @@ var Listener = function () {
     this.limit = limit;
   }
 
+  /**
+   * Callback function to be called right after event is fired and stopped completely
+   * @param {function} callback
+   * @returns {Listener}
+   */
+
+
   _createClass(Listener, [{
     key: "done",
     value: function done(callback) {
       this.cbDone = callback;
       return this;
     }
+
+    /**
+     * Callback function to be run if there is an error when processing event
+     * @param {function} callback
+     * @returns {Listener}
+     */
+
   }, {
     key: "error",
     value: function error(callback) {

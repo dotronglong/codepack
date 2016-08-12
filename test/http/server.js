@@ -1,4 +1,4 @@
-import Server from '../../lib/http/server'
+import {ServerHttp, ServerHttps} from '../../lib/http/server'
 var expect = require('chai').expect
 var http   = require('http')
 var https  = require('https')
@@ -6,8 +6,8 @@ var https  = require('https')
 describe('http/server.js', () => {
   let httpServer, httpsServer
   beforeEach(() => {
-    httpServer  = new Server.Http()
-    httpsServer = new Server.Https()
+    httpServer  = new ServerHttp()
+    httpsServer = new ServerHttps()
   })
 
   it('[get server] should return appropriate server instance', () => {

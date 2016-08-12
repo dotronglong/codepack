@@ -8,7 +8,15 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+/**
+ * Represent for an event emitted by EventManager
+ */
 var Event = function () {
+  /**
+   * Constructor
+   * @param {string} name Name of event
+   * @param {boolean} parallel Determine whether or not to allow running listeners in parallel
+   */
   function Event() {
     var name = arguments.length <= 0 || arguments[0] === undefined ? '' : arguments[0];
     var parallel = arguments.length <= 1 || arguments[1] === undefined ? false : arguments[1];
@@ -21,12 +29,24 @@ var Event = function () {
     this.exception = null;
   }
 
+  /**
+   * Stop running event furthermore
+   * @returns {boolean}
+   */
+
+
   _createClass(Event, [{
     key: 'stop',
     value: function stop() {
       this.continue = false;
       return true;
     }
+
+    /**
+     * Determine if the event is actually stopped or not
+     * @returns {boolean}
+     */
+
   }, {
     key: 'stopped',
     get: function get() {

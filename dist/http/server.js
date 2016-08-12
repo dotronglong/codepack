@@ -3,6 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.ServerHttps = exports.ServerHttp = exports.Server = undefined;
 
 var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 
@@ -26,7 +27,18 @@ var https = require('https');
 var DEFAULT_HTTP_PORT = 80;
 var DEFAULT_HTTPS_PORT = 443;
 
-var Server = function () {
+/**
+ * To handle start and stop node server
+ */
+
+var Server = exports.Server = function () {
+  /**
+   * Constructor
+   * @param {number} port Port of server to listen on
+   * @param {string} host The host address to allow connections
+   * @param {int} backlog Maximum length of the queue of pending connections
+   * @param {function} callback Callback function to be called after server is started
+   */
   function Server() {
     var port = arguments.length <= 0 || arguments[0] === undefined ? null : arguments[0];
     var host = arguments.length <= 1 || arguments[1] === undefined ? null : arguments[1];
@@ -42,16 +54,40 @@ var Server = function () {
     this.name = null;
   }
 
+  /**
+   * Determine if server's name equal a proposed name or not
+   * @param {string} name
+   * @returns {boolean}
+   */
+
+
   _createClass(Server, [{
     key: 'is',
     value: function is(name) {
       return this.name === name;
     }
+
+    /**
+     * Clone of original node server instance
+     * @returns {*}
+     */
+
   }, {
     key: 'start',
+
+
+    /**
+     * Start server and listen for connections
+     * @returns {*} The original node server instance
+     */
     value: function start() {
       return this.kernel.listen(this.port, this.host, this.backlog, this.callback);
     }
+
+    /**
+     * Close and stop the server
+     */
+
   }, {
     key: 'close',
     value: function close() {
@@ -61,7 +97,13 @@ var Server = function () {
     key: 'kernel',
     get: function get() {
       return this._kernel;
-    },
+    }
+
+    /**
+     * Set original node server instance as kernel
+     * @param kernel
+     */
+    ,
     set: function set(kernel) {
       this._kernel = kernel;
     }
@@ -70,64 +112,99 @@ var Server = function () {
   return Server;
 }();
 
-var Http = function (_Server) {
-  _inherits(Http, _Server);
+/**
+ * A HTTP based server to handle insecure http request
+ */
 
-  function Http() {
+
+var ServerHttp = exports.ServerHttp = function (_Server) {
+  _inherits(ServerHttp, _Server);
+
+  /**
+   * Constructor
+   * @param {number} port Port of server to listen on
+   * @param {string} host The host address to allow connections
+   * @param {int} backlog Maximum length of the queue of pending connections
+   * @param {function} callback Callback function to be called after server is started
+   */
+  function ServerHttp() {
     var port = arguments.length <= 0 || arguments[0] === undefined ? DEFAULT_HTTP_PORT : arguments[0];
     var host = arguments.length <= 1 || arguments[1] === undefined ? null : arguments[1];
     var backlog = arguments.length <= 2 || arguments[2] === undefined ? 511 : arguments[2];
     var callback = arguments.length <= 3 || arguments[3] === undefined ? null : arguments[3];
 
-    _classCallCheck(this, Http);
+    _classCallCheck(this, ServerHttp);
 
-    return _possibleConstructorReturn(this, Object.getPrototypeOf(Http).call(this, port, host, backlog, callback));
+    return _possibleConstructorReturn(this, Object.getPrototypeOf(ServerHttp).call(this, port, host, backlog, callback));
   }
 
-  _createClass(Http, [{
+  /**
+   * Return original node http server
+   * @returns {http.Server}
+   */
+
+
+  _createClass(ServerHttp, [{
     key: 'kernel',
     get: function get() {
       if (typeof this._kernel === 'undefined') {
         this._kernel = http.createServer();
       }
 
-      return _get(Object.getPrototypeOf(Http.prototype), 'kernel', this);
+      return _get(Object.getPrototypeOf(ServerHttp.prototype), 'kernel', this);
     }
   }]);
 
-  return Http;
+  return ServerHttp;
 }(Server);
 
-var Https = function (_Server2) {
-  _inherits(Https, _Server2);
+/**
+ * A HTTPS based server to handle secure http request through SSL
+ */
 
-  function Https() {
+
+var ServerHttps = exports.ServerHttps = function (_Server2) {
+  _inherits(ServerHttps, _Server2);
+
+  /**
+   * Constructor
+   * @param {{}} options Optional configuration for https server, for instance, certificates
+   * @param {number} port Port of server to listen on
+   * @param {string} host The host address to allow connections
+   * @param {int} backlog Maximum length of the queue of pending connections
+   * @param {function} callback Callback function to be called after server is started
+   */
+  function ServerHttps() {
     var options = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
     var port = arguments.length <= 1 || arguments[1] === undefined ? DEFAULT_HTTPS_PORT : arguments[1];
     var host = arguments.length <= 2 || arguments[2] === undefined ? null : arguments[2];
     var backlog = arguments.length <= 3 || arguments[3] === undefined ? 511 : arguments[3];
     var callback = arguments.length <= 4 || arguments[4] === undefined ? null : arguments[4];
 
-    _classCallCheck(this, Https);
+    _classCallCheck(this, ServerHttps);
 
-    var _this2 = _possibleConstructorReturn(this, Object.getPrototypeOf(Https).call(this, port, host, backlog, callback));
+    var _this2 = _possibleConstructorReturn(this, Object.getPrototypeOf(ServerHttps).call(this, port, host, backlog, callback));
 
     _this2.options = new _bag2.default(options);
     return _this2;
   }
 
-  _createClass(Https, [{
+  /**
+   * Return original node http server
+   * @returns {https.Server}
+   */
+
+
+  _createClass(ServerHttps, [{
     key: 'kernel',
     get: function get() {
       if (typeof this._kernel === 'undefined') {
         this._kernel = https.createServer(this.options.all());
       }
 
-      return _get(Object.getPrototypeOf(Https.prototype), 'kernel', this);
+      return _get(Object.getPrototypeOf(ServerHttps.prototype), 'kernel', this);
     }
   }]);
 
-  return Https;
+  return ServerHttps;
 }(Server);
-
-exports.default = { Http: Http, Https: Https };
