@@ -6,7 +6,7 @@ describe('http/message.js',() => {
   let message, body
   beforeEach(() => {
     message = new Message()
-    body = new Message.Body()
+    body = new Body()
   })
 
   /** @test {Message.type} */
