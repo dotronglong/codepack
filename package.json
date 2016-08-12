@@ -9,7 +9,7 @@
     "build": "./node_modules/.bin/gulp build",
     "server": "./node_modules/.bin/gulp server",
     "doc": "./node_modules/.bin/esdoc -c esdoc.json",
-    "postinstall": "npm run doc",
+    "prestart": "npm run doc",
     "start": "SERVER_ROOT=./docs/api node server.js"
   },
   "repository": {
