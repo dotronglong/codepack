@@ -76,6 +76,8 @@ var Router = function () {
           }
         }
       }
+
+      return null;
     }
   }]);
 

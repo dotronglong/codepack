@@ -120,6 +120,7 @@ var Route = function () {
   _createClass(Route, [{
     key: 'match',
     value: function match(request) {
+      /* Run pre-actions */
       this.preMatch();
 
       var method = request.method,
@@ -132,6 +133,7 @@ var Route = function () {
         isMatched = true;
       }
 
+      /* Run post-actions */
       this.postMatch();
 
       return isMatched;

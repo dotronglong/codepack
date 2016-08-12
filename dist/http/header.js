@@ -20,20 +20,37 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+/**
+ * Contain headers as a bag, easy to manipulate
+ */
 var Header = function (_Bag) {
   _inherits(Header, _Bag);
 
-  function Header(data) {
+  function Header() {
     _classCallCheck(this, Header);
 
-    return _possibleConstructorReturn(this, Object.getPrototypeOf(Header).call(this, data));
+    return _possibleConstructorReturn(this, Object.getPrototypeOf(Header).apply(this, arguments));
   }
 
   _createClass(Header, [{
     key: 'has',
+
+    /**
+     * Define whether or not a header key exist
+     * @param {string} key A string represents for header name, it is case-insensitive 
+     * @returns {boolean}
+     */
     value: function has(key) {
       return _get(Object.getPrototypeOf(Header.prototype), 'has', this).call(this, key.toLowerCase());
     }
+
+    /**
+     * Get value of a header by key
+     * @param {string} key Name of header to retrieve
+     * @param {string} def Default value to return in case there is no headers valid
+     * @returns {string}
+     */
+
   }, {
     key: 'get',
     value: function get(key) {
@@ -41,27 +58,45 @@ var Header = function (_Bag) {
 
       return _get(Object.getPrototypeOf(Header.prototype), 'get', this).call(this, key.toLowerCase(), def);
     }
+
+    /**
+     * Set a header (key-value)
+     * @param {string} key
+     * @param {string} value
+     */
+
   }, {
     key: 'set',
     value: function set(key, value) {
       _get(Object.getPrototypeOf(Header.prototype), 'set', this).call(this, key.toLowerCase(), value);
     }
+
+    /**
+     * Remove a header by key
+     * @param {string} key
+     */
+
   }, {
     key: 'delete',
     value: function _delete(key) {
       _get(Object.getPrototypeOf(Header.prototype), 'delete', this).call(this, key.toLowerCase());
     }
+
+    /**
+     * Replace current headers with new ones
+     * @param {{}} data
+     */
+
   }, {
     key: 'replace',
     value: function replace() {
-      var _this2 = this;
-
       var data = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
 
-      this.data = {};
-      Object.keys(data).forEach(function (k) {
-        return _this2.set(k.toLowerCase(), data[k]);
+      var _data = {};
+      Object.keys(data).forEach(function (key) {
+        _data[key.toLowerCase()] = data[key];
       });
+      _get(Object.getPrototypeOf(Header.prototype), 'replace', this).call(this, _data);
     }
   }]);
 

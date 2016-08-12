@@ -2,6 +2,7 @@ import Router from '../../../lib/http/routing/router'
 import Route from '../../../lib/http/routing/route'
 import Request from '../../../lib/http/request'
 var expect = require('chai').expect
+import Bag from '../../../lib/bag'
 
 describe('http/routing/router.js', () => {
   let router, route, name, path

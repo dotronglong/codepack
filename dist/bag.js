@@ -9,7 +9,11 @@ var _createClass = function () { function defineProperties(target, props) { for 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function copy() {
-  return Object.assign.apply(Object, arguments);
+  for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+    args[_key] = arguments[_key];
+  }
+
+  return Object.assign.apply(Object, [{}].concat(args));
 }
 
 function keys(source) {
@@ -52,7 +56,14 @@ function loop(keys, values) {
   };
 }
 
+/**
+ * An alternative for Map to handle key-value data
+ */
+
 var Bag = function () {
+  /**
+   * @param {{}} data Initial object data
+   */
   function Bag(data) {
     _classCallCheck(this, Bag);
 
@@ -60,45 +71,104 @@ var Bag = function () {
     iterator.apply(this);
   }
 
+  /**
+   * Return size (total items)
+   * @returns {number}
+   */
+
+
   _createClass(Bag, [{
     key: 'size',
     value: function size() {
       return this.length;
     }
+
+    /**
+     * Return total items
+     * @returns {number}
+     */
+
   }, {
     key: 'replace',
+
+
+    /**
+     * Replace the current data with new one
+     * @param {{}} data Data to replace
+     */
     value: function replace() {
       var data = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
 
-      this.data = copy({}, data);
+      this._data = copy(data);
     }
+
+    /**
+     * Determine whether or not a key exists in Bag
+     * @param {string} key
+     * @returns {boolean}
+     */
+
   }, {
     key: 'has',
     value: function has(key) {
-      return !(typeof this.data[key] === 'undefined');
+      return !(typeof this._data[key] === 'undefined');
     }
+
+    /**
+     * Get value of a pre-defined key
+     * @param {string} key
+     * @param {*} def Default value to return if key does not exist
+     * @returns {*}
+     */
+
   }, {
     key: 'get',
     value: function get(key) {
       var def = arguments.length <= 1 || arguments[1] === undefined ? null : arguments[1];
 
-      return this.has(key) ? this.data[key] : def;
+      return this.has(key) ? this._data[key] : def;
     }
+
+    /**
+     * Set a key-value pair
+     * @param {string} key
+     * @param {*} value
+     */
+
   }, {
     key: 'set',
     value: function set(key, value) {
-      this.data[key] = value;
+      this._data[key] = value;
     }
+
+    /**
+     * Remove a value by key
+     * @param {string} key
+     */
+
   }, {
     key: 'delete',
     value: function _delete(key) {
-      delete this.data[key];
+      delete this._data[key];
     }
+
+    /**
+     * Return a cloned version of Bag data
+     * @returns {{}}
+     */
+
   }, {
     key: 'all',
     value: function all() {
-      return this.data;
+      return copy(this._data);
     }
+
+    /**
+     * Get key-value pairs only for proposed keys
+     * @param {Array} keys An array of keys to get their's values
+     * @returns {{}}
+     */
+
   }, {
     key: 'only',
     value: function only(keys) {
@@ -106,15 +176,28 @@ var Bag = function () {
 
       var items = {};
       keys.forEach(function (key) {
-        return items[key] = _this.data[key];
+        return items[key] = _this._data[key];
       });
       return items;
     }
+
+    /**
+     * Clear all data
+     */
+
   }, {
     key: 'clear',
     value: function clear() {
-      this.data = {};
+      this._data = {};
     }
+
+    /**
+     * Combine all key-value pairs into string with a proposed delimiter
+     * @param {Array} keys (Optional) only render key-value pairs which has key in this pre-defined keys
+     * @param {string} delimiter Conjunction of string to connect key-value pairs
+     * @returns {string}
+     */
+
   }, {
     key: 'toString',
     value: function toString() {
@@ -127,14 +210,22 @@ var Bag = function () {
       if (Array.isArray(keys)) {
         data = this.only(keys);
       } else {
-        data = copy({}, this.data);
+        data = copy(this._data);
       }
 
-      Object.keys(data).forEach(function (k) {
-        string += (string === '' ? '' : delimiter) + (k + '=' + data[k]);
+      Object.keys(data).forEach(function (key) {
+        string += (string === '' ? '' : delimiter) + (key + '=' + data[key]);
       });
       return string;
     }
+
+    /**
+     * Loop through data with a callback
+     * @param {function} callback A callback function to handle item,
+     *                            it would receive 2 parameters (key, value) as the input
+     * @param {object} target An object to become "this argument" (receiver) of the callback
+     */
+
   }, {
     key: 'forEach',
     value: function forEach(callback, target) {
@@ -142,12 +233,19 @@ var Bag = function () {
 
       this.keys.forEach(function (key) {
         if (typeof target === 'undefined') {
-          callback(key, _this2.data[key]);
+          callback(key, _this2._data[key]);
         } else {
-          callback.apply(target, [key, _this2.data[key]]);
+          callback.apply(target, [key, _this2._data[key]]);
         }
       });
     }
+
+    /**
+     * Return an iterator to be looped through data of Bag
+     * @param {Array} keys (Optional) Only allow to loop pre-defined keys
+     * @returns {function} Iterator function to be used as for..of
+     */
+
   }, {
     key: 'entries',
     value: function entries(keys) {
@@ -158,15 +256,27 @@ var Bag = function () {
     get: function get() {
       return this.keys.length;
     }
+
+    /**
+     * Return all keys in Bag
+     * @returns {Array}
+     */
+
   }, {
     key: 'keys',
     get: function get() {
-      return keys(this.data);
+      return keys(this._data);
     }
+
+    /**
+     * Return all values in Bag
+     * @returns {Array}
+     */
+
   }, {
     key: 'values',
     get: function get() {
-      return values(this.data);
+      return values(this._data);
     }
   }]);
 

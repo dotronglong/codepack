@@ -9,7 +9,7 @@ describe('bag.js', function() {
   })
 
   it('[constructor] should replace the current data', () => {
-    expect(bag.data).to.deep.equal(data)
+    expect(bag.all()).to.deep.equal(data)
   })
   it('[size|get length] should return number of items in bag', () => {
     expect(bag.size()).to.equal(3)

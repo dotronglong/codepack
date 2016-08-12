@@ -22,12 +22,12 @@ describe('http/header.js', () => {
 
   it('[set] should set a key in lowercase with value', () => {
     headers.set('soMe-KEY', true)
-    expect(headers.data['some-key']).to.be.true
+    expect(headers.get('some-key')).to.be.true
   })
 
   it('[set] should set a key in lowercase with value', () => {
     headers.set('soMe-KEY', true)
-    expect(headers.data['some-key']).to.be.true
+    expect(headers.get('some-key')).to.be.true
     headers.delete('soMe-KEY')
     expect(headers.get('some-key')).to.be.null
   })

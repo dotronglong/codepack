@@ -20,10 +20,6 @@ var _header = require('./header');
 
 var _header2 = _interopRequireDefault(_header);
 
-var _collection = require('../collection');
-
-var _collection2 = _interopRequireDefault(_collection);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
