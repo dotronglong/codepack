@@ -1,1 +1,1 @@
-web: npm run doc
+web: ./node_modules/.bin/esdoc -c esdoc-heroku.json
