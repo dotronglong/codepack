@@ -62,9 +62,11 @@ function loop(keys, values) {
 
 var Bag = function () {
   /**
-   * @param {{}} data Initial object data
+   * @param {?{}} [data={}] Initial object data
    */
-  function Bag(data) {
+  function Bag() {
+    var data = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+
     _classCallCheck(this, Bag);
 
     this.replace(data);
@@ -94,7 +96,7 @@ var Bag = function () {
 
     /**
      * Replace the current data with new one
-     * @param {{}} data Data to replace
+     * @param {?{}} [data={}] Data to replace
      */
     value: function replace() {
       var data = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
@@ -104,7 +106,7 @@ var Bag = function () {
 
     /**
      * Determine whether or not a key exists in Bag
-     * @param {string} key
+     * @param {!string} key
      * @returns {boolean}
      */
 
@@ -116,8 +118,8 @@ var Bag = function () {
 
     /**
      * Get value of a pre-defined key
-     * @param {string} key
-     * @param {*} def Default value to return if key does not exist
+     * @param {!string} key
+     * @param {?*} [def=null] Default value to return if key does not exist
      * @returns {*}
      */
 
@@ -131,8 +133,8 @@ var Bag = function () {
 
     /**
      * Set a key-value pair
-     * @param {string} key
-     * @param {*} value
+     * @param {!string} key
+     * @param {!*} value
      */
 
   }, {
@@ -143,7 +145,7 @@ var Bag = function () {
 
     /**
      * Remove a value by key
-     * @param {string} key
+     * @param {!string} key
      */
 
   }, {
@@ -165,7 +167,7 @@ var Bag = function () {
 
     /**
      * Get key-value pairs only for proposed keys
-     * @param {Array} keys An array of keys to get their's values
+     * @param {!Array} keys An array of keys to get their's values
      * @returns {{}}
      */
 
@@ -193,8 +195,8 @@ var Bag = function () {
 
     /**
      * Combine all key-value pairs into string with a proposed delimiter
-     * @param {Array} keys (Optional) only render key-value pairs which has key in this pre-defined keys
-     * @param {string} delimiter Conjunction of string to connect key-value pairs
+     * @param {?Array} [keys=null] (Optional) only render key-value pairs which has key in this pre-defined keys
+     * @param {?string} [delimiter='&'] Conjunction of string to connect key-value pairs
      * @returns {string}
      */
 
@@ -223,7 +225,7 @@ var Bag = function () {
      * Loop through data with a callback
      * @param {function} callback A callback function to handle item,
      *                            it would receive 2 parameters (key, value) as the input
-     * @param {object} target An object to become "this argument" (receiver) of the callback
+     * @param {?object} target An object to become "this argument" (receiver) of the callback
      */
 
   }, {
@@ -242,7 +244,7 @@ var Bag = function () {
 
     /**
      * Return an iterator to be looped through data of Bag
-     * @param {Array} keys (Optional) Only allow to loop pre-defined keys
+     * @param {?Array} keys (Optional) Only allow to loop pre-defined keys
      * @returns {function} Iterator function to be used as for..of
      */
 

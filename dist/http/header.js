@@ -37,7 +37,7 @@ var Header = function (_Bag) {
 
     /**
      * Define whether or not a header key exist
-     * @param {string} key A string represents for header name, it is case-insensitive 
+     * @param {!string} key A string represents for header name, it is case-insensitive
      * @returns {boolean}
      */
     value: function has(key) {
@@ -46,8 +46,8 @@ var Header = function (_Bag) {
 
     /**
      * Get value of a header by key
-     * @param {string} key Name of header to retrieve
-     * @param {string} def Default value to return in case there is no headers valid
+     * @param {!string} key Name of header to retrieve
+     * @param {?string} [def=null] Default value to return in case there is no headers valid
      * @returns {string}
      */
 
@@ -61,8 +61,8 @@ var Header = function (_Bag) {
 
     /**
      * Set a header (key-value)
-     * @param {string} key
-     * @param {string} value
+     * @param {!string} key
+     * @param {!string} value
      */
 
   }, {
@@ -73,7 +73,7 @@ var Header = function (_Bag) {
 
     /**
      * Remove a header by key
-     * @param {string} key
+     * @param {!string} key
      */
 
   }, {
@@ -84,7 +84,7 @@ var Header = function (_Bag) {
 
     /**
      * Replace current headers with new ones
-     * @param {{}} data
+     * @param {?{}} [data={}]
      */
 
   }, {

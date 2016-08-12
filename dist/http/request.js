@@ -14,8 +14,6 @@ var _bag2 = _interopRequireDefault(_bag);
 
 var _message = require('./message');
 
-var _message2 = _interopRequireDefault(_message);
-
 var _header = require('./header');
 
 var _header2 = _interopRequireDefault(_header);
@@ -213,7 +211,7 @@ var Request = function (_Message) {
   }]);
 
   return Request;
-}(_message2.default);
+}(_message.Message);
 
 exports.default = Request;
 

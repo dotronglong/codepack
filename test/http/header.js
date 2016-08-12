@@ -1,6 +1,7 @@
 var expect = require('chai').expect
 import Header from '../../lib/http/header'
 
+/** @test {Header} */
 describe('http/header.js', () => {
   const data  = {
     'content-Type': 'application/json',
@@ -11,20 +12,24 @@ describe('http/header.js', () => {
     headers = new Header(data)
   })
 
+  /** @test {Header#has} */
   it('[has] should return true', () => {
     expect(headers.has('CONTENT-TYPE')).to.be.true
   })
 
+  /** @test {Header#get} */
   it('[get] should return application/json, and no-cache', () => {
     expect(headers.get('CONTENT-type')).to.equal('application/json')
     expect(headers.get('cache-CONTRol')).to.equal('no-cache')
   })
 
+  /** @test {Header#set} */
   it('[set] should set a key in lowercase with value', () => {
     headers.set('soMe-KEY', true)
     expect(headers.get('some-key')).to.be.true
   })
 
+  /** @test {Header#set} */
   it('[set] should set a key in lowercase with value', () => {
     headers.set('soMe-KEY', true)
     expect(headers.get('some-key')).to.be.true

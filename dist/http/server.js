@@ -34,10 +34,10 @@ var DEFAULT_HTTPS_PORT = 443;
 var Server = exports.Server = function () {
   /**
    * Constructor
-   * @param {number} port Port of server to listen on
-   * @param {string} host The host address to allow connections
-   * @param {int} backlog Maximum length of the queue of pending connections
-   * @param {function} callback Callback function to be called after server is started
+   * @param {?number} [port=null] Port of server to listen on
+   * @param {?string} [host=null] The host address to allow connections
+   * @param {?number} [backlog=511] Maximum length of the queue of pending connections
+   * @param {?function} [callback=null] Callback function to be called after server is started
    */
   function Server() {
     var port = arguments.length <= 0 || arguments[0] === undefined ? null : arguments[0];
@@ -47,16 +47,35 @@ var Server = exports.Server = function () {
 
     _classCallCheck(this, Server);
 
+    /**
+     * @type {number}
+     */
     this.port = port;
+
+    /**
+     * @type {string}
+     */
     this.host = host;
+
+    /**
+     * @type {number}
+     */
     this.backlog = backlog;
+
+    /**
+     * @type {function}
+     */
     this.callback = callback;
+
+    /**
+     * @type {string}
+     */
     this.name = null;
   }
 
   /**
    * Determine if server's name equal a proposed name or not
-   * @param {string} name
+   * @param {!string} name
    * @returns {boolean}
    */
 
@@ -69,7 +88,7 @@ var Server = exports.Server = function () {
 
     /**
      * Clone of original node server instance
-     * @returns {*}
+     * @returns {object}
      */
 
   }, {
@@ -78,7 +97,7 @@ var Server = exports.Server = function () {
 
     /**
      * Start server and listen for connections
-     * @returns {*} The original node server instance
+     * @returns {object} Original node server instance
      */
     value: function start() {
       return this.kernel.listen(this.port, this.host, this.backlog, this.callback);
@@ -122,10 +141,10 @@ var ServerHttp = exports.ServerHttp = function (_Server) {
 
   /**
    * Constructor
-   * @param {number} port Port of server to listen on
-   * @param {string} host The host address to allow connections
-   * @param {int} backlog Maximum length of the queue of pending connections
-   * @param {function} callback Callback function to be called after server is started
+   * @param {?number} [port=80] Port of server to listen on
+   * @param {?string} [host=null] The host address to allow connections
+   * @param {?number} [backlog=511] Maximum length of the queue of pending connections
+   * @param {?function} [callback=null] Callback function to be called after server is started
    */
   function ServerHttp() {
     var port = arguments.length <= 0 || arguments[0] === undefined ? DEFAULT_HTTP_PORT : arguments[0];
@@ -168,11 +187,11 @@ var ServerHttps = exports.ServerHttps = function (_Server2) {
 
   /**
    * Constructor
-   * @param {{}} options Optional configuration for https server, for instance, certificates
-   * @param {number} port Port of server to listen on
-   * @param {string} host The host address to allow connections
-   * @param {int} backlog Maximum length of the queue of pending connections
-   * @param {function} callback Callback function to be called after server is started
+   * @param {?{}} [options={}] Optional configuration for https server, for instance, certificates
+   * @param {?number} [port=443] Port of server to listen on
+   * @param {?string} [host=null] The host address to allow connections
+   * @param {?number} [backlog=511] Maximum length of the queue of pending connections
+   * @param {?function} [callback=null] Callback function to be called after server is started
    */
   function ServerHttps() {
     var options = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];

@@ -94,6 +94,9 @@ var EventManager = function () {
   function EventManager() {
     _classCallCheck(this, EventManager);
 
+    /**
+     * @type {{}}
+     */
     this.events = {};
   }
 

@@ -3,6 +3,7 @@ var expect = require('chai').expect
 var http   = require('http')
 var https  = require('https')
 
+/** @test {Server} */
 describe('http/server.js', () => {
   let httpServer, httpsServer
   beforeEach(() => {
@@ -10,11 +11,13 @@ describe('http/server.js', () => {
     httpsServer = new ServerHttps()
   })
 
-  it('[get server] should return appropriate server instance', () => {
+  /** @test {Server.kernel} */
+  it('[get kernel] should return appropriate server instance', () => {
     expect(httpServer.kernel instanceof http.Server).to.be.true
     expect(httpsServer.kernel instanceof https.Server).to.be.true
   })
 
+  /** @test {Server#start} */
   it('[start] should start server correctly', () => {
     httpServer.port = 3333
     httpServer.callback = () => {
@@ -26,6 +29,7 @@ describe('http/server.js', () => {
     httpServer.start()
   })
 
+  /** @test {Server#is} */
   it('[is] should return true and false respectively', () => {
     httpServer.name = 'My_Server'
     expect(httpServer.is('My_Another_Server')).to.be.false
