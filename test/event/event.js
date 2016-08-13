@@ -9,6 +9,7 @@ describe('event/event.js', () => {
   /** @test {Event#stop} */
   it('[stop] should stop the event by setting continue property to false', () => {
     expect(event.stopped).to.be.false
+    event.stop()
     expect(event.stopped).to.be.true
   })
 

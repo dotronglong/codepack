@@ -16,14 +16,24 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+/**
+ * Response Event which contains resonse before sending out
+ */
 var ResponseEvent = function (_Event) {
   _inherits(ResponseEvent, _Event);
 
+  /**
+   * Constructor
+   * @param {Response} [response=null] The active response which is going to send out
+   */
   function ResponseEvent() {
     var response = arguments.length <= 0 || arguments[0] === undefined ? null : arguments[0];
 
     _classCallCheck(this, ResponseEvent);
 
+    /**
+     * @type {Response}
+     */
     var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(ResponseEvent).call(this, 'http.outgoing_response', false));
 
     _this.response = response;

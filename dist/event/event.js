@@ -24,21 +24,22 @@ var Event = function () {
     _classCallCheck(this, Event);
 
     /**
-     * @access public
      * @type {string}
-    this.name      = name
-     /**
-     * @access public
+     */
+    this.name = name;
+
+    /**
      * @type {boolean}
-    this.parallel  = parallel
-     /**
+     */
+    this.parallel = parallel;
+
+    /**
      * @access private
      * @type {boolean}
      */
     this.continue = true;
 
     /**
-     * @access public
      * @type {Error}
      */
     this.exception = null;

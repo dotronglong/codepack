@@ -25,9 +25,9 @@ var PRIORITY_HIGH = 10;
 var Listener = function () {
   /**
    * Constructor
-   * @param {function} runner Callback function to process event, it would receive an event as input
-   * @param {number} priority Determine the order of listener in running queue
-   * @param {number} limit Define if this listen could only run at a specific times
+   * @param {!function} runner Callback function to process event, it would receive an event as input
+   * @param {?number} [priority=5] Determine the order of listener in running queue
+   * @param {?number} [limit=null] Define if this listen could only run at a specific times
    */
   function Listener(runner) {
     var priority = arguments.length <= 1 || arguments[1] === undefined ? PRIORITY_NORMAL : arguments[1];
@@ -35,15 +35,41 @@ var Listener = function () {
 
     _classCallCheck(this, Listener);
 
+    /**
+     * @access protected
+     * @type {function}
+     */
     this.runner = runner;
+
+    /**
+     * @access protected
+     * @type {number}
+     */
     this.priority = priority;
+
+    /**
+     * @access protected
+     * @type {number}
+     */
     this.limit = limit;
+
+    /**
+     * @access private
+     * @type {function}
+     */
+    this.cbDone = null;
+
+    /**
+     * @access private
+     * @type {function}
+     */
+    this.cbError = null;
   }
 
   /**
    * Callback function to be called right after event is fired and stopped completely
-   * @param {function} callback
-   * @returns {Listener}
+   * @param {!function} callback
+   * @returns {Listener} The current listener object
    */
 
 
@@ -56,8 +82,8 @@ var Listener = function () {
 
     /**
      * Callback function to be run if there is an error when processing event
-     * @param {function} callback
-     * @returns {Listener}
+     * @param {!function} callback
+     * @returns {Listener} The current listener object
      */
 
   }, {
