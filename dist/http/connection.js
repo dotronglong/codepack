@@ -12,9 +12,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 var Connection =
 /**
  * Constructor
- * @param {Request} request An object which is an instance of http/Request
- * @param {Response} response An object which is an instance of http/Response
- * @param {Server} server An instance of http/Server
+ * @param {?Request} [request=null] An object which is an instance of http/Request
+ * @param {?Response} [response=null] An object which is an instance of http/Response
+ * @param {?Server} [server=null] An instance of http/Server
  */
 function Connection() {
   var request = arguments.length <= 0 || arguments[0] === undefined ? null : arguments[0];
@@ -23,8 +23,19 @@ function Connection() {
 
   _classCallCheck(this, Connection);
 
+  /**
+   * @type {Request}
+   */
   this.request = request;
+
+  /**
+   * @type {Response}
+   */
   this.response = response;
+
+  /**
+   * @type {Server}
+   */
   this.server = server;
 };
 

@@ -14,8 +14,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 var Event = function () {
   /**
    * Constructor
-   * @param {string} name Name of event
-   * @param {boolean} parallel Determine whether or not to allow running listeners in parallel
+   * @param {?string} [name=''] Name of event
+   * @param {boolean} [parallel=false] Determine whether or not to allow running listeners in parallel
    */
   function Event() {
     var name = arguments.length <= 0 || arguments[0] === undefined ? '' : arguments[0];
@@ -23,15 +23,29 @@ var Event = function () {
 
     _classCallCheck(this, Event);
 
-    this.name = name;
-    this.parallel = parallel;
+    /**
+     * @access public
+     * @type {string}
+    this.name      = name
+     /**
+     * @access public
+     * @type {boolean}
+    this.parallel  = parallel
+     /**
+     * @access private
+     * @type {boolean}
+     */
     this.continue = true;
+
+    /**
+     * @access public
+     * @type {Error}
+     */
     this.exception = null;
   }
 
   /**
-   * Stop running event furthermore
-   * @returns {boolean}
+   * Stop running event any furthermore
    */
 
 
@@ -39,7 +53,6 @@ var Event = function () {
     key: 'stop',
     value: function stop() {
       this.continue = false;
-      return true;
     }
 
     /**
