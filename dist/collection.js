@@ -125,7 +125,7 @@ var Collection = function () {
     /**
      * Return last item of collection
      *
-     * @returns {T}
+     * @returns {*}
      */
 
   }, {

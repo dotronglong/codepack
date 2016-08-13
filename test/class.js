@@ -13,7 +13,7 @@ class B {
   }
 }
 
-class C extends Class.combine(A, B) {
+class C extends Class.mix(A, B) {
   helloWorld() {
     return this.hello() + ' ' + this.world() + '!';
   }

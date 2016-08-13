@@ -26,6 +26,10 @@ function copy(target, source) {
   });
 }
 
+/**
+ * Tools to deal with classes
+ */
+
 var Class = function () {
   function Class() {
     _classCallCheck(this, Class);
@@ -33,9 +37,22 @@ var Class = function () {
 
   _createClass(Class, null, [{
     key: 'methodExists',
+
+    /**
+     * Check whether or not a method exists in object
+     * @ignore
+     * @returns {boolean}
+     */
     value: function methodExists(object, method) {
       return this.getMethods(object).indexOf(method) !== NOT_IN_ARRAY;
     }
+
+    /**
+     * Get all methods of an object
+     * @ignore
+     * @returns {Array}
+     */
+
   }, {
     key: 'getMethods',
     value: function getMethods(object) {
@@ -57,9 +74,15 @@ var Class = function () {
       }
       return methods;
     }
+
+    /**
+     * Mixes many classes into one in order to allow to extend from multiple classes
+     * @returns {object}
+     */
+
   }, {
-    key: 'combine',
-    value: function combine(baseClass) {
+    key: 'mix',
+    value: function mix(baseClass) {
       for (var _len = arguments.length, mixins = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
         mixins[_key - 1] = arguments[_key];
       }
@@ -99,6 +122,15 @@ var Class = function () {
 
       return base;
     }
+
+    /**
+     * Determine whether or not an object is an instance of a class
+     * @ignore
+     * @param {object} object Object to check
+     * @param {object} target Class object to test
+     * @returns {boolean}
+     */
+
   }, {
     key: 'instanceof',
     value: function _instanceof(object, target) {
@@ -118,6 +150,14 @@ var Class = function () {
 
       return false;
     }
+
+    /**
+     * Mark an object to be an instance of target's object
+     * @ignore
+     * @param {object} object Object to be modified
+     * @param {object} target Class object be added as instance's class
+     */
+
   }, {
     key: 'setInstanceof',
     value: function setInstanceof(object, target) {
@@ -132,6 +172,13 @@ var Class = function () {
 
       object[INSTANCEOF_PROPERTY_NAME].push(target);
     }
+
+    /**
+     * Remove all properties on an object
+     * @param {object} object Object to be cleaned
+     * @param {?Array} ignore List of ignoring properties, let them remain
+     */
+
   }, {
     key: 'cleanProperties',
     value: function cleanProperties(object, ignore) {
@@ -145,6 +192,17 @@ var Class = function () {
 
       return object;
     }
+
+    /**
+     * Define a property on an object with an easy way
+     * @param {object} object The target object
+     * @param {string} name Name of the property
+     * @param {?*} [value=null] Initial value of property
+     * @param {?boolean} [enumerable=true] Mark property as enumerable
+     * @param {?writable} [writable=true] Mark property as writable
+     * @param {?configurable} [configurable=true] Mark property as configurable
+     */
+
   }, {
     key: 'defineProperty',
     value: function defineProperty(object, name) {
@@ -160,6 +218,14 @@ var Class = function () {
         value: value
       });
     }
+
+    /**
+     * Define a property which is not enumerable
+     * @param {object} object The target object
+     * @param {string} name Name of the property
+     * @param {?*} [value=null] Initial value of property
+     */
+
   }, {
     key: 'definePropertyNotEnumerable',
     value: function definePropertyNotEnumerable(object, name) {
@@ -167,6 +233,14 @@ var Class = function () {
 
       return this.defineProperty(object, name, value, false);
     }
+
+    /**
+     * Define a property which is not writable
+     * @param {object} object The target object
+     * @param {string} name Name of the property
+     * @param {?*} [value=null] Initial value of property
+     */
+
   }, {
     key: 'definePropertyNotWritable',
     value: function definePropertyNotWritable(object, name) {
@@ -174,6 +248,14 @@ var Class = function () {
 
       return this.defineProperty(object, name, value, true, false);
     }
+
+    /**
+     * Define a property which is not configurable
+     * @param {object} object The target object
+     * @param {string} name Name of the property
+     * @param {?*} [value=null] Initial value of property
+     */
+
   }, {
     key: 'definePropertyNotConfigurable',
     value: function definePropertyNotConfigurable(object, name) {
