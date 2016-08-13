@@ -36,7 +36,7 @@ describe('class.js', function() {
     expect(Class.methodExists(c, 'world')).to.be.true
     expect(Class.methodExists(C, 'helloWorld')).to.be.true
   })
-  it('[combine] should return "Hello World" which is a result from combination between A.hello() and B.world()', function() {
+  it('[mix] should return "Hello World" which is a result from combination between A.hello() and B.world()', function() {
     expect(c.helloWorld()).to.equal('Hello World!');
   });
   it('[definePropertyNotEnumerable] should create new property which is not enumerable', function() {

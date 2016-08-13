@@ -30,11 +30,12 @@ describe('http/message.js',() => {
   it('[body setter::content] should parse JSON content', () => {
     let data = {a: 'Hello', b: 'World'}
     body.content = data
-    expect(body.content).to.deep.equal(data)
+    expect(body.content.all()).to.deep.equal(data)
     expect(body.toString()).to.equal(JSON.stringify(data))
 
     data = JSON.stringify(data)
-    expect(body.content).to.deep.equal(JSON.parse(data))
+    body.content = data
+    expect(body.content.all()).to.deep.equal(JSON.parse(data))
     expect(body.toString()).to.equal(data)
   })
 })

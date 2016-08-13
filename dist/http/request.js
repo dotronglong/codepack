@@ -58,6 +58,12 @@ var parseQueryString = function parseQueryString(string) {
   return query;
 };
 
+/**
+ * Http Request
+ *
+ * Contains information about request
+ */
+
 var Request = function (_Message) {
   _inherits(Request, _Message);
 
@@ -69,6 +75,11 @@ var Request = function (_Message) {
 
   _createClass(Request, [{
     key: 'server',
+
+    /**
+     * Get server's information
+     * @return {object} An object which contains information of server
+     */
     get: function get() {
       if (typeof this._server === 'undefined') {
         this._server = new _bag2.default({
@@ -82,7 +93,13 @@ var Request = function (_Message) {
       }
 
       return this._server;
-    },
+    }
+
+    /**
+     * Set server's information
+     * @param {object} server
+     */
+    ,
     set: function set(server) {
       if ((typeof server === 'undefined' ? 'undefined' : _typeof(server)) === 'object') {
         this.server.replace(server);
@@ -90,6 +107,12 @@ var Request = function (_Message) {
         throw new Error('[Request::server] Input server must be an JSON object.');
       }
     }
+
+    /**
+     * Get client's information
+     * @return {object} An object which contains information of client
+     */
+
   }, {
     key: 'client',
     get: function get() {
@@ -101,7 +124,13 @@ var Request = function (_Message) {
       }
 
       return this._client;
-    },
+    }
+
+    /**
+     * Set client's information
+     * @param  {object} client
+     */
+    ,
     set: function set(client) {
       if ((typeof client === 'undefined' ? 'undefined' : _typeof(client)) === 'object') {
         this.client.replace(client);
@@ -109,38 +138,92 @@ var Request = function (_Message) {
         throw new Error('[Request::client] Input client must be an JSON object.');
       }
     }
+
+    /**
+     * Get host address
+     * @return {string} The host addres of server, for instance, 127.0.0.1, localhost
+     */
+
   }, {
     key: 'host',
     get: function get() {
       return this.server.get(REQUEST_HOST);
-    },
+    }
+
+    /**
+     * Set host address
+     * @param  {string} host
+     */
+    ,
     set: function set(host) {
       this.server.set(REQUEST_HOST, host);
     }
+
+    /**
+     * Get server's port
+     * @return {number} Server port
+     */
+
   }, {
     key: 'port',
     get: function get() {
       return this.server.get(REQUEST_PORT);
-    },
+    }
+
+    /**
+     * Set server's port
+     * @param {number} port
+     */
+    ,
     set: function set(port) {
       this.server.set(REQUEST_PORT, parseInt(port));
     }
+
+    /**
+     * Path of request
+     * @return {string} Request's uri, it should always start with a slash ("/")
+     */
+
   }, {
     key: 'path',
     get: function get() {
       return this.server.get(REQUEST_PATH, '');
-    },
+    }
+
+    /**
+     * Set request's path
+     * @param {string} path
+     */
+    ,
     set: function set(path) {
       this.server.set(REQUEST_PATH, path);
     }
+
+    /**
+     * Request's method, for example, GET, POST, and PUT
+     * @return {string}
+     */
+
   }, {
     key: 'method',
     get: function get() {
       return this.server.get(REQUEST_METHOD, Request.METHOD_GET);
-    },
+    }
+
+    /**
+     * Set request's method
+     * @param {string} method
+     */
+    ,
     set: function set(method) {
       this.server.set(REQUEST_METHOD, method);
     }
+
+    /**
+     * Set request's uri, a string follows right after question mark of path
+     * @return {Bag}
+     */
+
   }, {
     key: 'query',
     get: function get() {
@@ -149,7 +232,13 @@ var Request = function (_Message) {
       }
 
       return this._query;
-    },
+    }
+
+    /**
+     * Set request's query
+     * @param {string|object|Bag} query
+     */
+    ,
     set: function set(query) {
       if (typeof query === 'string') {
         this._query = new _bag2.default(parseQueryString(query));
@@ -161,6 +250,12 @@ var Request = function (_Message) {
         }
       }
     }
+
+    /**
+     * Parameters are built from routing process by matching request host and path
+     * @return {Bag}
+     */
+
   }, {
     key: 'params',
     get: function get() {
@@ -169,30 +264,66 @@ var Request = function (_Message) {
       }
 
       return this._params;
-    },
+    }
+
+    /**
+     * Set request's parameters
+     * @param {object} params
+     */
+    ,
     set: function set(params) {
       this.params.replace(params);
     }
+
+    /**
+     * Get server address
+     * @return {string}
+     */
+
   }, {
     key: 'serverAddress',
     get: function get() {
       return this.server.get(REQUEST_ADDRESS);
     }
+
+    /**
+     * Get local address
+     * @return {string}
+     */
+
   }, {
     key: 'localAddress',
     get: function get() {
       return this.server.get(REQUEST_LOCAL_ADDRESS);
     }
+
+    /**
+     * Get client's address
+     * @return {string}
+     */
+
   }, {
     key: 'clientAddress',
     get: function get() {
       return this.client.get(REQUEST_CLIENT_ADDRESS);
     }
+
+    /**
+     * Get client port
+     * @return {number}
+     */
+
   }, {
     key: 'clientPort',
     get: function get() {
       return this.client.get(REQUEST_CLIENT_PORT);
     }
+
+    /**
+     * Request type, it is defined base on the Content-Type header of Request
+     * @return {string} For example, request has Content-Type = 'application/json' will have 'json' as type
+     */
+
   }, {
     key: 'type',
     get: function get() {

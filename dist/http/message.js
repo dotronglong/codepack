@@ -23,11 +23,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 /**
  * Body of message
- * @access public
  */
 var Body = exports.Body = function () {
   /**
-   * constructor
+   * Constructor
    * @param {?string} content Content of message's body
    * @param {?string} [type="application/json"] Body's content type
    */
@@ -36,10 +35,28 @@ var Body = exports.Body = function () {
 
     _classCallCheck(this, Body);
 
+    /**
+     * @type {*}
+     */
     this.content = content;
+
+    /**
+     * @type {string}
+     */
     this.type = type;
 
+    /**
+     * Raw content of body
+     * @access protected
+     * @type {string}
+     */
     this.rawContent = '';
+
+    /**
+     * Parsed content of body
+     * @access protected
+     * @type {object|Bag}
+     */
     this.parsedContent = {};
   }
 
@@ -72,14 +89,14 @@ var Body = exports.Body = function () {
       var contentType = typeof content === 'undefined' ? 'undefined' : _typeof(content);
       switch (contentType) {
         case 'object':
-          this.parsedContent = content;
+          this.parsedContent = new _bag2.default(content);
           this.rawContent = JSON.stringify(content);
           break;
         case 'string':
           if (content === '') {
-            this.parsedContent = {};
+            this.parsedContent = new _bag2.default();
           } else {
-            this.parsedContent = JSON.parse(content);
+            this.parsedContent = new _bag2.default(JSON.parse(content));
           }
           this.rawContent = content;
           break;
@@ -120,7 +137,7 @@ var Body = exports.Body = function () {
 }();
 
 /**
- * Message
+ * Http Message
  */
 
 
@@ -143,6 +160,11 @@ var Message = exports.Message = function () {
      */
     this.body = body;
 
+    /**
+     * Original resource
+     * @access protected
+     * @type {object}
+     */
     this.resource = null;
   }
 
