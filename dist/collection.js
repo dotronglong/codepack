@@ -12,20 +12,32 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 var assert = require('assert');
 
+/**
+ * Support to manipulate collection of items
+ */
+
 var Collection = function () {
+  /**
+   * Constructor
+   * @param {?Array} [items=[]] Initial items to be placed in collection
+   */
   function Collection() {
     var items = arguments.length <= 0 || arguments[0] === undefined ? [] : arguments[0];
 
     _classCallCheck(this, Collection);
 
+    /**
+     * @access protected
+     * @type {Array}
+     */
     this.items = items;
   }
 
   /**
    * Add an item to collection
    *
-   * @param {*} item
-   * @returns Collection
+   * @param {*} item Add an item to collection, it should have any type as possible
+   * @returns {Collection}
    */
 
 
@@ -39,7 +51,7 @@ var Collection = function () {
     /**
      * Remove an item (or index) from collection
      *
-     * @param {Number|Object} item
+     * @param {number|object} item Item to be removed
      */
 
   }, {
@@ -67,7 +79,7 @@ var Collection = function () {
     /**
      * Check whether or not an item exists in collection
      *
-     * @param {*} item
+     * @param {*} item Item to check
      * @returns {boolean}
      */
 
@@ -100,7 +112,7 @@ var Collection = function () {
     /**
      * Add an item to collection
      *
-     * @see Collection.add
+     * @see {Collection#add}
      * @param {*} item
      */
 
@@ -125,7 +137,7 @@ var Collection = function () {
     /**
      * Find items by query
      *
-     * @param {Object} query
+     * @param {{}} query
      * @returns {Collection|null}
      */
 
@@ -157,8 +169,8 @@ var Collection = function () {
     /**
      * Get an item by index
      *
-     * @param {Number} index
-     * @param {*} def Default result if item could not be found
+     * @param {number} index
+     * @param {?*} [def=null] Default result if item could not be found
      * @returns {*}
      */
 
@@ -169,6 +181,12 @@ var Collection = function () {
 
       return typeof this.items[index] === 'undefined' ? def : this.items[index];
     }
+
+    /**
+     * Get all items in collection
+     * @returns {Array}
+     */
+
   }, {
     key: 'all',
     value: function all() {
