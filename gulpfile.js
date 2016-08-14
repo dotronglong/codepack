@@ -9,11 +9,6 @@ const clc     = require('cli-color')
 const nodemon = require('gulp-nodemon')
 var jsdoc     = require('gulp-jsdoc3')
 
-const handleError = function (error) {
-  console.log(error)
-  this.emit('error')
-}
-
 const main       = 'index.js'
 const buildDir   = 'build'
 const libDir     = 'lib'
@@ -68,7 +63,7 @@ gulp.task('test:force', ['build'], function () {
     })
 })
 gulp.task('watch:test', ['test:force'], function () {
-  gulp.watch([].concat(sources, tests), ['test'])
+  gulp.watch([].concat(sources, tests), ['test:force'])
 })
 gulp.task('watch:build', ['build'], function () {
   gulp.watch([].concat(sources, tests), ['build'])

@@ -12,6 +12,11 @@ describe('http/header.js', () => {
     headers = new Header(data)
   })
 
+  /** @test {Header.keys} */
+  it('[get keys] should return keys in upperCase format', () => {
+    expect(headers.keys).to.deep.equal(['Content-Type', 'Cache-Control'])
+  })
+
   /** @test {Header#has} */
   it('[has] should return true', () => {
     expect(headers.has('CONTENT-TYPE')).to.be.true

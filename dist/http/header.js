@@ -12,6 +12,10 @@ var _bag = require('../bag');
 
 var _bag2 = _interopRequireDefault(_bag);
 
+var _str = require('../str');
+
+var _str2 = _interopRequireDefault(_str);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -34,6 +38,7 @@ var Header = function (_Bag) {
 
   _createClass(Header, [{
     key: 'has',
+
 
     /**
      * Define whether or not a header key exist
@@ -97,6 +102,42 @@ var Header = function (_Bag) {
         _data[key.toLowerCase()] = data[key];
       });
       _get(Object.getPrototypeOf(Header.prototype), 'replace', this).call(this, _data);
+    }
+  }, {
+    key: 'keys',
+
+    /**
+     * Return all keys
+     * @returns {Array}
+     */
+    get: function get() {
+      var keys = [];
+      var _iteratorNormalCompletion = true;
+      var _didIteratorError = false;
+      var _iteratorError = undefined;
+
+      try {
+        for (var _iterator = Object.keys(this._data)[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+          var key = _step.value;
+
+          keys.push(_str2.default.upperCaseFirst(key, '-'));
+        }
+      } catch (err) {
+        _didIteratorError = true;
+        _iteratorError = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion && _iterator.return) {
+            _iterator.return();
+          }
+        } finally {
+          if (_didIteratorError) {
+            throw _iteratorError;
+          }
+        }
+      }
+
+      return keys;
     }
   }]);
 

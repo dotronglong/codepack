@@ -16,9 +16,18 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+/**
+ * Http Response
+ */
 var Response = function (_Message) {
   _inherits(Response, _Message);
 
+  /**
+   * Constructor
+   * @param {?object} [headers={}] Initial headers
+   * @param {?string} [body=''] Response's body content
+   * @param {?number} [statusCode=200] Response's status code, default is OK
+   */
   function Response() {
     var headers = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
     var body = arguments.length <= 1 || arguments[1] === undefined ? '' : arguments[1];
@@ -42,12 +51,20 @@ var Response = function (_Message) {
     return _this;
   }
 
+  /**
+   * Send response to client
+   * @param {?string} content Message body content
+   * @param {?number} statusCode Response's status code
+   * @param {?object} headers Response's headers
+   */
+
+
   _createClass(Response, [{
     key: 'send',
-    value: function send(content) {
-      if (typeof content !== 'undefined') {
-        this.body.content = content;
-      }
+    value: function send(content, statusCode, headers) {
+      this.body = content || this.body;
+      this.statusCode = statusCode || this.statusCode;
+      this.headers = headers || this.headers;
 
       var _iteratorNormalCompletion = true;
       var _didIteratorError = false;
