@@ -51,7 +51,7 @@ var Collection = function () {
     /**
      * Remove an item (or index) from collection
      *
-     * @param {number|object} item Item to be removed
+     * @param {number|Object} item Item to be removed
      */
 
   }, {

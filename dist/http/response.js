@@ -24,13 +24,13 @@ var Response = function (_Message) {
 
   /**
    * Constructor
-   * @param {?object} [headers={}] Initial headers
+   * @param {?Object} [headers={}] Initial headers
    * @param {?string} [body=''] Response's body content
    * @param {?number} [statusCode=200] Response's status code, default is OK
    */
   function Response() {
     var headers = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
-    var body = arguments.length <= 1 || arguments[1] === undefined ? '' : arguments[1];
+    var body = arguments[1];
     var statusCode = arguments.length <= 2 || arguments[2] === undefined ? Response.HTTP_OK : arguments[2];
 
     _classCallCheck(this, Response);
@@ -55,14 +55,14 @@ var Response = function (_Message) {
    * Send response to client
    * @param {?string} content Message body content
    * @param {?number} statusCode Response's status code
-   * @param {?object} headers Response's headers
+   * @param {?Object} headers Response's headers
    */
 
 
   _createClass(Response, [{
     key: 'send',
     value: function send(content, statusCode, headers) {
-      this.body = content || this.body;
+      this.body.content = content;
       this.statusCode = statusCode || this.statusCode;
       this.headers = headers || this.headers;
 

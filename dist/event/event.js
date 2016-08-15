@@ -24,11 +24,13 @@ var Event = function () {
     _classCallCheck(this, Event);
 
     /**
+     * An unique name of event
      * @type {string}
      */
     this.name = name;
 
     /**
+     * Define whether or not to run this event's listeners in parallel
      * @type {boolean}
      */
     this.parallel = parallel;
@@ -40,6 +42,7 @@ var Event = function () {
     this.continue = true;
 
     /**
+     * Detail exception if there was an error
      * @type {Error}
      */
     this.exception = null;

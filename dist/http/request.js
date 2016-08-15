@@ -78,7 +78,7 @@ var Request = function (_Message) {
 
     /**
      * Get server's information
-     * @return {object} An object which contains information of server
+     * @return {Object} An object which contains information of server
      */
     get: function get() {
       if (typeof this._server === 'undefined') {
@@ -97,7 +97,7 @@ var Request = function (_Message) {
 
     /**
      * Set server's information
-     * @param {object} server
+     * @param {Object} server
      */
     ,
     set: function set(server) {
@@ -110,7 +110,7 @@ var Request = function (_Message) {
 
     /**
      * Get client's information
-     * @return {object} An object which contains information of client
+     * @return {Object} An object which contains information of client
      */
 
   }, {
@@ -128,7 +128,7 @@ var Request = function (_Message) {
 
     /**
      * Set client's information
-     * @param  {object} client
+     * @param  {Object} client
      */
     ,
     set: function set(client) {
@@ -268,7 +268,7 @@ var Request = function (_Message) {
 
     /**
      * Set request's parameters
-     * @param {object} params
+     * @param {Object} params
      */
     ,
     set: function set(params) {

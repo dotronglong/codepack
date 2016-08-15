@@ -28,6 +28,14 @@ var DEFAULT_HTTP_PORT = 80;
 var DEFAULT_HTTPS_PORT = 443;
 
 /**
+ * @typedef {Object} NodeHttpServer
+ */
+
+/**
+ * @typedef {Object} NodeHttpsServer
+ */
+
+/**
  * To handle start and stop node server
  */
 
@@ -88,7 +96,7 @@ var Server = exports.Server = function () {
 
     /**
      * Clone of original node server instance
-     * @returns {object}
+     * @returns {Object}
      */
 
   }, {
@@ -97,7 +105,7 @@ var Server = exports.Server = function () {
 
     /**
      * Start server and listen for connections
-     * @returns {object} Original node server instance
+     * @returns {Object} Original node server instance
      */
     value: function start() {
       return this.kernel.listen(this.port, this.host, this.backlog, this.callback);
@@ -120,7 +128,7 @@ var Server = exports.Server = function () {
 
     /**
      * Set original node server instance as kernel
-     * @param kernel
+     * @param {Object} kernel
      */
     ,
     set: function set(kernel) {
@@ -141,6 +149,7 @@ var ServerHttp = exports.ServerHttp = function (_Server) {
 
   /**
    * Constructor
+   *
    * @param {?number} [port=80] Port of server to listen on
    * @param {?string} [host=null] The host address to allow connections
    * @param {?number} [backlog=511] Maximum length of the queue of pending connections
@@ -159,7 +168,7 @@ var ServerHttp = exports.ServerHttp = function (_Server) {
 
   /**
    * Return original node http server
-   * @returns {http.Server}
+   * @returns {NodeHttpServer}
    */
 
 
@@ -210,7 +219,7 @@ var ServerHttps = exports.ServerHttps = function (_Server2) {
 
   /**
    * Return original node http server
-   * @returns {https.Server}
+   * @returns {NodeHttpsServer}
    */
 
 

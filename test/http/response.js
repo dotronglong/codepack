@@ -7,8 +7,8 @@ describe('http/response.js', () => {
   beforeEach(() => {
     response = new Response()
   })
-  /** @test {Response#send} */
 
+  /** @test {Response#send} */
   it('[send] should send a response', () => {
     let resource = {
       statusCode: null,
@@ -22,7 +22,7 @@ describe('http/response.js', () => {
     }
     response.resource = resource
 
-    const content = 'Some content!',
+    const content = {'text': 'Some content!'},
           headers = {'Content-Type': 'application/json', 'Cache-Control': 'no-cache'},
           statusCode = 404
 

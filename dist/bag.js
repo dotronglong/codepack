@@ -225,7 +225,7 @@ var Bag = function () {
      * Loop through data with a callback
      * @param {function} callback A callback function to handle item,
      *                            it would receive 2 parameters (key, value) as the input
-     * @param {?object} target An object to become "this argument" (receiver) of the callback
+     * @param {?Object} target An object to become "this argument" (receiver) of the callback
      */
 
   }, {

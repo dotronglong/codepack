@@ -27,7 +27,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 var Body = exports.Body = function () {
   /**
    * Constructor
-   * @param {?string} content Content of message's body
+   * @param {?string} [content='{}'] Content of message's body
    * @param {?string} [type="application/json"] Body's content type
    */
   function Body(content) {
@@ -36,11 +36,15 @@ var Body = exports.Body = function () {
     _classCallCheck(this, Body);
 
     /**
+     * Body content, it might be a string or an object.
+     * When retrieving, it always be a parsed type, for instance, object, Bag.
+     * When setting, it could be an object or a string
      * @type {*}
      */
     this.content = content;
 
     /**
+     * Type of body, it relies on http header 'Content-Type'
      * @type {string}
      */
     this.type = type;
@@ -53,9 +57,9 @@ var Body = exports.Body = function () {
     this.rawContent = '';
 
     /**
-     * Parsed content of body
+     * Parsed content of body, it's type depends on the body's type
      * @access protected
-     * @type {object|Bag}
+     * @type {Object|Bag}
      */
     this.parsedContent = {};
   }
@@ -73,7 +77,7 @@ var Body = exports.Body = function () {
     }
 
     /**
-     * @type {object}
+     * @returns {Object}
      */
 
   }, {
@@ -114,14 +118,13 @@ var Body = exports.Body = function () {
     }
 
     /**
-     * @param {*} content Content of body to be set
+     * @param {string} content Content of body to be set
      */
     ,
     set: function set(content) {
-      if (typeof content === 'undefined') {
+      if (content === undefined) {
         return;
       }
-
       switch (this.type) {
         case Message.CONTENT_JSON:
           this.handleContentJson(content);
@@ -151,11 +154,13 @@ var Message = exports.Message = function () {
     _classCallCheck(this, Message);
 
     /**
+     * Message's headers
      * @type {Header}
      */
     this.headers = headers;
 
     /**
+     * Message's body for some special request method, such as POST and PUT
      * @type {Body}
      */
     this.body = body;
@@ -163,7 +168,7 @@ var Message = exports.Message = function () {
     /**
      * Original resource
      * @access protected
-     * @type {object}
+     * @type {Object}
      */
     this.resource = null;
   }
@@ -204,7 +209,7 @@ var Message = exports.Message = function () {
     }
 
     /**
-     * @param {{}} headers
+     * @param {Object} headers
      */
     ,
     set: function set(headers) {
@@ -219,7 +224,7 @@ var Message = exports.Message = function () {
     }
 
     /**
-     * @type {Body}
+     * @return {Body}
      */
 
   }, {
@@ -229,15 +234,17 @@ var Message = exports.Message = function () {
     }
 
     /**
-     * @param {?*} body
+     * @param {?string|Body} body
      */
     ,
     set: function set(body) {
-      if (typeof body === 'undefined') {
-        return;
+      if (body instanceof Body) {
+        this._body = body;
+      } else if (typeof body === 'string') {
+        this._body = new Body(body);
+      } else {
+        this._body = new Body();
       }
-
-      this._body = body;
     }
   }]);
 

@@ -77,7 +77,7 @@ var Class = function () {
 
     /**
      * Mixes many classes into one in order to allow to extend from multiple classes
-     * @returns {object}
+     * @returns {Object}
      */
 
   }, {
@@ -126,8 +126,8 @@ var Class = function () {
     /**
      * Determine whether or not an object is an instance of a class
      * @ignore
-     * @param {object} object Object to check
-     * @param {object} target Class object to test
+     * @param {Object} object Object to check
+     * @param {Object} target Class object to test
      * @returns {boolean}
      */
 
@@ -154,8 +154,8 @@ var Class = function () {
     /**
      * Mark an object to be an instance of target's object
      * @ignore
-     * @param {object} object Object to be modified
-     * @param {object} target Class object be added as instance's class
+     * @param {Object} object Object to be modified
+     * @param {Object} target Class object be added as instance's class
      */
 
   }, {
@@ -175,7 +175,7 @@ var Class = function () {
 
     /**
      * Remove all properties on an object
-     * @param {object} object Object to be cleaned
+     * @param {Object} object Object to be cleaned
      * @param {?Array} ignore List of ignoring properties, let them remain
      */
 
@@ -195,7 +195,7 @@ var Class = function () {
 
     /**
      * Define a property on an object with an easy way
-     * @param {object} object The target object
+     * @param {Object} object The target object
      * @param {string} name Name of the property
      * @param {?*} [value=null] Initial value of property
      * @param {?boolean} [enumerable=true] Mark property as enumerable
@@ -221,7 +221,7 @@ var Class = function () {
 
     /**
      * Define a property which is not enumerable
-     * @param {object} object The target object
+     * @param {Object} object The target object
      * @param {string} name Name of the property
      * @param {?*} [value=null] Initial value of property
      */
@@ -236,7 +236,7 @@ var Class = function () {
 
     /**
      * Define a property which is not writable
-     * @param {object} object The target object
+     * @param {Object} object The target object
      * @param {string} name Name of the property
      * @param {?*} [value=null] Initial value of property
      */
@@ -251,7 +251,7 @@ var Class = function () {
 
     /**
      * Define a property which is not configurable
-     * @param {object} object The target object
+     * @param {Object} object The target object
      * @param {string} name Name of the property
      * @param {?*} [value=null] Initial value of property
      */
