@@ -192,6 +192,25 @@ var Collection = function () {
     value: function all() {
       return this.items;
     }
+
+    /**
+     * Loop through data with a callback
+     * @param {function} callback A callback function to handle item,
+     *                            it would receive 2 parameters (key, value) as the input
+     * @param {?Object} target An object to become "this argument" (receiver) of the callback
+     */
+
+  }, {
+    key: 'forEach',
+    value: function forEach(callback, target) {
+      this.items.forEach(function (item) {
+        if (typeof target === 'undefined') {
+          callback(item);
+        } else {
+          callback.apply(target, [item]);
+        }
+      });
+    }
   }]);
 
   return Collection;

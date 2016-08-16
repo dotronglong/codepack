@@ -4,7 +4,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _event = require('../../event/event');
+var _event = require('../../../event/event');
 
 var _event2 = _interopRequireDefault(_event);
 
@@ -17,31 +17,29 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 /**
- * Event will be emiited if there is an incoming request to the server
+ * Contains information about event which is emitted before calling handler's action
  */
-var RequestEvent = function (_Event) {
-  _inherits(RequestEvent, _Event);
+var BeforeActionEvent = function (_Event) {
+  _inherits(BeforeActionEvent, _Event);
 
   /**
    * Constructor
-   * @param {?Connection} [connection=null] Active connection to the server
+   * @param {?Connection} connection Current active connection
    */
-  function RequestEvent() {
-    var connection = arguments.length <= 0 || arguments[0] === undefined ? null : arguments[0];
-
-    _classCallCheck(this, RequestEvent);
+  function BeforeActionEvent(connection) {
+    _classCallCheck(this, BeforeActionEvent);
 
     /**
-     * Current active connection
+     * Current connection
      * @type {Connection}
      */
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(RequestEvent).call(this, 'http.incoming_request', false));
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(BeforeActionEvent).call(this, 'handler.before_action', false));
 
     _this.connection = connection;
     return _this;
   }
 
-  return RequestEvent;
+  return BeforeActionEvent;
 }(_event2.default);
 
-exports.default = RequestEvent;
+exports.default = BeforeActionEvent;

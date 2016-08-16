@@ -54,9 +54,28 @@ var App = function () {
   function App(options) {
     _classCallCheck(this, App);
 
+    /**
+     * App configuration
+     * @type {Bag}
+     */
     this.options = options;
+
+    /**
+     * Server pool
+     * @type {Collection}
+     */
     this.servers = new _collection2.default();
+
+    /**
+     * App's plugins
+     * @type {Collection}
+     */
     this.plugins = new _collection2.default();
+
+    /**
+     * Event Manager
+     * @type {EventManager}
+     */
     this.events = new _manager2.default();
   }
 

@@ -53,19 +53,12 @@ var Response = function (_Message) {
 
   /**
    * Send response to client
-   * @param {?string} content Message body content
-   * @param {?number} statusCode Response's status code
-   * @param {?Object} headers Response's headers
    */
 
 
   _createClass(Response, [{
     key: 'send',
-    value: function send(content, statusCode, headers) {
-      this.body.content = content;
-      this.statusCode = statusCode || this.statusCode;
-      this.headers = headers || this.headers;
-
+    value: function send() {
       var _iteratorNormalCompletion = true;
       var _didIteratorError = false;
       var _iteratorError = undefined;

@@ -36,16 +36,16 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var HEADER_HOST = 'host';
 
-var Kernel = function (_App$Plugin) {
-  _inherits(Kernel, _App$Plugin);
+var KernelPlugin = function (_App$Plugin) {
+  _inherits(KernelPlugin, _App$Plugin);
 
-  function Kernel() {
-    _classCallCheck(this, Kernel);
+  function KernelPlugin() {
+    _classCallCheck(this, KernelPlugin);
 
-    return _possibleConstructorReturn(this, Object.getPrototypeOf(Kernel).apply(this, arguments));
+    return _possibleConstructorReturn(this, Object.getPrototypeOf(KernelPlugin).apply(this, arguments));
   }
 
-  _createClass(Kernel, [{
+  _createClass(KernelPlugin, [{
     key: 'onBoot',
     value: function onBoot() {
       var _this2 = this;
@@ -60,9 +60,8 @@ var Kernel = function (_App$Plugin) {
       var _this3 = this;
 
       server.kernel.on('request', function (req, res) {
-        var connection = _this3.setUpConnection(req, res),
-            event = new _request4.default(connection, server);
-        _this3.app.events.emit(event);
+        var connection = _this3.setUpConnection(req, res);
+        _this3.app.events.emit(new _request4.default(connection, server));
       });
     }
   }, {
@@ -78,7 +77,7 @@ var Kernel = function (_App$Plugin) {
       var matches = host.match(/^([\w\.-]+):?(\d+)?$/i);
       if (matches !== null) {
         request.host = matches[1];
-        if (typeof matches[2] !== 'undefined') {
+        if (matches[2] === undefined) {
           request.port = matches[2];
         }
       }
@@ -101,7 +100,7 @@ var Kernel = function (_App$Plugin) {
     }
   }]);
 
-  return Kernel;
+  return KernelPlugin;
 }(_app2.default.Plugin);
 
-exports.default = Kernel;
+exports.default = KernelPlugin;
