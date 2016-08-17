@@ -6,25 +6,11 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _request = require("../http/request");
-
-var _request2 = _interopRequireDefault(_request);
-
-var _response = require("../http/response");
-
-var _response2 = _interopRequireDefault(_response);
-
-var _connection = require("../http/connection");
-
-var _connection2 = _interopRequireDefault(_connection);
-
 var _app = require("../app");
 
-var _app2 = _interopRequireDefault(_app);
+var _request = require("../http/event/request");
 
-var _request3 = require("../http/event/request");
-
-var _request4 = _interopRequireDefault(_request3);
+var _request2 = _interopRequireDefault(_request);
 
 var _listener = require("../event/listener");
 
@@ -50,8 +36,8 @@ var RequestListener = function (_Listener) {
   return RequestListener;
 }(_listener2.default);
 
-var HandlerPlugin = function (_App$Plugin) {
-  _inherits(HandlerPlugin, _App$Plugin);
+var HandlerPlugin = function (_Plugin) {
+  _inherits(HandlerPlugin, _Plugin);
 
   function HandlerPlugin() {
     _classCallCheck(this, HandlerPlugin);
@@ -62,11 +48,11 @@ var HandlerPlugin = function (_App$Plugin) {
   _createClass(HandlerPlugin, [{
     key: "onBoot",
     value: function onBoot() {
-      this.app.events.subscribe(_request2.default);
+      this.app.events.subscribe(_request2.default.NAME, new RequestListener());
     }
   }]);
 
   return HandlerPlugin;
-}(_app2.default.Plugin);
+}(_app.Plugin);
 
 exports.default = HandlerPlugin;
