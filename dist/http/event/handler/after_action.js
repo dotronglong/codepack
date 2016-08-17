@@ -19,27 +19,29 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 /**
  * Contains information about event which is emitted after calling handler's action
  */
-var AfterSendEvent = function (_Event) {
-  _inherits(AfterSendEvent, _Event);
+var AfterActionEvent = function (_Event) {
+  _inherits(AfterActionEvent, _Event);
 
   /**
    * Constructor
    * @param {?Connection} connection Current active connection
    */
-  function AfterSendEvent(connection) {
-    _classCallCheck(this, AfterSendEvent);
+  function AfterActionEvent(connection) {
+    _classCallCheck(this, AfterActionEvent);
 
     /**
      * Current connection
      * @type {Connection}
      */
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(AfterSendEvent).call(this, "handler.after_action", false));
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(AfterActionEvent).call(this, AfterActionEvent.NAME, false));
 
     _this.connection = connection;
     return _this;
   }
 
-  return AfterSendEvent;
+  return AfterActionEvent;
 }(_event2.default);
 
-exports.default = AfterSendEvent;
+exports.default = AfterActionEvent;
+
+AfterActionEvent.NAME = "handler.after_action";

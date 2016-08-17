@@ -35,7 +35,7 @@ var RequestEvent = function (_Event) {
      * Current active connection
      * @type {Connection}
      */
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(RequestEvent).call(this, "http.incoming_request", false));
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(RequestEvent).call(this, RequestEvent.NAME, false));
 
     _this.connection = connection;
     return _this;
@@ -45,3 +45,5 @@ var RequestEvent = function (_Event) {
 }(_event2.default);
 
 exports.default = RequestEvent;
+
+RequestEvent.NAME = "http.incoming_request";

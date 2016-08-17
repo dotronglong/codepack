@@ -6,6 +6,12 @@ describe("event/event.js", () => {
   let event = new Event()
   beforeEach(() => {event = new Event()})
 
+  /** @test {Event.name} */
+  it("[get name] should return event's name", () => {
+    event = new Event('my_event')
+    expect(event.name).to.equal('my_event')
+  })
+
   /** @test {Event#stop} */
   it("[stop] should stop the event by setting continue property to false", () => {
     expect(event.stopped).to.be.false

@@ -33,7 +33,7 @@ var AfterSendEvent = function (_Event) {
      * Current connection
      * @type {Connection}
      */
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(AfterSendEvent).call(this, "response.after_send", false));
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(AfterSendEvent).call(this, AfterSendEvent.NAME, false));
 
     _this.connection = connection;
     return _this;
@@ -43,3 +43,5 @@ var AfterSendEvent = function (_Event) {
 }(_event2.default);
 
 exports.default = AfterSendEvent;
+
+AfterSendEvent.NAME = "response.after_send";

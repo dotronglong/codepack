@@ -20,8 +20,6 @@ var _connection2 = _interopRequireDefault(_connection);
 
 var _app = require("../app");
 
-var _app2 = _interopRequireDefault(_app);
-
 var _request3 = require("../http/event/request");
 
 var _request4 = _interopRequireDefault(_request3);
@@ -36,8 +34,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var HEADER_HOST = "host";
 
-var KernelPlugin = function (_App$Plugin) {
-  _inherits(KernelPlugin, _App$Plugin);
+var KernelPlugin = function (_Plugin) {
+  _inherits(KernelPlugin, _Plugin);
 
   function KernelPlugin() {
     _classCallCheck(this, KernelPlugin);
@@ -60,8 +58,8 @@ var KernelPlugin = function (_App$Plugin) {
       var _this3 = this;
 
       server.kernel.on("request", function (req, res) {
-        var connection = _this3.setUpConnection(req, res);
-        _this3.app.events.emit(new _request4.default(connection, server));
+        var connection = _this3.setUpConnection(req, res, server);
+        _this3.app.events.emit(new _request4.default(connection));
       });
     }
   }, {
@@ -77,7 +75,7 @@ var KernelPlugin = function (_App$Plugin) {
       var matches = host.match(/^([\w\.-]+):?(\d+)?$/i);
       if (matches !== null) {
         request.host = matches[1];
-        if (matches[2] === undefined) {
+        if (matches[2] !== undefined) {
           request.port = matches[2];
         }
       }
@@ -93,14 +91,14 @@ var KernelPlugin = function (_App$Plugin) {
     }
   }, {
     key: "setUpConnection",
-    value: function setUpConnection(req, res) {
+    value: function setUpConnection(req, res, server) {
       var request = this.setUpRequest(req),
           response = this.setUpResponse(res);
-      return new _connection2.default(request, response);
+      return new _connection2.default(request, response, server);
     }
   }]);
 
   return KernelPlugin;
-}(_app2.default.Plugin);
+}(_app.Plugin);
 
 exports.default = KernelPlugin;

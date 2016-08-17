@@ -103,8 +103,8 @@ var EventManager = function () {
   /**
    * Subscribe a listener to Event Manager
    *
-   * @param {string} name Name of event to subscribe
-   * @param {Listener} listener A listener object to handle incoming event
+   * @param {!string} name Name of event to subscribe
+   * @param {!Listener} listener A listener object to handle incoming event
    */
 
 
@@ -120,8 +120,8 @@ var EventManager = function () {
     /**
      * Unsubsribe a listener
      *
-     * @param {string} name Name of event to unsubscribe
-     * @param {Listener} listener Listener to unsubscribe
+     * @param {!string} name Name of event to unsubscribe
+     * @param {!Listener} listener Listener to unsubscribe
      */
 
   }, {
@@ -136,10 +136,10 @@ var EventManager = function () {
     /**
      * Register an event handler
      *
-     * @param {string} name Name of event to listen
-     * @param {function} runner Callback to handle incoming event
-     * @param {number} priority Higher priority handler will be call later than the others
-     * @param {number} limit Number of times to be run. Default is null to ignore limit
+     * @param {!string} name Name of event to listen
+     * @param {!function} runner Callback to handle incoming event
+     * @param {?number} priority Higher priority handler will be call later than the others
+     * @param {?number} limit Number of times to be run. Default is null to ignore limit
      * @returns {Listener} Listener instance of registration
      */
 
@@ -159,9 +159,9 @@ var EventManager = function () {
     /**
      * Register an one time handler of a specific event
      *
-     * @param {string} name Name of event to listen
-     * @param {function} runner Callback to handle incoming event
-     * @param {number} priority Higher priority handler will be call later than the others
+     * @param {!string} name Name of event to listen
+     * @param {!function} runner Callback to handle incoming event
+     * @param {?number} priority Higher priority handler will be call later than the others
      * @returns {Listener} Listener instance of registration
      */
 
@@ -174,9 +174,9 @@ var EventManager = function () {
     /**
      * Register an twice times handler of a specific event
      *
-     * @param {string} name Name of event to listen
-     * @param {function} runner Callback to handle incoming event
-     * @param {number} priority Higher priority handler will be call later than the others
+     * @param {!string} name Name of event to listen
+     * @param {!function} runner Callback to handle incoming event
+     * @param {?number} priority Higher priority handler will be call later than the others
      * @returns {Listener} Listener instance of registration
      */
 
@@ -210,15 +210,15 @@ var EventManager = function () {
           }
         }
       } else {
-        throw new Error("[Event:off] event\"s name must be specified.");
+        throw new Error("[Event:off] event's name must be specified.");
       }
     }
 
     /**
      * Sort event listeners by priority
-     *
-     * @param {string} name Name of event to sort
-     * @param {string} type Sorting type, asc or desc
+     * @see {EventManager.SORT_ASCENDING}
+     * @param {!string} name Name of event to sort
+     * @param {string} [type="asc"] Sorting type, asc (EventManager.SORT_ASCENDING) or desc (EventManager.SORT_DESCENDING)
      */
 
   }, {

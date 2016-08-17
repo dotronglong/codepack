@@ -23,11 +23,10 @@ describe("http/response.js", () => {
     response.resource = resource
 
     const content = {"text": "Some content!"},
-          headers = {"Content-Type": "application/json", "Cache-Control": "no-cache"},
-          statusCode = 404
+          headers = {"Content-Type": "application/json", "Cache-Control": "no-cache"}
 
-    response.send(content, statusCode, headers)
-    expect(resource.statusCode).to.equal(statusCode)
+    response.headers = headers
+    response.send()
     expect(resource.headers).to.deep.equal(headers)
   })
 })

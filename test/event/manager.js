@@ -10,9 +10,10 @@ describe("event/manager.js", () => {
       name = "event_name",
       func = (e, done) => {done()},
       listener
+  
   beforeEach(() => {
     em = new EventManager()
-    event = new Event()
+    event = new Event(name)
     listener = new Listener(func)
   })
 

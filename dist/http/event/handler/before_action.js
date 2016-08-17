@@ -33,7 +33,7 @@ var BeforeActionEvent = function (_Event) {
      * Current connection
      * @type {Connection}
      */
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(BeforeActionEvent).call(this, "handler.before_action", false));
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(BeforeActionEvent).call(this, BeforeActionEvent.NAME, false));
 
     _this.connection = connection;
     return _this;
@@ -43,3 +43,5 @@ var BeforeActionEvent = function (_Event) {
 }(_event2.default);
 
 exports.default = BeforeActionEvent;
+
+BeforeActionEvent.NAME = "handler.before_action";

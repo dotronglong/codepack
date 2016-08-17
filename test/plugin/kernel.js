@@ -1,10 +1,10 @@
 var expect = require("chai").expect
-import Kernel from "../../lib/plugin/kernel"
+import KernelPlugin from "../../lib/plugin/kernel"
 
 describe("plugin/kernel.js", () => {
-  let kernel = new Kernel()
+  let kernel = new KernelPlugin()
   beforeEach(() => {
-    kernel = new Kernel()
+    kernel = new KernelPlugin()
   })
 
   it("[setUpRequest] should build a request from resource", () => {

@@ -33,7 +33,7 @@ var BeforeSendEvent = function (_Event) {
      * Current connection
      * @type {Connection}
      */
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(BeforeSendEvent).call(this, "response.before_send", false));
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(BeforeSendEvent).call(this, BeforeSendEvent.NAME, false));
 
     _this.connection = connection;
     return _this;
@@ -43,3 +43,5 @@ var BeforeSendEvent = function (_Event) {
 }(_event2.default);
 
 exports.default = BeforeSendEvent;
+
+BeforeSendEvent.NAME = "response.before_send";

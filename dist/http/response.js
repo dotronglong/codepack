@@ -88,6 +88,7 @@ var Response = function (_Message) {
       }
 
       this.resource.statusCode = this.statusCode;
+      this.resource.statusMessage = this.statusMessage;
       this.resource.end(this.body.toString());
     }
   }]);
