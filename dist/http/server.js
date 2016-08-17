@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -9,7 +9,7 @@ var _get = function get(object, property, receiver) { if (object === null) objec
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _bag = require('../bag');
+var _bag = require("../bag");
 
 var _bag2 = _interopRequireDefault(_bag);
 
@@ -21,8 +21,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var http = require('http');
-var https = require('https');
+var http = require("http");
+var https = require("https");
 
 var DEFAULT_HTTP_PORT = 80;
 var DEFAULT_HTTPS_PORT = 443;
@@ -89,7 +89,7 @@ var Server = exports.Server = function () {
 
 
   _createClass(Server, [{
-    key: 'is',
+    key: "is",
     value: function is(name) {
       return this.name === name;
     }
@@ -100,7 +100,7 @@ var Server = exports.Server = function () {
      */
 
   }, {
-    key: 'start',
+    key: "start",
 
 
     /**
@@ -116,12 +116,12 @@ var Server = exports.Server = function () {
      */
 
   }, {
-    key: 'close',
+    key: "close",
     value: function close() {
       this.kernel.close();
     }
   }, {
-    key: 'kernel',
+    key: "kernel",
     get: function get() {
       return this._kernel;
     }
@@ -173,13 +173,13 @@ var ServerHttp = exports.ServerHttp = function (_Server) {
 
 
   _createClass(ServerHttp, [{
-    key: 'kernel',
+    key: "kernel",
     get: function get() {
-      if (typeof this._kernel === 'undefined') {
+      if (typeof this._kernel === "undefined") {
         this._kernel = http.createServer();
       }
 
-      return _get(Object.getPrototypeOf(ServerHttp.prototype), 'kernel', this);
+      return _get(Object.getPrototypeOf(ServerHttp.prototype), "kernel", this);
     }
   }]);
 
@@ -224,13 +224,13 @@ var ServerHttps = exports.ServerHttps = function (_Server2) {
 
 
   _createClass(ServerHttps, [{
-    key: 'kernel',
+    key: "kernel",
     get: function get() {
-      if (typeof this._kernel === 'undefined') {
+      if (typeof this._kernel === "undefined") {
         this._kernel = https.createServer(this.options.all());
       }
 
-      return _get(Object.getPrototypeOf(ServerHttps.prototype), 'kernel', this);
+      return _get(Object.getPrototypeOf(ServerHttps.prototype), "kernel", this);
     }
   }]);
 

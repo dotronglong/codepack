@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -8,15 +8,15 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _listener = require('./listener');
+var _listener = require("./listener");
 
 var _listener2 = _interopRequireDefault(_listener);
 
-var _event = require('./event');
+var _event = require("./event");
 
 var _event2 = _interopRequireDefault(_event);
 
-var _async = require('async');
+var _async = require("async");
 
 var _async2 = _interopRequireDefault(_async);
 
@@ -40,10 +40,10 @@ function onAsyncCompleted(event, err) {
       this.events[event.name].listeners[i].limit--;
     }
 
-    if (err === null && typeof listener.cbDone === 'function') {
+    if (err === null && typeof listener.cbDone === "function") {
       listener.cbDone(event);
-    } else if (err !== null && typeof listener.cbError === 'function') {
-      if (typeof err === 'string') {
+    } else if (err !== null && typeof listener.cbError === "function") {
+      if (typeof err === "string") {
         event.exception = new Error(err);
       } else {
         event.exception = err;
@@ -109,10 +109,10 @@ var EventManager = function () {
 
 
   _createClass(EventManager, [{
-    key: 'subscribe',
+    key: "subscribe",
     value: function subscribe(name, listener) {
       if (!(listener instanceof _listener2.default)) {
-        throw new Error('[Event:subscribe] listener must be an instance of Event/Listener');
+        throw new Error("[Event:subscribe] listener must be an instance of Event/Listener");
       }
       this.on(name, listener.runner, listener.priority, listener.limit);
     }
@@ -125,10 +125,10 @@ var EventManager = function () {
      */
 
   }, {
-    key: 'unsubscribe',
+    key: "unsubscribe",
     value: function unsubscribe(name, listener) {
       if (!(listener instanceof _listener2.default)) {
-        throw new Error('[Event:subscribe] listener must be an instance of Event/Listener');
+        throw new Error("[Event:subscribe] listener must be an instance of Event/Listener");
       }
       this.off(name, listener.priority);
     }
@@ -144,7 +144,7 @@ var EventManager = function () {
      */
 
   }, {
-    key: 'on',
+    key: "on",
     value: function on(name, runner, priority, limit) {
       if (!this.has(name)) {
         this.events[name] = getEventItem();
@@ -166,7 +166,7 @@ var EventManager = function () {
      */
 
   }, {
-    key: 'once',
+    key: "once",
     value: function once(name, runner, priority) {
       return this.on(name, runner, priority, _listener2.default.LIMIT_ONCE);
     }
@@ -181,7 +181,7 @@ var EventManager = function () {
      */
 
   }, {
-    key: 'twice',
+    key: "twice",
     value: function twice(name, runner, priority) {
       return this.on(name, runner, priority, _listener2.default.LIMIT_TWICE);
     }
@@ -196,9 +196,9 @@ var EventManager = function () {
      */
 
   }, {
-    key: 'off',
+    key: "off",
     value: function off(name, priority) {
-      if (typeof priority === 'undefined') {
+      if (typeof priority === "undefined") {
         // remove all listeners of event's name
         this.events[name] = getEventItem();
       } else if (this.has(name)) {
@@ -210,7 +210,7 @@ var EventManager = function () {
           }
         }
       } else {
-        throw new Error('[Event:off] event\'s name must be specified.');
+        throw new Error("[Event:off] event\"s name must be specified.");
       }
     }
 
@@ -222,7 +222,7 @@ var EventManager = function () {
      */
 
   }, {
-    key: 'sort',
+    key: "sort",
     value: function sort(name) {
       var type = arguments.length <= 1 || arguments[1] === undefined ? EventManager.SORT_ASCENDING : arguments[1];
 
@@ -261,9 +261,9 @@ var EventManager = function () {
      */
 
   }, {
-    key: 'has',
+    key: "has",
     value: function has(name) {
-      return _typeof(this.events[name]) === 'object';
+      return _typeof(this.events[name]) === "object";
     }
 
     /**
@@ -274,7 +274,7 @@ var EventManager = function () {
      */
 
   }, {
-    key: 'get',
+    key: "get",
     value: function get(name) {
       return this.has(name) ? this.events[name] : getEventItem([], true);
     }
@@ -286,12 +286,12 @@ var EventManager = function () {
      */
 
   }, {
-    key: 'emit',
+    key: "emit",
     value: function emit(event) {
       var _this = this;
 
       if (!(event instanceof _event2.default)) {
-        throw new Error('[Event::emit] event must be an instance of Event');
+        throw new Error("[Event::emit] event must be an instance of Event");
       }
       var name = event.name;
       this.sort(name);
@@ -330,5 +330,5 @@ var EventManager = function () {
 
 exports.default = EventManager;
 
-EventManager.SORT_ASCENDING = 'asc';
-EventManager.SORT_DESCENDING = 'desc';
+EventManager.SORT_ASCENDING = "asc";
+EventManager.SORT_DESCENDING = "desc";

@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -6,15 +6,15 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _bag = require('./bag');
+var _bag = require("./bag");
 
 var _bag2 = _interopRequireDefault(_bag);
 
-var _collection = require('./collection');
+var _collection = require("./collection");
 
 var _collection2 = _interopRequireDefault(_collection);
 
-var _manager = require('./event/manager');
+var _manager = require("./event/manager");
 
 var _manager2 = _interopRequireDefault(_manager);
 
@@ -35,7 +35,7 @@ var Plugin = function () {
 
 
   _createClass(Plugin, [{
-    key: 'onBoot',
+    key: "onBoot",
     value: function onBoot() {}
 
     /**
@@ -43,7 +43,7 @@ var Plugin = function () {
      */
 
   }, {
-    key: 'onReady',
+    key: "onReady",
     value: function onReady() {}
   }]);
 
@@ -80,34 +80,34 @@ var App = function () {
   }
 
   _createClass(App, [{
-    key: 'register',
+    key: "register",
     value: function register(plugin) {
       this.plugins.add(plugin);
     }
   }, {
-    key: 'setUp',
+    key: "setUp",
     value: function setUp() {
       this.plugins.forEach(function (plugin) {
         return plugin.onBoot();
       });
     }
   }, {
-    key: 'tearDown',
+    key: "tearDown",
     value: function tearDown() {
       this.plugins.forEach(function (plugin) {
         return plugin.onReady();
       });
     }
   }, {
-    key: 'run',
+    key: "run",
     value: function run() {
       this.setUp();
       this.tearDown();
     }
   }, {
-    key: 'options',
+    key: "options",
     get: function get() {
-      if (typeof this._options === 'undefined') {
+      if (typeof this._options === "undefined") {
         this._options = new _bag2.default();
       }
 

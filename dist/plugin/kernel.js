@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -6,23 +6,23 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _request = require('../http/request');
+var _request = require("../http/request");
 
 var _request2 = _interopRequireDefault(_request);
 
-var _response = require('../http/response');
+var _response = require("../http/response");
 
 var _response2 = _interopRequireDefault(_response);
 
-var _connection = require('../http/connection');
+var _connection = require("../http/connection");
 
 var _connection2 = _interopRequireDefault(_connection);
 
-var _app = require('../app');
+var _app = require("../app");
 
 var _app2 = _interopRequireDefault(_app);
 
-var _request3 = require('../http/event/request');
+var _request3 = require("../http/event/request");
 
 var _request4 = _interopRequireDefault(_request3);
 
@@ -34,7 +34,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var HEADER_HOST = 'host';
+var HEADER_HOST = "host";
 
 var KernelPlugin = function (_App$Plugin) {
   _inherits(KernelPlugin, _App$Plugin);
@@ -46,7 +46,7 @@ var KernelPlugin = function (_App$Plugin) {
   }
 
   _createClass(KernelPlugin, [{
-    key: 'onBoot',
+    key: "onBoot",
     value: function onBoot() {
       var _this2 = this;
 
@@ -55,17 +55,17 @@ var KernelPlugin = function (_App$Plugin) {
       });
     }
   }, {
-    key: 'setUpServer',
+    key: "setUpServer",
     value: function setUpServer(server) {
       var _this3 = this;
 
-      server.kernel.on('request', function (req, res) {
+      server.kernel.on("request", function (req, res) {
         var connection = _this3.setUpConnection(req, res);
         _this3.app.events.emit(new _request4.default(connection, server));
       });
     }
   }, {
-    key: 'setUpRequest',
+    key: "setUpRequest",
     value: function setUpRequest(resource) {
       var request = new _request2.default();
       request.resource = resource;
@@ -85,14 +85,14 @@ var KernelPlugin = function (_App$Plugin) {
       return request;
     }
   }, {
-    key: 'setUpResponse',
+    key: "setUpResponse",
     value: function setUpResponse(res) {
       var response = new _response2.default();
       response.resource = res;
       return response;
     }
   }, {
-    key: 'setUpConnection',
+    key: "setUpConnection",
     value: function setUpConnection(req, res) {
       var request = this.setUpRequest(req),
           response = this.setUpResponse(res);

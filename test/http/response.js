@@ -1,15 +1,15 @@
-var expect = require('chai').expect
-import Response from '../../lib/http/response'
+var expect = require("chai").expect
+import Response from "../../lib/http/response"
 
 /** @test {Response} */
-describe('http/response.js', () => {
+describe("http/response.js", () => {
   let response
   beforeEach(() => {
     response = new Response()
   })
 
   /** @test {Response#send} */
-  it('[send] should send a response', () => {
+  it("[send] should send a response", () => {
     let resource = {
       statusCode: null,
       headers: {},
@@ -22,8 +22,8 @@ describe('http/response.js', () => {
     }
     response.resource = resource
 
-    const content = {'text': 'Some content!'},
-          headers = {'Content-Type': 'application/json', 'Cache-Control': 'no-cache'},
+    const content = {"text": "Some content!"},
+          headers = {"Content-Type": "application/json", "Cache-Control": "no-cache"},
           statusCode = 404
 
     response.send(content, statusCode, headers)

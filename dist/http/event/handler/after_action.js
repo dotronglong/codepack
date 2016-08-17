@@ -1,10 +1,10 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _event = require('../../../event/event');
+var _event = require("../../../event/event");
 
 var _event2 = _interopRequireDefault(_event);
 
@@ -33,7 +33,7 @@ var AfterSendEvent = function (_Event) {
      * Current connection
      * @type {Connection}
      */
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(AfterSendEvent).call(this, 'handler.after_action', false));
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(AfterSendEvent).call(this, "handler.after_action", false));
 
     _this.connection = connection;
     return _this;

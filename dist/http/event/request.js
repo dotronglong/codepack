@@ -1,10 +1,10 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _event = require('../../event/event');
+var _event = require("../../event/event");
 
 var _event2 = _interopRequireDefault(_event);
 
@@ -35,7 +35,7 @@ var RequestEvent = function (_Event) {
      * Current active connection
      * @type {Connection}
      */
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(RequestEvent).call(this, 'http.incoming_request', false));
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(RequestEvent).call(this, "http.incoming_request", false));
 
     _this.connection = connection;
     return _this;

@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -9,11 +9,11 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _header = require('./header');
+var _header = require("./header");
 
 var _header2 = _interopRequireDefault(_header);
 
-var _bag = require('../bag');
+var _bag = require("../bag");
 
 var _bag2 = _interopRequireDefault(_bag);
 
@@ -54,7 +54,7 @@ var Body = exports.Body = function () {
      * @access protected
      * @type {string}
      */
-    this.rawContent = '';
+    this.rawContent = "";
 
     /**
      * Parsed content of body, it's type depends on the body's type
@@ -71,7 +71,7 @@ var Body = exports.Body = function () {
 
 
   _createClass(Body, [{
-    key: 'toString',
+    key: "toString",
     value: function toString() {
       return this.rawContent;
     }
@@ -81,7 +81,7 @@ var Body = exports.Body = function () {
      */
 
   }, {
-    key: 'handleContentJson',
+    key: "handleContentJson",
 
 
     /**
@@ -90,21 +90,21 @@ var Body = exports.Body = function () {
      * @param {*} content Body content
      */
     value: function handleContentJson(content) {
-      var contentType = typeof content === 'undefined' ? 'undefined' : _typeof(content);
+      var contentType = typeof content === "undefined" ? "undefined" : _typeof(content);
       switch (contentType) {
-        case 'object':
+        case "object":
           this.parsedContent = new _bag2.default(content);
           this.rawContent = JSON.stringify(content);
           break;
-        case 'string':
-          if (content === '') {
+        case "string":
+          if (content === "") {
             this.parsedContent = new _bag2.default();
           } else {
             this.parsedContent = new _bag2.default(JSON.parse(content));
           }
           this.rawContent = content;
           break;
-        case 'function':
+        case "function":
           this.handleContentJson(content());
           break;
         default:
@@ -112,7 +112,7 @@ var Body = exports.Body = function () {
       }
     }
   }, {
-    key: 'content',
+    key: "content",
     get: function get() {
       return this.parsedContent;
     }
@@ -130,7 +130,7 @@ var Body = exports.Body = function () {
           this.handleContentJson(content);
           break;
         default:
-          throw new Error('Invalid Body Content Type');
+          throw new Error("Invalid Body Content Type");
           break;
       }
     }
@@ -179,7 +179,7 @@ var Message = exports.Message = function () {
 
 
   _createClass(Message, [{
-    key: 'on',
+    key: "on",
 
 
     /**
@@ -193,7 +193,7 @@ var Message = exports.Message = function () {
       }
     }
   }, {
-    key: 'type',
+    key: "type",
     get: function get() {
       return this.headers.get(Message.HEADER_CONTENT_TYPE, Message.CONTENT_JSON);
     }
@@ -203,7 +203,7 @@ var Message = exports.Message = function () {
      */
 
   }, {
-    key: 'headers',
+    key: "headers",
     get: function get() {
       return this._headers;
     }
@@ -213,10 +213,10 @@ var Message = exports.Message = function () {
      */
     ,
     set: function set(headers) {
-      if (typeof headers === 'undefined') {
+      if (typeof headers === "undefined") {
         headers = {};
       }
-      if ((typeof headers === 'undefined' ? 'undefined' : _typeof(headers)) === 'object' && headers instanceof _bag2.default) {
+      if ((typeof headers === "undefined" ? "undefined" : _typeof(headers)) === "object" && headers instanceof _bag2.default) {
         headers = headers.all();
       }
 
@@ -224,11 +224,11 @@ var Message = exports.Message = function () {
     }
 
     /**
-     * @return {Body}
+     * @returns {Body}
      */
 
   }, {
-    key: 'body',
+    key: "body",
     get: function get() {
       return this._body;
     }
@@ -240,7 +240,7 @@ var Message = exports.Message = function () {
     set: function set(body) {
       if (body instanceof Body) {
         this._body = body;
-      } else if (typeof body === 'string') {
+      } else if (typeof body === "string") {
         this._body = new Body(body);
       } else {
         this._body = new Body();
@@ -251,11 +251,11 @@ var Message = exports.Message = function () {
   return Message;
 }();
 
-Message.HEADER_CONTENT_TYPE = 'Content-Type';
-Message.HEADER_USER_AGENT = 'User-Agent';
-Message.HEADER_HOST = 'Host';
+Message.HEADER_CONTENT_TYPE = "Content-Type";
+Message.HEADER_USER_AGENT = "User-Agent";
+Message.HEADER_HOST = "Host";
 
-Message.CONTENT_XML = 'text/xml';
-Message.CONTENT_HTML = 'text/html';
-Message.CONTENT_TEXT = 'text/plain';
-Message.CONTENT_JSON = 'application/json';
+Message.CONTENT_XML = "text/xml";
+Message.CONTENT_HTML = "text/html";
+Message.CONTENT_TEXT = "text/plain";
+Message.CONTENT_JSON = "application/json";

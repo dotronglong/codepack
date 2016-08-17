@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -14,11 +14,11 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 var Event = function () {
   /**
    * Constructor
-   * @param {?string} [name=''] Name of event
+   * @param {?string} [name=""] Name of event
    * @param {boolean} [parallel=false] Determine whether or not to allow running listeners in parallel
    */
   function Event() {
-    var name = arguments.length <= 0 || arguments[0] === undefined ? '' : arguments[0];
+    var name = arguments.length <= 0 || arguments[0] === undefined ? "" : arguments[0];
     var parallel = arguments.length <= 1 || arguments[1] === undefined ? false : arguments[1];
 
     _classCallCheck(this, Event);
@@ -54,7 +54,7 @@ var Event = function () {
 
 
   _createClass(Event, [{
-    key: 'stop',
+    key: "stop",
     value: function stop() {
       this.continue = false;
     }
@@ -65,7 +65,7 @@ var Event = function () {
      */
 
   }, {
-    key: 'stopped',
+    key: "stopped",
     get: function get() {
       return this.continue === false;
     }

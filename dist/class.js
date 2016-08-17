@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -12,7 +12,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var INSTANCEOF_PROPERTY_NAME = '__implements';
+var INSTANCEOF_PROPERTY_NAME = "__implements";
 var NOT_IN_ARRAY = -1;
 
 function copy(target, source) {
@@ -36,7 +36,7 @@ var Class = function () {
   }
 
   _createClass(Class, null, [{
-    key: 'methodExists',
+    key: "methodExists",
 
     /**
      * Check whether or not a method exists in object
@@ -54,12 +54,12 @@ var Class = function () {
      */
 
   }, {
-    key: 'getMethods',
+    key: "getMethods",
     value: function getMethods(object) {
       var methods = [];
-      if (typeof object.prototype === 'undefined') {
+      if (typeof object.prototype === "undefined") {
         // temporary not support this case
-        if (typeof object[INSTANCEOF_PROPERTY_NAME] !== 'undefined') {
+        if (typeof object[INSTANCEOF_PROPERTY_NAME] !== "undefined") {
           object[INSTANCEOF_PROPERTY_NAME].forEach(function (o) {
             Class.getMethods(o).forEach(function (name) {
               if (name.match(/^(?:constructor|prototype|arguments|caller|name|bind|call|apply|toString|length)$/)) return;
@@ -81,7 +81,7 @@ var Class = function () {
      */
 
   }, {
-    key: 'mix',
+    key: "mix",
     value: function mix(baseClass) {
       for (var _len = arguments.length, mixins = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
         mixins[_key - 1] = arguments[_key];
@@ -103,7 +103,7 @@ var Class = function () {
 
           _this[INSTANCEOF_PROPERTY_NAME] = [baseClass];
           mixins.forEach(function (mixin) {
-            if (mixin.prototype.hasOwnProperty('init') === true) {
+            if (mixin.prototype.hasOwnProperty("init") === true) {
               mixin.prototype.init.call(_this);
             }
 
@@ -132,14 +132,14 @@ var Class = function () {
      */
 
   }, {
-    key: 'instanceof',
+    key: "instanceof",
     value: function _instanceof(object, target) {
-      if (typeof target === 'function' && object instanceof target) {
+      if (typeof target === "function" && object instanceof target) {
         return true;
       }
 
       if (object.hasOwnProperty(INSTANCEOF_PROPERTY_NAME)) {
-        var targetName = typeof target === 'string' ? target : target.name;
+        var targetName = typeof target === "string" ? target : target.name;
         var implementClasses = object[INSTANCEOF_PROPERTY_NAME];
         for (var i = 0; i < implementClasses.length; i++) {
           if (implementClasses[i].name === targetName) {
@@ -159,7 +159,7 @@ var Class = function () {
      */
 
   }, {
-    key: 'setInstanceof',
+    key: "setInstanceof",
     value: function setInstanceof(object, target) {
       if (object.hasOwnProperty(INSTANCEOF_PROPERTY_NAME) === false) {
         Object.defineProperty(object, INSTANCEOF_PROPERTY_NAME, {
@@ -180,9 +180,9 @@ var Class = function () {
      */
 
   }, {
-    key: 'cleanProperties',
+    key: "cleanProperties",
     value: function cleanProperties(object, ignore) {
-      ignore = typeof ignore === 'undefined' ? [] : ignore;
+      ignore = typeof ignore === "undefined" ? [] : ignore;
       Object.keys(object).forEach(function (prop) {
         if (ignore.length && ignore.indexOf(prop) > NOT_IN_ARRAY) {
           return;
@@ -204,7 +204,7 @@ var Class = function () {
      */
 
   }, {
-    key: 'defineProperty',
+    key: "defineProperty",
     value: function defineProperty(object, name) {
       var value = arguments.length <= 2 || arguments[2] === undefined ? null : arguments[2];
       var enumerable = arguments.length <= 3 || arguments[3] === undefined ? true : arguments[3];
@@ -227,7 +227,7 @@ var Class = function () {
      */
 
   }, {
-    key: 'definePropertyNotEnumerable',
+    key: "definePropertyNotEnumerable",
     value: function definePropertyNotEnumerable(object, name) {
       var value = arguments.length <= 2 || arguments[2] === undefined ? null : arguments[2];
 
@@ -242,7 +242,7 @@ var Class = function () {
      */
 
   }, {
-    key: 'definePropertyNotWritable',
+    key: "definePropertyNotWritable",
     value: function definePropertyNotWritable(object, name) {
       var value = arguments.length <= 2 || arguments[2] === undefined ? null : arguments[2];
 
@@ -257,7 +257,7 @@ var Class = function () {
      */
 
   }, {
-    key: 'definePropertyNotConfigurable',
+    key: "definePropertyNotConfigurable",
     value: function definePropertyNotConfigurable(object, name) {
       var value = arguments.length <= 2 || arguments[2] === undefined ? null : arguments[2];
 

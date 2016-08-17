@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -80,7 +80,7 @@ var Bag = function () {
 
 
   _createClass(Bag, [{
-    key: 'size',
+    key: "size",
     value: function size() {
       return this.length;
     }
@@ -91,7 +91,7 @@ var Bag = function () {
      */
 
   }, {
-    key: 'replace',
+    key: "replace",
 
 
     /**
@@ -111,9 +111,9 @@ var Bag = function () {
      */
 
   }, {
-    key: 'has',
+    key: "has",
     value: function has(key) {
-      return !(typeof this._data[key] === 'undefined');
+      return !(typeof this._data[key] === "undefined");
     }
 
     /**
@@ -124,7 +124,7 @@ var Bag = function () {
      */
 
   }, {
-    key: 'get',
+    key: "get",
     value: function get(key) {
       var def = arguments.length <= 1 || arguments[1] === undefined ? null : arguments[1];
 
@@ -138,7 +138,7 @@ var Bag = function () {
      */
 
   }, {
-    key: 'set',
+    key: "set",
     value: function set(key, value) {
       this._data[key] = value;
     }
@@ -149,7 +149,7 @@ var Bag = function () {
      */
 
   }, {
-    key: 'delete',
+    key: "delete",
     value: function _delete(key) {
       delete this._data[key];
     }
@@ -160,7 +160,7 @@ var Bag = function () {
      */
 
   }, {
-    key: 'all',
+    key: "all",
     value: function all() {
       return copy(this._data);
     }
@@ -172,7 +172,7 @@ var Bag = function () {
      */
 
   }, {
-    key: 'only',
+    key: "only",
     value: function only(keys) {
       var _this = this;
 
@@ -188,7 +188,7 @@ var Bag = function () {
      */
 
   }, {
-    key: 'clear',
+    key: "clear",
     value: function clear() {
       this._data = {};
     }
@@ -196,18 +196,18 @@ var Bag = function () {
     /**
      * Combine all key-value pairs into string with a proposed delimiter
      * @param {?Array} [keys=null] (Optional) only render key-value pairs which has key in this pre-defined keys
-     * @param {?string} [delimiter='&'] Conjunction of string to connect key-value pairs
+     * @param {?string} [delimiter="&"] Conjunction of string to connect key-value pairs
      * @returns {string}
      */
 
   }, {
-    key: 'toString',
+    key: "toString",
     value: function toString() {
       var keys = arguments.length <= 0 || arguments[0] === undefined ? null : arguments[0];
-      var delimiter = arguments.length <= 1 || arguments[1] === undefined ? '&' : arguments[1];
+      var delimiter = arguments.length <= 1 || arguments[1] === undefined ? "&" : arguments[1];
 
       var data = [],
-          string = '';
+          string = "";
 
       if (Array.isArray(keys)) {
         data = this.only(keys);
@@ -216,7 +216,7 @@ var Bag = function () {
       }
 
       Object.keys(data).forEach(function (key) {
-        string += (string === '' ? '' : delimiter) + (key + '=' + data[key]);
+        string += (string === "" ? "" : delimiter) + (key + "=" + data[key]);
       });
       return string;
     }
@@ -229,12 +229,12 @@ var Bag = function () {
      */
 
   }, {
-    key: 'forEach',
+    key: "forEach",
     value: function forEach(callback, target) {
       var _this2 = this;
 
       this.keys.forEach(function (key) {
-        if (typeof target === 'undefined') {
+        if (typeof target === "undefined") {
           callback(key, _this2._data[key]);
         } else {
           callback.apply(target, [key, _this2._data[key]]);
@@ -249,12 +249,12 @@ var Bag = function () {
      */
 
   }, {
-    key: 'entries',
+    key: "entries",
     value: function entries(keys) {
-      return iterator.apply(typeof keys === 'undefined' ? this : this.only(keys));
+      return iterator.apply(typeof keys === "undefined" ? this : this.only(keys));
     }
   }, {
-    key: 'length',
+    key: "length",
     get: function get() {
       return this.keys.length;
     }
@@ -265,7 +265,7 @@ var Bag = function () {
      */
 
   }, {
-    key: 'keys',
+    key: "keys",
     get: function get() {
       return keys(this._data);
     }
@@ -276,7 +276,7 @@ var Bag = function () {
      */
 
   }, {
-    key: 'values',
+    key: "values",
     get: function get() {
       return values(this._data);
     }

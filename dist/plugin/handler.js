@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -6,27 +6,27 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _request = require('../http/request');
+var _request = require("../http/request");
 
 var _request2 = _interopRequireDefault(_request);
 
-var _response = require('../http/response');
+var _response = require("../http/response");
 
 var _response2 = _interopRequireDefault(_response);
 
-var _connection = require('../http/connection');
+var _connection = require("../http/connection");
 
 var _connection2 = _interopRequireDefault(_connection);
 
-var _app = require('../app');
+var _app = require("../app");
 
 var _app2 = _interopRequireDefault(_app);
 
-var _request3 = require('../http/event/request');
+var _request3 = require("../http/event/request");
 
 var _request4 = _interopRequireDefault(_request3);
 
-var _listener = require('../event/listener');
+var _listener = require("../event/listener");
 
 var _listener2 = _interopRequireDefault(_listener);
 
@@ -52,7 +52,7 @@ var HandlerPlugin = function (_App$Plugin) {
   }
 
   _createClass(HandlerPlugin, [{
-    key: 'onBoot',
+    key: "onBoot",
     value: function onBoot() {
       this.app.events.sub;
     }

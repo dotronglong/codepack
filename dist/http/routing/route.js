@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -8,7 +8,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
 
-var _bag = require('../../bag');
+var _bag = require("../../bag");
 
 var _bag2 = _interopRequireDefault(_bag);
 
@@ -16,8 +16,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var SRC_HOST = 'host';
-var SRC_PATH = 'path';
+var SRC_HOST = "host";
+var SRC_PATH = "path";
 
 function scanAndReplace(text, source, dest) {
   if (text === null) {
@@ -28,11 +28,11 @@ function scanAndReplace(text, source, dest) {
   var o = Route.MATCH_OPENING_TAG,
       c = Route.MATCH_CLOSING_TAG;
 
-  var pattern = o + '(\\w+)' + c,
-      matches = text.match(new RegExp(pattern, 'ig')),
+  var pattern = o + "(\\w+)" + c,
+      matches = text.match(new RegExp(pattern, "ig")),
       args = Object.keys(source);
 
-  if (matches === null || !args.length || (typeof dest === 'undefined' ? 'undefined' : _typeof(dest)) !== 'object') {
+  if (matches === null || !args.length || (typeof dest === "undefined" ? "undefined" : _typeof(dest)) !== "object") {
     // do nothing
     return;
   }
@@ -40,22 +40,22 @@ function scanAndReplace(text, source, dest) {
   // loop matches to replace in text
   matches.forEach(function (match) {
     var replacement = /\w+/,
-        argument = match.replace(new RegExp(o + '|' + c, 'ig'), '');
+        argument = match.replace(new RegExp(o + "|" + c, "ig"), "");
 
     for (var i = 0; i < args.length; i++) {
-      if (match === '' + o + args[i] + c) {
+      if (match === "" + o + args[i] + c) {
         argument = args[i];
         replacement = source[argument];
         break;
       }
     }
 
-    if ((typeof replacement === 'undefined' ? 'undefined' : _typeof(replacement)) === 'object' && replacement instanceof RegExp) {
+    if ((typeof replacement === "undefined" ? "undefined" : _typeof(replacement)) === "object" && replacement instanceof RegExp) {
       replacement = replacement.toString();
-      replacement = replacement.replace(/^\/(.*)\/[a-z]*$/ig, '$1');
+      replacement = replacement.replace(/^\/(.*)\/[a-z]*$/ig, "$1");
     }
 
-    text = text.replace(match, '(' + replacement + ')');
+    text = text.replace(match, "(" + replacement + ")");
     dest[argument] = null;
   });
 
@@ -63,7 +63,7 @@ function scanAndReplace(text, source, dest) {
 }
 
 function matchAndApply(text, pattern, dest) {
-  if (typeof text === 'undefined' || typeof pattern === 'undefined') {
+  if (typeof text === "undefined" || typeof pattern === "undefined") {
     return false;
   }
 
@@ -85,19 +85,19 @@ function matchAndApply(text, pattern, dest) {
 }
 
 function validateRegExp(target) {
-  if ((typeof target === 'undefined' ? 'undefined' : _typeof(target)) === 'object' && target instanceof RegExp) {
+  if ((typeof target === "undefined" ? "undefined" : _typeof(target)) === "object" && target instanceof RegExp) {
     target = target.toString();
   }
 
   // consider to check for string only?
-  return '^' + target + '$';
+  return "^" + target + "$";
 }
 
 var Route = function () {
   function Route() {
-    var name = arguments.length <= 0 || arguments[0] === undefined ? '' : arguments[0];
+    var name = arguments.length <= 0 || arguments[0] === undefined ? "" : arguments[0];
     var methods = arguments.length <= 1 || arguments[1] === undefined ? null : arguments[1];
-    var path = arguments.length <= 2 || arguments[2] === undefined ? '' : arguments[2];
+    var path = arguments.length <= 2 || arguments[2] === undefined ? "" : arguments[2];
     var host = arguments.length <= 3 || arguments[3] === undefined ? null : arguments[3];
     var port = arguments.length <= 4 || arguments[4] === undefined ? null : arguments[4];
     var demands = arguments.length <= 5 || arguments[5] === undefined ? {} : arguments[5];
@@ -118,7 +118,7 @@ var Route = function () {
   }
 
   _createClass(Route, [{
-    key: 'match',
+    key: "match",
     value: function match(request) {
       /* Run pre-actions */
       this.preMatch();
@@ -139,7 +139,7 @@ var Route = function () {
       return isMatched;
     }
   }, {
-    key: 'preMatch',
+    key: "preMatch",
     value: function preMatch() {
       this.cleanUp();
 
@@ -150,7 +150,7 @@ var Route = function () {
       this.path = scanAndReplace(validateRegExp(this.path), this.demands, this._matches[SRC_PATH]);
     }
   }, {
-    key: 'postMatch',
+    key: "postMatch",
     value: function postMatch() {
       this.host = this.reservedHost;
       this.path = this.reservedPath;
@@ -159,13 +159,13 @@ var Route = function () {
       this.reservedPath = null;
     }
   }, {
-    key: 'cleanUp',
+    key: "cleanUp",
     value: function cleanUp() {
       this._matches[SRC_HOST] = {};
       this._matches[SRC_PATH] = {};
     }
   }, {
-    key: 'methods',
+    key: "methods",
     get: function get() {
       return this._methods;
     },
@@ -177,12 +177,12 @@ var Route = function () {
       this._methods = methods;
     }
   }, {
-    key: 'options',
+    key: "options",
     get: function get() {
       return this._options;
     },
     set: function set(options) {
-      if ((typeof options === 'undefined' ? 'undefined' : _typeof(options)) === 'object') {
+      if ((typeof options === "undefined" ? "undefined" : _typeof(options)) === "object") {
         if (options instanceof _bag2.default) {
           this._options = options;
         } else {
@@ -191,7 +191,7 @@ var Route = function () {
       }
     }
   }, {
-    key: 'matches',
+    key: "matches",
     get: function get() {
       return Object.assign({}, this._matches[SRC_HOST], this._matches[SRC_PATH]);
     },
@@ -199,28 +199,28 @@ var Route = function () {
       this._matches = matches;
     }
   }], [{
-    key: 'from',
+    key: "from",
     value: function from(object) {
       var route = new this();
-      if (typeof object.name !== 'undefined') {
+      if (typeof object.name !== "undefined") {
         route.name = object.name;
       }
-      if (typeof object.methods !== 'undefined') {
+      if (typeof object.methods !== "undefined") {
         route.methods = object.methods;
       }
-      if (typeof object.path !== 'undefined') {
+      if (typeof object.path !== "undefined") {
         route.path = object.path;
       }
-      if (typeof object.host !== 'undefined') {
+      if (typeof object.host !== "undefined") {
         route.host = object.host;
       }
-      if (typeof object.port !== 'undefined') {
+      if (typeof object.port !== "undefined") {
         route.port = object.port;
       }
-      if (typeof object.options !== 'undefined') {
+      if (typeof object.options !== "undefined") {
         route.options = object.options;
       }
-      if (typeof object.demands !== 'undefined') {
+      if (typeof object.demands !== "undefined") {
         route.demands = object.demands;
       }
 
@@ -233,5 +233,5 @@ var Route = function () {
 
 exports.default = Route;
 
-Route.MATCH_OPENING_TAG = '{';
-Route.MATCH_CLOSING_TAG = '}';
+Route.MATCH_OPENING_TAG = "{";
+Route.MATCH_CLOSING_TAG = "}";
