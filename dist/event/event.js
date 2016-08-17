@@ -14,20 +14,12 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 var Event = function () {
   /**
    * Constructor
-   * @param {?string} [name=""] Name of event
    * @param {boolean} [parallel=false] Determine whether or not to allow running listeners in parallel
    */
   function Event() {
-    var name = arguments.length <= 0 || arguments[0] === undefined ? "" : arguments[0];
-    var parallel = arguments.length <= 1 || arguments[1] === undefined ? false : arguments[1];
+    var parallel = arguments.length <= 0 || arguments[0] === undefined ? false : arguments[0];
 
     _classCallCheck(this, Event);
-
-    /**
-     * An unique name of event
-     * @type {string}
-     */
-    this.name = name;
 
     /**
      * Define whether or not to run this event's listeners in parallel
@@ -73,5 +65,12 @@ var Event = function () {
 
   return Event;
 }();
+/**
+ * Name of event
+ * Derived class must override this static attribute
+ * @type {string}
+ */
+
 
 exports.default = Event;
+Event.NAME = "";

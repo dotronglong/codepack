@@ -12,7 +12,7 @@ describe("event/manager.js", () => {
       listener
   beforeEach(() => {
     em = new EventManager()
-    event = new Event(name)
+    event = new Event()
     listener = new Listener(func)
   })
 

@@ -131,7 +131,6 @@ var Body = exports.Body = function () {
           break;
         default:
           throw new Error("Invalid Body Content Type");
-          break;
       }
     }
   }]);

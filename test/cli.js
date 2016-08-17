@@ -6,19 +6,19 @@ describe("cli.js", function() {
     cli.NEW_LINE = true;
   });
 
-  it("[error] should print "." in red color", function() {
+  it("[error] should print '.' in red color", function() {
     cli.NEW_LINE = false;
     cli.error(".");
   });
-  it("[success] should print "." in green color", function() {
+  it("[success] should print '.' in green color", function() {
     cli.NEW_LINE = false;
     cli.success(".");
   });
-  it("[warning] should print "." in orange color", function() {
+  it("[warning] should print '.' in orange color", function() {
     cli.NEW_LINE = false;
     cli.warning(".");
   });
-  it("[info] should print "." in blue color", function() {
+  it("[info] should print '.' in blue color", function() {
     cli.NEW_LINE = false;
     cli.info(".");
   });

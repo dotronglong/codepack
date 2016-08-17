@@ -37,25 +37,25 @@ describe("bag.js", function() {
   })
 
   /** @test {Bag#get} */
-  it("[get] should return "hello" when getting key "a", and return null if not found", function() {
+  it("[get] should return 'hello' when getting key 'a', and return null if not found", function() {
     expect(bag.get("a")).to.equal("hello")
     expect(bag.get("not_exist")).to.be.null
   })
 
   /** @test {Bag#set} */
-  it("[set] should set "hello_world" to key "a"", () => {
+  it("[set] should set 'hello_world' to key 'a'", () => {
     bag.set("a", "hello_world")
     expect(bag.get("a")).to.equal("hello_world")
   })
 
   /** @test {Bag#has} */
-  it("[has] should return true on "a", and false on "not_exist"", () => {
+  it("[has] should return true on 'a', and false on 'not_exist'", () => {
     expect(bag.has("a")).to.be.true
     expect(bag.has("not_exist")).to.be.false
   })
 
   /** @test {Bag#delete} */
-  it("[delete] should remove the value of key "a"", () => {
+  it("[delete] should remove the value of key 'a", () => {
     bag.delete("a")
     expect(bag.get("a")).to.be.null
   })
@@ -66,7 +66,7 @@ describe("bag.js", function() {
   })
 
   /** @test {Bag#only} */
-  it("[only] should return {a: \"hello\", b: \"world\"} when getting only values of keys "a" and "b"", function() {
+  it("[only] should return {a: 'hello', b: 'world'} when getting only values of keys 'a' and 'b'", () => {
     expect(bag.only(["a", "b"])).to.deep.equal({a: "hello", b: "world"})
   })
 
