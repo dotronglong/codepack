@@ -63,6 +63,10 @@ var Plugin = exports.Plugin = function () {
 }();
 
 var App = function () {
+  /**
+   * Constructor
+   * @param {Object} options Application's configuration
+   */
   function App(options) {
     _classCallCheck(this, App);
 

@@ -122,15 +122,14 @@ var Body = exports.Body = function () {
      */
     ,
     set: function set(content) {
-      if (content === undefined) {
-        return;
-      }
-      switch (this.type) {
-        case Message.CONTENT_JSON:
-          this.handleContentJson(content);
-          break;
-        default:
-          throw new Error("Invalid Body Content Type");
+      if (content !== undefined) {
+        switch (this.type) {
+          case Message.CONTENT_JSON:
+            this.handleContentJson(content);
+            break;
+          default:
+            throw new Error("Invalid Body Content Type");
+        }
       }
     }
   }]);
@@ -198,7 +197,7 @@ var Message = exports.Message = function () {
     }
 
     /**
-     * @type {Header}
+     * @returns {Header}
      */
 
   }, {
@@ -208,18 +207,21 @@ var Message = exports.Message = function () {
     }
 
     /**
-     * @param {Object} headers
+     * @param {Object|Bag|Header} headers
      */
     ,
     set: function set(headers) {
-      if (typeof headers === "undefined") {
-        headers = {};
+      if ((typeof headers === "undefined" ? "undefined" : _typeof(headers)) === "object") {
+        if (headers instanceof _bag2.default) {
+          this._headers = new _header2.default(headers.all());
+        } else if (headers instanceof _header2.default) {
+          this._headers = headers;
+        } else {
+          this._headers = new _header2.default(headers);
+        }
+      } else {
+        this._headers = new _header2.default();
       }
-      if ((typeof headers === "undefined" ? "undefined" : _typeof(headers)) === "object" && headers instanceof _bag2.default) {
-        headers = headers.all();
-      }
-
-      this._headers = new _header2.default(headers);
     }
 
     /**

@@ -52,6 +52,12 @@ var KernelPlugin = function (_Plugin) {
         return _this2.setUpServer(server);
       });
     }
+
+    /**
+     * Set up the server, connection and finally emit RequestEvent
+     * @param {Server} server
+     */
+
   }, {
     key: "setUpServer",
     value: function setUpServer(server) {
