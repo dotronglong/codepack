@@ -93,7 +93,34 @@ function validateRegExp(target) {
   return "^" + target + "$";
 }
 
+/**
+ * Http Route
+ */
+
 var Route = function () {
+  /**
+   * Constructor
+   * @example
+   * let route = new Route(
+   *   "route_name",
+   *   ["GET", "POST"],
+   *   "/accounts/{id}",
+   *   "{language}.domain.com",
+   *   6969,
+   *   {id: /\d+/, language: /[a-zA-Z]{2}/},
+   *   {format: "json"},
+   *   {useDb: true}
+   * )
+   *
+   * @param {string} [name=""] Name of route, it should be an unique string
+   * @param {Array|string} [methods=null] Accepted methods for route
+   * @param {string} [path=""] Path of route, regexp string is allowed
+   * @param {string} [host=null] Expected host, default is null to ignore host
+   * @param {number} [port=null] Expected port, default is null to ignore port
+   * @param {Object} [demands={}] Requirements for regexp host or path
+   * @param {Object} [params={}] Additional parameters to route, it would be merged with matches result
+   * @param {Object} [options={}] Route's options contain optional configuration
+   */
   function Route() {
     var name = arguments.length <= 0 || arguments[0] === undefined ? "" : arguments[0];
     var methods = arguments.length <= 1 || arguments[1] === undefined ? null : arguments[1];
@@ -106,19 +133,76 @@ var Route = function () {
 
     _classCallCheck(this, Route);
 
+    /**
+     * Name of route
+     * @type {string}
+     */
     this.name = name;
+
+    /**
+     * A list of accepted methods
+     * @type {Array}
+     */
     this.methods = methods;
+
+    /**
+     * Path of request to be matched
+     * @type {string}
+     */
     this.path = path;
+
+    /**
+     * Host of request to be verified
+     * @type {string}
+     */
     this.host = host;
+
+    /**
+     * Expected port to be validated
+     * @type {number}
+     */
     this.port = port;
+
+    /**
+     * Requirements of matching, it is optional of have pre-defined required properties of matching
+     * @type {Object}
+     */
     this.demands = demands;
+
+    /**
+     * Additional or default parameters to be merged with final matches data
+     * @type {Object}
+     */
     this.params = params;
+
+    /**
+     * Extra configuration for route
+     * @type {Object}
+     */
     this.options = options;
+
+    /**
+     * Result of matching process
+     * @type {Object}
+     */
     this.matches = {};
   }
 
+  /**
+   * List of accepted methods
+   * @returns {Array}
+   */
+
+
   _createClass(Route, [{
     key: "match",
+
+
+    /**
+     * Define whether or not a request has been matched to this route
+     * @param {Request} request
+     * @returns {boolean}
+     */
     value: function match(request) {
       /* Run pre-actions */
       this.preMatch();
@@ -133,6 +217,12 @@ var Route = function () {
 
       return isMatched;
     }
+
+    /**
+     * Prepare before matching
+     * @protected
+     */
+
   }, {
     key: "preMatch",
     value: function preMatch() {
@@ -144,6 +234,12 @@ var Route = function () {
       this.host = this.host === null ? null : scanAndReplace(validateRegExp(this.host), this.demands, this._matches[SRC_HOST]);
       this.path = this.path === null ? null : scanAndReplace(validateRegExp(this.path), this.demands, this._matches[SRC_PATH]);
     }
+
+    /**
+     * Perform actions after matching
+     * @protected
+     */
+
   }, {
     key: "postMatch",
     value: function postMatch() {
@@ -153,6 +249,12 @@ var Route = function () {
       this.reservedHost = null;
       this.reservedPath = null;
     }
+
+    /**
+     * Clean up data
+     * @protected
+     */
+
   }, {
     key: "cleanUp",
     value: function cleanUp() {
@@ -163,7 +265,13 @@ var Route = function () {
     key: "methods",
     get: function get() {
       return this._methods;
-    },
+    }
+
+    /**
+     * In case methods is a string, it would be converted to an array with single item
+     * @param {Array} methods
+     */
+    ,
     set: function set(methods) {
       if (methods !== null && Array.isArray(methods) === false) {
         methods = [methods];
@@ -171,11 +279,22 @@ var Route = function () {
 
       this._methods = methods;
     }
+
+    /**
+     * Extra configuration for route
+     * @returns {Bag}
+     */
+
   }, {
     key: "options",
     get: function get() {
       return this._options;
-    },
+    }
+
+    /**
+     * @param {Bag|Object} options
+     */
+    ,
     set: function set(options) {
       if ((typeof options === "undefined" ? "undefined" : _typeof(options)) === "object") {
         if (options instanceof _bag2.default) {
@@ -185,39 +304,43 @@ var Route = function () {
         }
       }
     }
+
+    /**
+     * @returns {Object}
+     */
+
   }, {
     key: "matches",
     get: function get() {
       return Object.assign({}, this._matches[SRC_HOST], this._matches[SRC_PATH]);
-    },
+    }
+
+    /**
+     * @param {Object} matches
+     */
+    ,
     set: function set(matches) {
       this._matches = matches;
     }
+
+    /**
+     * Convert an object to route instance
+     * @param {Object} object
+     * @returns {Route}
+     */
+
   }], [{
     key: "from",
     value: function from(object) {
       var route = new this();
-      if (typeof object.name !== "undefined") {
-        route.name = object.name;
-      }
-      if (typeof object.methods !== "undefined") {
-        route.methods = object.methods;
-      }
-      if (typeof object.path !== "undefined") {
-        route.path = object.path;
-      }
-      if (typeof object.host !== "undefined") {
-        route.host = object.host;
-      }
-      if (typeof object.port !== "undefined") {
-        route.port = object.port;
-      }
-      if (typeof object.options !== "undefined") {
-        route.options = object.options;
-      }
-      if (typeof object.demands !== "undefined") {
-        route.demands = object.demands;
-      }
+      route.name = object.name || "";
+      route.methods = object.methods || [];
+      route.path = object.path || "";
+      route.host = object.host || null;
+      route.port = object.port || null;
+      route.options = object.options || {};
+      route.demands = object.demands || {};
+      route.params = object.params || {};
 
       return route;
     }

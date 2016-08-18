@@ -30,12 +30,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
  * @param {Router} router
  */
 var handleRoute = function handleRoute(connection, router) {
-  console.log(router.routes, connection.request.path);
   var route = router.route(connection.request);
-  console.log(route);
   if (route) {
     connection.request.params = route.matches;
-    console.log(connection.request.params);
   }
 };
 
