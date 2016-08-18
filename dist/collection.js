@@ -183,6 +183,19 @@ var Collection = function () {
     }
 
     /**
+     * Replace all current items
+     * @param {Array} [items=[]]
+     */
+
+  }, {
+    key: "replace",
+    value: function replace() {
+      var items = arguments.length <= 0 || arguments[0] === undefined ? [] : arguments[0];
+
+      this.items = items;
+    }
+
+    /**
      * Get all items in collection
      * @returns {Array}
      */

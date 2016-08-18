@@ -268,11 +268,17 @@ var Request = function (_Message) {
 
     /**
      * Set request's parameters
-     * @param {Object} params
+     * @param {Bag|Object} params
      */
     ,
     set: function set(params) {
-      this.params.replace(params);
+      if ((typeof params === "undefined" ? "undefined" : _typeof(params)) === "object") {
+        if (params instanceof _bag2.default) {
+          this._params = params;
+        } else {
+          this.params.replace(params);
+        }
+      }
     }
 
     /**

@@ -67,6 +67,7 @@ var KernelPlugin = function (_Plugin) {
         var connection = _this3.setUpConnection(req, res, server);
         _this3.app.events.emit(new _request4.default(connection));
       });
+      server.start();
     }
   }, {
     key: "setUpRequest",

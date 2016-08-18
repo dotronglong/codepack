@@ -24,13 +24,30 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+/**
+ * Handle Routing
+ * @param {Connection} connection
+ * @param {Router} router
+ */
+var handleRoute = function handleRoute(connection, router) {
+  console.log(router.routes, connection.request.path);
+  var route = router.route(connection.request);
+  console.log(route);
+  if (route) {
+    connection.request.params = route.matches;
+    console.log(connection.request.params);
+  }
+};
+
 var RequestListener = function (_Listener) {
   _inherits(RequestListener, _Listener);
 
-  function RequestListener() {
+  function RequestListener(router) {
     _classCallCheck(this, RequestListener);
 
-    return _possibleConstructorReturn(this, Object.getPrototypeOf(RequestListener).call(this, function () {}, _listener2.default.PRIORITY_HIGH));
+    return _possibleConstructorReturn(this, Object.getPrototypeOf(RequestListener).call(this, function (event) {
+      handleRoute(event.connection, router);
+    }, _listener2.default.PRIORITY_HIGH));
   }
 
   return RequestListener;
@@ -48,7 +65,7 @@ var HandlerPlugin = function (_Plugin) {
   _createClass(HandlerPlugin, [{
     key: "onBoot",
     value: function onBoot() {
-      this.app.events.subscribe(_request2.default.NAME, new RequestListener());
+      this.app.events.subscribe(_request2.default.NAME, new RequestListener(this.app.router));
     }
   }]);
 

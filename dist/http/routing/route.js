@@ -19,7 +19,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 var SRC_HOST = "host";
 var SRC_PATH = "path";
 
-function scanAndReplace(text, source, dest) {
+function scanAndReplace(text, source, target) {
   if (text === null) {
     // do nothing
     return;
@@ -32,9 +32,9 @@ function scanAndReplace(text, source, dest) {
       matches = text.match(new RegExp(pattern, "ig")),
       args = Object.keys(source);
 
-  if (matches === null || !args.length || (typeof dest === "undefined" ? "undefined" : _typeof(dest)) !== "object") {
+  if (matches === null || (typeof target === "undefined" ? "undefined" : _typeof(target)) !== "object") {
     // do nothing
-    return;
+    return text;
   }
 
   // loop matches to replace in text
@@ -56,14 +56,14 @@ function scanAndReplace(text, source, dest) {
     }
 
     text = text.replace(match, "(" + replacement + ")");
-    dest[argument] = null;
+    target[argument] = null;
   });
 
   return text;
 }
 
-function matchAndApply(text, pattern, dest) {
-  if (typeof text === "undefined" || typeof pattern === "undefined") {
+function matchAndApply(text, pattern, target) {
+  if (text === undefined || pattern === undefined) {
     return false;
   }
 
@@ -76,9 +76,9 @@ function matchAndApply(text, pattern, dest) {
     return false;
   }
 
-  var args = Object.keys(dest);
+  var args = Object.keys(target);
   for (var i = 1; i < matches.length; i++) {
-    dest[args[i - 1]] = matches[i];
+    target[args[i - 1]] = matches[i];
   }
 
   return true;
@@ -123,13 +123,8 @@ var Route = function () {
       /* Run pre-actions */
       this.preMatch();
 
-      var method = request.method,
-          host = request.host,
-          port = request.port,
-          path = request.path;
-
       var isMatched = false;
-      if ((this.methods === null || this.methods.indexOf(method) >= 0) && matchAndApply(host, this.host, this._matches[SRC_HOST]) && matchAndApply(path, this.path, this._matches[SRC_PATH]) && (this.port === null || port !== null && port === this.port)) {
+      if ((this.methods === null || this.methods.indexOf(request.method) >= 0) && (this.host === null || matchAndApply(request.host, this.host, this._matches[SRC_HOST])) && (this.path === null || matchAndApply(request.path, this.path, this._matches[SRC_PATH])) && (this.port === null || request.port !== null && request.port === this.port)) {
         isMatched = true;
       }
 
@@ -146,8 +141,8 @@ var Route = function () {
       this.reservedHost = this.host;
       this.reservedPath = this.path;
 
-      this.host = scanAndReplace(validateRegExp(this.host), this.demands, this._matches[SRC_HOST]);
-      this.path = scanAndReplace(validateRegExp(this.path), this.demands, this._matches[SRC_PATH]);
+      this.host = this.host === null ? null : scanAndReplace(validateRegExp(this.host), this.demands, this._matches[SRC_HOST]);
+      this.path = this.path === null ? null : scanAndReplace(validateRegExp(this.path), this.demands, this._matches[SRC_PATH]);
     }
   }, {
     key: "postMatch",

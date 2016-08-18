@@ -5,11 +5,17 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.Plugin = undefined;
 
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _bag = require("./bag");
 
 var _bag2 = _interopRequireDefault(_bag);
+
+var _router = require("./http/routing/router");
+
+var _router2 = _interopRequireDefault(_router);
 
 var _collection = require("./collection");
 
@@ -93,19 +99,39 @@ var App = function () {
      * @type {EventManager}
      */
     this.events = new _manager2.default();
+
+    /**
+     * Router
+     * @type {Router}
+     */
+    this.router = new _router2.default();
   }
 
   _createClass(App, [{
-    key: "register",
-    value: function register(plugin) {
-      this.plugins.add(plugin);
-    }
-  }, {
     key: "setUp",
     value: function setUp() {
-      this.plugins.forEach(function (plugin) {
-        return plugin.onBoot();
+      var _this = this;
+
+      var plugins = this.plugins.all().map(function (plugin) {
+        if (typeof plugin === 'function') {
+          plugin = new plugin(_this);
+        }
+        if ((typeof plugin === "undefined" ? "undefined" : _typeof(plugin)) === 'object') {
+          if (plugin instanceof Plugin) {
+            plugin.app = _this;
+          } else {
+            throw new Error("[App#setUp] plugin must be an instance of Plugin");
+          }
+        } else {
+          throw new Error("[App#setUp] This type of plugin is not supported.");
+        }
+
+        /* Run onBoot */
+        plugin.onBoot();
+
+        return plugin;
       });
+      this.plugins.replace(plugins);
     }
   }, {
     key: "tearDown",
@@ -130,7 +156,7 @@ var App = function () {
       return this._options;
     },
     set: function set(options) {
-      this._options.replace(options);
+      this.options.replace(options);
     }
   }]);
 
@@ -138,5 +164,3 @@ var App = function () {
 }();
 
 exports.default = App;
-
-App.Plugin = Plugin;

@@ -65,4 +65,23 @@ describe("http/routing/route.js", () => {
     expect(route.match(request)).to.be.true
     expect(route.matches).to.deep.equal({id: "1988", name: "longdo", country: "vn"})
   })
+
+  it("[match] should allow to match even if host or port is null", () => {
+    route.name = "route_without_host_and_port"
+    route.host = null
+    route.port = null
+    route.path = "/accounts/{gender}/{id}-{name}"
+
+    let request = new Request()
+    request.host = "localhost"
+    request.path = "/accounts/male/1988-longdo"
+    request.method = "GET"
+
+    expect(route.match(request)).to.be.true
+    expect(route.matches).to.deep.equal({id: "1988", name: "longdo", "gender": "male"})
+
+    route.name = "route_without_port"
+    route.host = "localhost"
+    expect(route.match(request)).to.be.true
+  })
 })
