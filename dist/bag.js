@@ -64,6 +64,7 @@ var Bag = function () {
   /**
    * @param {?{}} [data={}] Initial object data
    */
+
   function Bag() {
     var data = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
 

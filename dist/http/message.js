@@ -24,12 +24,14 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 /**
  * Body of message
  */
+
 var Body = exports.Body = function () {
   /**
    * Constructor
    * @param {?string} [content='{}'] Content of message's body
    * @param {?string} [type="application/json"] Body's content type
    */
+
   function Body(content) {
     var type = arguments.length <= 1 || arguments[1] === undefined ? Message.CONTENT_JSON : arguments[1];
 
@@ -148,6 +150,7 @@ var Message = exports.Message = function () {
    * @param {?{}} headers Message's headers
    * @param {?*} body Message's body
    */
+
   function Message(headers, body) {
     _classCallCheck(this, Message);
 

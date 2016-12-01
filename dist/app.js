@@ -32,11 +32,13 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 /**
  * Application's Plugin
  */
+
 var Plugin = exports.Plugin = function () {
   /**
    * Constructor
    * @param {App} app Current application
    */
+
   function Plugin(app) {
     _classCallCheck(this, Plugin);
 
@@ -73,6 +75,7 @@ var App = function () {
    * Constructor
    * @param {Object} options Application's configuration
    */
+
   function App(options) {
     _classCallCheck(this, App);
 

@@ -19,6 +19,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 /**
  * Http Response
  */
+
 var Response = function (_Message) {
   _inherits(Response, _Message);
 
@@ -28,6 +29,7 @@ var Response = function (_Message) {
    * @param {?string} [body=''] Response's body content
    * @param {?number} [statusCode=200] Response's status code, default is OK
    */
+
   function Response() {
     var headers = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
     var body = arguments[1];
@@ -39,6 +41,7 @@ var Response = function (_Message) {
      * Response's status code
      * @type {number}
      */
+
     var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Response).call(this, headers, body));
 
     _this.statusCode = statusCode;

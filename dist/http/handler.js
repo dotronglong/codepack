@@ -21,12 +21,14 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 /**
  * Connect handler
  */
+
 var Handler = function () {
   /**
    * Constructor
    * @param {!EventManager} events Event manager which should be passed from {App}
    * @param {!Connection} connection Current active connection
    */
+
   function Handler(events, connection) {
     _classCallCheck(this, Handler);
 

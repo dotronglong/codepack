@@ -27,6 +27,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 /**
  * Contain headers as a bag, easy to manipulate
  */
+
 var Header = function (_Bag) {
   _inherits(Header, _Bag);
 

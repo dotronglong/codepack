@@ -19,6 +19,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 /**
  * Event will be emiited if there is an incoming request to the server
  */
+
 var RequestEvent = function (_Event) {
   _inherits(RequestEvent, _Event);
 
@@ -26,6 +27,7 @@ var RequestEvent = function (_Event) {
    * Constructor
    * @param {?Connection} [connection=null] Active connection to the server
    */
+
   function RequestEvent() {
     var connection = arguments.length <= 0 || arguments[0] === undefined ? null : arguments[0];
 
@@ -35,6 +37,7 @@ var RequestEvent = function (_Event) {
      * Current active connection
      * @type {Connection}
      */
+
     var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(RequestEvent).call(this, RequestEvent.NAME, false));
 
     _this.connection = connection;

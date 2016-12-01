@@ -17,6 +17,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 /**
  * @ignore
  */
+
 var Singleton = function () {
   function Singleton() {
     _classCallCheck(this, Singleton);

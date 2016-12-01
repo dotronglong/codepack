@@ -91,6 +91,7 @@ var EventManager = function () {
   /**
    * Constructor
    */
+
   function EventManager() {
     _classCallCheck(this, EventManager);
 

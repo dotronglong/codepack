@@ -21,6 +21,7 @@ var Collection = function () {
    * Constructor
    * @param {?Array} [items=[]] Initial items to be placed in collection
    */
+
   function Collection() {
     var items = arguments.length <= 0 || arguments[0] === undefined ? [] : arguments[0];
 

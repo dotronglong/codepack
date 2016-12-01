@@ -47,6 +47,7 @@ var Server = exports.Server = function () {
    * @param {?number} [backlog=511] Maximum length of the queue of pending connections
    * @param {?function} [callback=null] Callback function to be called after server is started
    */
+
   function Server() {
     var port = arguments.length <= 0 || arguments[0] === undefined ? null : arguments[0];
     var host = arguments.length <= 1 || arguments[1] === undefined ? null : arguments[1];
@@ -155,6 +156,7 @@ var ServerHttp = exports.ServerHttp = function (_Server) {
    * @param {?number} [backlog=511] Maximum length of the queue of pending connections
    * @param {?function} [callback=null] Callback function to be called after server is started
    */
+
   function ServerHttp() {
     var port = arguments.length <= 0 || arguments[0] === undefined ? DEFAULT_HTTP_PORT : arguments[0];
     var host = arguments.length <= 1 || arguments[1] === undefined ? null : arguments[1];
@@ -202,6 +204,7 @@ var ServerHttps = exports.ServerHttps = function (_Server2) {
    * @param {?number} [backlog=511] Maximum length of the queue of pending connections
    * @param {?function} [callback=null] Callback function to be called after server is started
    */
+
   function ServerHttps() {
     var options = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
     var port = arguments.length <= 1 || arguments[1] === undefined ? DEFAULT_HTTPS_PORT : arguments[1];

@@ -11,12 +11,14 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 /**
  * Represent for an event emitted by EventManager
  */
+
 var Event = function () {
   /**
    * Constructor
    * @param {string} name Event's name
    * @param {boolean} [parallel=false] Determine whether or not to allow running listeners in parallel
    */
+
   function Event(name) {
     var parallel = arguments.length <= 1 || arguments[1] === undefined ? false : arguments[1];
 

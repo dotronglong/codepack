@@ -35,6 +35,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
  *
  * Manage and route request
  */
+
 var Router = function (_Bag) {
   _inherits(Router, _Bag);
 
@@ -42,6 +43,7 @@ var Router = function (_Bag) {
    * Constructor
    * @param {Route[]} routes
    */
+
   function Router() {
     var routes = arguments.length <= 0 || arguments[0] === undefined ? [] : arguments[0];
 

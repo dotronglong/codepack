@@ -121,6 +121,7 @@ var Route = function () {
    * @param {Object} [params={}] Additional parameters to route, it would be merged with matches result
    * @param {Object} [options={}] Route's options contain optional configuration
    */
+
   function Route() {
     var name = arguments.length <= 0 || arguments[0] === undefined ? "" : arguments[0];
     var methods = arguments.length <= 1 || arguments[1] === undefined ? null : arguments[1];

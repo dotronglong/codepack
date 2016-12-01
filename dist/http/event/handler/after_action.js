@@ -19,6 +19,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 /**
  * Contains information about event which is emitted after calling handler's action
  */
+
 var AfterActionEvent = function (_Event) {
   _inherits(AfterActionEvent, _Event);
 
@@ -26,6 +27,7 @@ var AfterActionEvent = function (_Event) {
    * Constructor
    * @param {?Connection} connection Current active connection
    */
+
   function AfterActionEvent(connection) {
     _classCallCheck(this, AfterActionEvent);
 
@@ -33,6 +35,7 @@ var AfterActionEvent = function (_Event) {
      * Current connection
      * @type {Connection}
      */
+
     var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(AfterActionEvent).call(this, AfterActionEvent.NAME, false));
 
     _this.connection = connection;

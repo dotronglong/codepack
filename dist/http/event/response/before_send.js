@@ -19,6 +19,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 /**
  * Contains information about event which is emitted before sending response to client
  */
+
 var BeforeSendEvent = function (_Event) {
   _inherits(BeforeSendEvent, _Event);
 
@@ -26,6 +27,7 @@ var BeforeSendEvent = function (_Event) {
    * Constructor
    * @param {?Connection} connection Current active connection
    */
+
   function BeforeSendEvent(connection) {
     _classCallCheck(this, BeforeSendEvent);
 
@@ -33,6 +35,7 @@ var BeforeSendEvent = function (_Event) {
      * Current connection
      * @type {Connection}
      */
+
     var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(BeforeSendEvent).call(this, BeforeSendEvent.NAME, false));
 
     _this.connection = connection;
