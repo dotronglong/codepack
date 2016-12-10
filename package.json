@@ -48,10 +48,10 @@
     "gulp-concat": "^2.6.0",
     "gulp-jsdoc3": "^0.3.0",
     "gulp-mocha": "^2.2.0",
-    "gulp-nodemon": "^2.1.0",
-    "esdoc": "^0.4.8"
+    "gulp-nodemon": "^2.1.0"
   },
   "dependencies": {
+    "esdoc": "^0.4.8",
     "async": "^2.0.0",
     "cli-color": "^1.1.0",
     "path": "^0.12.7"
