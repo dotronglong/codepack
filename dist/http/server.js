@@ -47,12 +47,11 @@ var Server = exports.Server = function () {
    * @param {?number} [backlog=511] Maximum length of the queue of pending connections
    * @param {?function} [callback=null] Callback function to be called after server is started
    */
-
   function Server() {
-    var port = arguments.length <= 0 || arguments[0] === undefined ? null : arguments[0];
-    var host = arguments.length <= 1 || arguments[1] === undefined ? null : arguments[1];
-    var backlog = arguments.length <= 2 || arguments[2] === undefined ? 511 : arguments[2];
-    var callback = arguments.length <= 3 || arguments[3] === undefined ? null : arguments[3];
+    var port = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+    var host = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+    var backlog = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 511;
+    var callback = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : null;
 
     _classCallCheck(this, Server);
 
@@ -156,16 +155,15 @@ var ServerHttp = exports.ServerHttp = function (_Server) {
    * @param {?number} [backlog=511] Maximum length of the queue of pending connections
    * @param {?function} [callback=null] Callback function to be called after server is started
    */
-
   function ServerHttp() {
-    var port = arguments.length <= 0 || arguments[0] === undefined ? DEFAULT_HTTP_PORT : arguments[0];
-    var host = arguments.length <= 1 || arguments[1] === undefined ? null : arguments[1];
-    var backlog = arguments.length <= 2 || arguments[2] === undefined ? 511 : arguments[2];
-    var callback = arguments.length <= 3 || arguments[3] === undefined ? null : arguments[3];
+    var port = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : DEFAULT_HTTP_PORT;
+    var host = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+    var backlog = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 511;
+    var callback = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : null;
 
     _classCallCheck(this, ServerHttp);
 
-    return _possibleConstructorReturn(this, Object.getPrototypeOf(ServerHttp).call(this, port, host, backlog, callback));
+    return _possibleConstructorReturn(this, (ServerHttp.__proto__ || Object.getPrototypeOf(ServerHttp)).call(this, port, host, backlog, callback));
   }
 
   /**
@@ -181,7 +179,7 @@ var ServerHttp = exports.ServerHttp = function (_Server) {
         this._kernel = http.createServer();
       }
 
-      return _get(Object.getPrototypeOf(ServerHttp.prototype), "kernel", this);
+      return _get(ServerHttp.prototype.__proto__ || Object.getPrototypeOf(ServerHttp.prototype), "kernel", this);
     }
   }]);
 
@@ -204,17 +202,16 @@ var ServerHttps = exports.ServerHttps = function (_Server2) {
    * @param {?number} [backlog=511] Maximum length of the queue of pending connections
    * @param {?function} [callback=null] Callback function to be called after server is started
    */
-
   function ServerHttps() {
-    var options = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
-    var port = arguments.length <= 1 || arguments[1] === undefined ? DEFAULT_HTTPS_PORT : arguments[1];
-    var host = arguments.length <= 2 || arguments[2] === undefined ? null : arguments[2];
-    var backlog = arguments.length <= 3 || arguments[3] === undefined ? 511 : arguments[3];
-    var callback = arguments.length <= 4 || arguments[4] === undefined ? null : arguments[4];
+    var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+    var port = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : DEFAULT_HTTPS_PORT;
+    var host = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
+    var backlog = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 511;
+    var callback = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : null;
 
     _classCallCheck(this, ServerHttps);
 
-    var _this2 = _possibleConstructorReturn(this, Object.getPrototypeOf(ServerHttps).call(this, port, host, backlog, callback));
+    var _this2 = _possibleConstructorReturn(this, (ServerHttps.__proto__ || Object.getPrototypeOf(ServerHttps)).call(this, port, host, backlog, callback));
 
     _this2.options = new _bag2.default(options);
     return _this2;
@@ -233,7 +230,7 @@ var ServerHttps = exports.ServerHttps = function (_Server2) {
         this._kernel = https.createServer(this.options.all());
       }
 
-      return _get(Object.getPrototypeOf(ServerHttps.prototype), "kernel", this);
+      return _get(ServerHttps.prototype.__proto__ || Object.getPrototypeOf(ServerHttps.prototype), "kernel", this);
     }
   }]);
 

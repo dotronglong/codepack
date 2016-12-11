@@ -40,7 +40,7 @@ var KernelPlugin = function (_Plugin) {
   function KernelPlugin() {
     _classCallCheck(this, KernelPlugin);
 
-    return _possibleConstructorReturn(this, Object.getPrototypeOf(KernelPlugin).apply(this, arguments));
+    return _possibleConstructorReturn(this, (KernelPlugin.__proto__ || Object.getPrototypeOf(KernelPlugin)).apply(this, arguments));
   }
 
   _createClass(KernelPlugin, [{

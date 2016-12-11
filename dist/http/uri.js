@@ -16,9 +16,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 var Uri = function () {
   function Uri(scheme, user, pwd, host, port) {
-    var path = arguments.length <= 5 || arguments[5] === undefined ? "/" : arguments[5];
-    var query = arguments.length <= 6 || arguments[6] === undefined ? "" : arguments[6];
-    var fragment = arguments.length <= 7 || arguments[7] === undefined ? "" : arguments[7];
+    var path = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : "/";
+    var query = arguments.length > 6 && arguments[6] !== undefined ? arguments[6] : "";
+    var fragment = arguments.length > 7 && arguments[7] !== undefined ? arguments[7] : "";
 
     _classCallCheck(this, Uri);
 

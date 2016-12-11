@@ -19,7 +19,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 /**
  * Contains information about event which is emitted before calling handler's action
  */
-
 var BeforeActionEvent = function (_Event) {
   _inherits(BeforeActionEvent, _Event);
 
@@ -27,7 +26,6 @@ var BeforeActionEvent = function (_Event) {
    * Constructor
    * @param {?Connection} connection Current active connection
    */
-
   function BeforeActionEvent(connection) {
     _classCallCheck(this, BeforeActionEvent);
 
@@ -35,8 +33,7 @@ var BeforeActionEvent = function (_Event) {
      * Current connection
      * @type {Connection}
      */
-
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(BeforeActionEvent).call(this, BeforeActionEvent.NAME, false));
+    var _this = _possibleConstructorReturn(this, (BeforeActionEvent.__proto__ || Object.getPrototypeOf(BeforeActionEvent)).call(this, BeforeActionEvent.NAME, false));
 
     _this.connection = connection;
     return _this;

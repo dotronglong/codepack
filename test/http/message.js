@@ -1,41 +1,22 @@
-var expect = require("chai").expect
-import {Message, Body} from "../../lib/http/message"
+var expect = require('chai').expect
+import Message from '../../lib/http/message'
+import Header from '../../lib/http/header'
+import Body from '../../lib/http/body'
 
 /** @test {Message} */
-describe("http/message.js",() => {
-  let message, body
+describe('http/message.js',() => {
+  let message
   beforeEach(() => {
     message = new Message()
-    body = new Body()
   })
 
-  /** @test {Message.type} */
-  it("[getter::type] should return value of header content-type", () => {
-    expect(message.type).to.equal(Message.CONTENT_JSON)
-    message.headers.set(Message.HEADER_CONTENT_TYPE, Message.CONTENT_TEXT)
-    expect(message.type).to.equal(Message.CONTENT_TEXT)
+  /** @test {Message#getHeader} */
+  it('[getHeader] should return an instance of Header', () => {
+    expect(message.getHeader()).to.be.an.instanceof(Header)
   })
 
-  /** @test {Body#toString} */
-  it("[body -> toString] should return string", () => {
-    expect(typeof body.toString()).to.equal("string")
-  })
-
-  /** @test {Body.content} */
-  it("[body -> content] should return an object", () => {
-    expect(typeof body.content).to.equal("object")
-  })
-
-  /** @test {body#set content} */
-  it("[body setter::content] should parse JSON content", () => {
-    let data = {a: "Hello", b: "World"}
-    body.content = data
-    expect(body.content.all()).to.deep.equal(data)
-    expect(body.toString()).to.equal(JSON.stringify(data))
-
-    data = JSON.stringify(data)
-    body.content = data
-    expect(body.content.all()).to.deep.equal(JSON.parse(data))
-    expect(body.toString()).to.equal(data)
+  /** @test {Message#getBody} */
+  it('[getBody] should return an instance of Body', () => {
+    expect(message.getBody()).to.be.an.instanceof(Body)
   })
 })

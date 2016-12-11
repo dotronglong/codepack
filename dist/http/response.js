@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -8,7 +8,15 @@ var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = [
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _message = require("./message");
+var _body = require('./body');
+
+var _body2 = _interopRequireDefault(_body);
+
+var _message = require('./message');
+
+var _message2 = _interopRequireDefault(_message);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -17,33 +25,33 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 /**
- * Http Response
+ * HTTP Response
  */
-
 var Response = function (_Message) {
   _inherits(Response, _Message);
 
   /**
    * Constructor
-   * @param {?Object} [headers={}] Initial headers
-   * @param {?string} [body=''] Response's body content
+   * @param {?string} [content=''] Response's body content
    * @param {?number} [statusCode=200] Response's status code, default is OK
+   * @param {?Object} [header={}] Initial headers
    */
-
   function Response() {
-    var headers = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
-    var body = arguments[1];
-    var statusCode = arguments.length <= 2 || arguments[2] === undefined ? Response.HTTP_OK : arguments[2];
+    var content = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+    var statusCode = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : Response.HTTP_OK;
+    var header = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
 
     _classCallCheck(this, Response);
+
+    var _this = _possibleConstructorReturn(this, (Response.__proto__ || Object.getPrototypeOf(Response)).call(this));
+
+    _this.setBody(new _body2.default(content));
+    _this.setHeader(header);
 
     /**
      * Response's status code
      * @type {number}
      */
-
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Response).call(this, headers, body));
-
     _this.statusCode = statusCode;
 
     /**
@@ -60,20 +68,19 @@ var Response = function (_Message) {
 
 
   _createClass(Response, [{
-    key: "send",
+    key: 'send',
     value: function send() {
       var _iteratorNormalCompletion = true;
       var _didIteratorError = false;
       var _iteratorError = undefined;
 
       try {
-        for (var _iterator = this.headers[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-          var _step$value = _slicedToArray(_step.value, 2);
+        for (var _iterator = this.getHeader()[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+          var _step$value = _slicedToArray(_step.value, 2),
+              key = _step$value[0],
+              value = _step$value[1];
 
-          var key = _step$value[0];
-          var value = _step$value[1];
-
-          this.resource.setHeader(key, value);
+          this.getResource().setHeader(key, value);
         }
       } catch (err) {
         _didIteratorError = true;
@@ -90,14 +97,14 @@ var Response = function (_Message) {
         }
       }
 
-      this.resource.statusCode = this.statusCode;
-      this.resource.statusMessage = this.statusMessage;
-      this.resource.end(this.body.toString());
+      this.getResource().statusCode = this.statusCode;
+      this.getResource().statusMessage = this.statusMessage;
+      this.getResource().end(this.getBody().toString());
     }
   }]);
 
   return Response;
-}(_message.Message);
+}(_message2.default);
 
 exports.default = Response;
 

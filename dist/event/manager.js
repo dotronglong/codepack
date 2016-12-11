@@ -4,7 +4,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -65,8 +65,8 @@ function onAsyncCompleted(event, err) {
  * @returns {{listeners: Array, sorted: boolean}}
  */
 var getEventItem = function getEventItem() {
-  var listeners = arguments.length <= 0 || arguments[0] === undefined ? [] : arguments[0];
-  var sorted = arguments.length <= 1 || arguments[1] === undefined ? false : arguments[1];
+  var listeners = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+  var sorted = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
 
   return {
     listeners: listeners,
@@ -91,7 +91,6 @@ var EventManager = function () {
   /**
    * Constructor
    */
-
   function EventManager() {
     _classCallCheck(this, EventManager);
 
@@ -225,7 +224,7 @@ var EventManager = function () {
   }, {
     key: "sort",
     value: function sort(name) {
-      var type = arguments.length <= 1 || arguments[1] === undefined ? EventManager.SORT_ASCENDING : arguments[1];
+      var type = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : EventManager.SORT_ASCENDING;
 
       if (this.get(name).sorted) {
         return;

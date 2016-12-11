@@ -14,18 +14,18 @@ describe("http/response.js", () => {
       statusCode: null,
       headers: {},
       end: function(content) {
-        expect(content).to.equal(response.body.toString())
+        expect(content).to.equal(response.getBody().toString())
       },
       setHeader: function(key, value) {
         this.headers[key] = value
       }
     }
-    response.resource = resource
+    response.setResource(resource)
 
     const content = {"text": "Some content!"},
           headers = {"Content-Type": "application/json", "Cache-Control": "no-cache"}
 
-    response.headers = headers
+    response.setHeader(headers)
     response.send()
     expect(resource.headers).to.deep.equal(headers)
   })

@@ -12,7 +12,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
  * String processor
  * @todo Manipulate string
  */
-
 var Str = function () {
   function Str() {
     _classCallCheck(this, Str);

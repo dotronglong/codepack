@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -8,11 +8,11 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 
-var _bag = require("../bag");
+var _bag = require('../bag');
 
 var _bag2 = _interopRequireDefault(_bag);
 
-var _str = require("../str");
+var _str = require('../str');
 
 var _str2 = _interopRequireDefault(_str);
 
@@ -27,18 +27,17 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 /**
  * Contain headers as a bag, easy to manipulate
  */
-
 var Header = function (_Bag) {
   _inherits(Header, _Bag);
 
   function Header() {
     _classCallCheck(this, Header);
 
-    return _possibleConstructorReturn(this, Object.getPrototypeOf(Header).apply(this, arguments));
+    return _possibleConstructorReturn(this, (Header.__proto__ || Object.getPrototypeOf(Header)).apply(this, arguments));
   }
 
   _createClass(Header, [{
-    key: "has",
+    key: 'has',
 
 
     /**
@@ -47,7 +46,7 @@ var Header = function (_Bag) {
      * @returns {boolean}
      */
     value: function has(key) {
-      return _get(Object.getPrototypeOf(Header.prototype), "has", this).call(this, key.toLowerCase());
+      return _get(Header.prototype.__proto__ || Object.getPrototypeOf(Header.prototype), 'has', this).call(this, key.toLowerCase());
     }
 
     /**
@@ -58,11 +57,11 @@ var Header = function (_Bag) {
      */
 
   }, {
-    key: "get",
+    key: 'get',
     value: function get(key) {
-      var def = arguments.length <= 1 || arguments[1] === undefined ? null : arguments[1];
+      var def = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
 
-      return _get(Object.getPrototypeOf(Header.prototype), "get", this).call(this, key.toLowerCase(), def);
+      return _get(Header.prototype.__proto__ || Object.getPrototypeOf(Header.prototype), 'get', this).call(this, key.toLowerCase(), def);
     }
 
     /**
@@ -72,9 +71,9 @@ var Header = function (_Bag) {
      */
 
   }, {
-    key: "set",
+    key: 'set',
     value: function set(key, value) {
-      _get(Object.getPrototypeOf(Header.prototype), "set", this).call(this, key.toLowerCase(), value);
+      _get(Header.prototype.__proto__ || Object.getPrototypeOf(Header.prototype), 'set', this).call(this, key.toLowerCase(), value);
     }
 
     /**
@@ -83,9 +82,9 @@ var Header = function (_Bag) {
      */
 
   }, {
-    key: "delete",
+    key: 'delete',
     value: function _delete(key) {
-      _get(Object.getPrototypeOf(Header.prototype), "delete", this).call(this, key.toLowerCase());
+      _get(Header.prototype.__proto__ || Object.getPrototypeOf(Header.prototype), 'delete', this).call(this, key.toLowerCase());
     }
 
     /**
@@ -94,18 +93,18 @@ var Header = function (_Bag) {
      */
 
   }, {
-    key: "replace",
+    key: 'replace',
     value: function replace() {
-      var data = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+      var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 
       var _data = {};
       Object.keys(data).forEach(function (key) {
         _data[key.toLowerCase()] = data[key];
       });
-      _get(Object.getPrototypeOf(Header.prototype), "replace", this).call(this, _data);
+      _get(Header.prototype.__proto__ || Object.getPrototypeOf(Header.prototype), 'replace', this).call(this, _data);
     }
   }, {
-    key: "keys",
+    key: 'keys',
 
     /**
      * Return all keys
@@ -121,7 +120,7 @@ var Header = function (_Bag) {
         for (var _iterator = Object.keys(this._data)[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
           var key = _step.value;
 
-          keys.push(_str2.default.upperCaseFirst(key, "-"));
+          keys.push(_str2.default.upperCaseFirst(key, '-'));
         }
       } catch (err) {
         _didIteratorError = true;
@@ -147,4 +146,6 @@ var Header = function (_Bag) {
 
 exports.default = Header;
 
-Header.CONTENT_TYPE = "content-type";
+Header.CONTENT_TYPE = 'Content-Type';
+Header.USER_AGENT = 'User-Agent';
+Header.HOST = 'Host';

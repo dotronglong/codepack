@@ -29,10 +29,9 @@ var Listener = function () {
    * @param {?number} [priority=5] Determine the order of listener in running queue
    * @param {?number} [limit=null] Define if this listen could only run at a specific times
    */
-
   function Listener(runner) {
-    var priority = arguments.length <= 1 || arguments[1] === undefined ? PRIORITY_NORMAL : arguments[1];
-    var limit = arguments.length <= 2 || arguments[2] === undefined ? LIMIT_NONE : arguments[2];
+    var priority = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : PRIORITY_NORMAL;
+    var limit = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : LIMIT_NONE;
 
     _classCallCheck(this, Listener);
 

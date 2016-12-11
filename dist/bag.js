@@ -64,9 +64,8 @@ var Bag = function () {
   /**
    * @param {?{}} [data={}] Initial object data
    */
-
   function Bag() {
-    var data = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+    var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 
     _classCallCheck(this, Bag);
 
@@ -100,7 +99,7 @@ var Bag = function () {
      * @param {?{}} [data={}] Data to replace
      */
     value: function replace() {
-      var data = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+      var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 
       this._data = copy(data);
     }
@@ -127,7 +126,7 @@ var Bag = function () {
   }, {
     key: "get",
     value: function get(key) {
-      var def = arguments.length <= 1 || arguments[1] === undefined ? null : arguments[1];
+      var def = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
 
       return this.has(key) ? this._data[key] : def;
     }
@@ -204,8 +203,8 @@ var Bag = function () {
   }, {
     key: "toString",
     value: function toString() {
-      var keys = arguments.length <= 0 || arguments[0] === undefined ? null : arguments[0];
-      var delimiter = arguments.length <= 1 || arguments[1] === undefined ? "&" : arguments[1];
+      var keys = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+      var delimiter = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "&";
 
       var data = [],
           string = "";

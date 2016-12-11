@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 var _bag = require("../../bag");
 
@@ -121,16 +121,15 @@ var Route = function () {
    * @param {Object} [params={}] Additional parameters to route, it would be merged with matches result
    * @param {Object} [options={}] Route's options contain optional configuration
    */
-
   function Route() {
-    var name = arguments.length <= 0 || arguments[0] === undefined ? "" : arguments[0];
-    var methods = arguments.length <= 1 || arguments[1] === undefined ? null : arguments[1];
-    var path = arguments.length <= 2 || arguments[2] === undefined ? "" : arguments[2];
-    var host = arguments.length <= 3 || arguments[3] === undefined ? null : arguments[3];
-    var port = arguments.length <= 4 || arguments[4] === undefined ? null : arguments[4];
-    var demands = arguments.length <= 5 || arguments[5] === undefined ? {} : arguments[5];
-    var params = arguments.length <= 6 || arguments[6] === undefined ? {} : arguments[6];
-    var options = arguments.length <= 7 || arguments[7] === undefined ? {} : arguments[7];
+    var name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "";
+    var methods = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+    var path = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : "";
+    var host = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : null;
+    var port = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : null;
+    var demands = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : {};
+    var params = arguments.length > 6 && arguments[6] !== undefined ? arguments[6] : {};
+    var options = arguments.length > 7 && arguments[7] !== undefined ? arguments[7] : {};
 
     _classCallCheck(this, Route);
 

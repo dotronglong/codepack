@@ -16,7 +16,7 @@ var INSTANCEOF_PROPERTY_NAME = "__implements";
 var NOT_IN_ARRAY = -1;
 
 function copy(target, source) {
-  var all = arguments.length <= 2 || arguments[2] === undefined ? false : arguments[2];
+  var all = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
 
   Object.getOwnPropertyNames(source).concat(Object.getOwnPropertySymbols(source)).forEach(function (prop) {
     if (all === false && prop.match(/^(?:constructor|prototype|arguments|caller|name|bind|call|apply|toString|length)$/)) {
@@ -91,7 +91,7 @@ var Class = function () {
         _inherits(_Combined, _baseClass);
 
         function _Combined() {
-          var _Object$getPrototypeO;
+          var _ref;
 
           _classCallCheck(this, _Combined);
 
@@ -99,7 +99,7 @@ var Class = function () {
             args[_key2] = arguments[_key2];
           }
 
-          var _this = _possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(_Combined)).call.apply(_Object$getPrototypeO, [this].concat(args)));
+          var _this = _possibleConstructorReturn(this, (_ref = _Combined.__proto__ || Object.getPrototypeOf(_Combined)).call.apply(_ref, [this].concat(args)));
 
           _this[INSTANCEOF_PROPERTY_NAME] = [baseClass];
           mixins.forEach(function (mixin) {
@@ -206,10 +206,10 @@ var Class = function () {
   }, {
     key: "defineProperty",
     value: function defineProperty(object, name) {
-      var value = arguments.length <= 2 || arguments[2] === undefined ? null : arguments[2];
-      var enumerable = arguments.length <= 3 || arguments[3] === undefined ? true : arguments[3];
-      var writable = arguments.length <= 4 || arguments[4] === undefined ? true : arguments[4];
-      var configurable = arguments.length <= 5 || arguments[5] === undefined ? true : arguments[5];
+      var value = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
+      var enumerable = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : true;
+      var writable = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : true;
+      var configurable = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : true;
 
       Object.defineProperty(object, name, {
         configurable: configurable,
@@ -229,7 +229,7 @@ var Class = function () {
   }, {
     key: "definePropertyNotEnumerable",
     value: function definePropertyNotEnumerable(object, name) {
-      var value = arguments.length <= 2 || arguments[2] === undefined ? null : arguments[2];
+      var value = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
 
       return this.defineProperty(object, name, value, false);
     }
@@ -244,7 +244,7 @@ var Class = function () {
   }, {
     key: "definePropertyNotWritable",
     value: function definePropertyNotWritable(object, name) {
-      var value = arguments.length <= 2 || arguments[2] === undefined ? null : arguments[2];
+      var value = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
 
       return this.defineProperty(object, name, value, true, false);
     }
@@ -259,7 +259,7 @@ var Class = function () {
   }, {
     key: "definePropertyNotConfigurable",
     value: function definePropertyNotConfigurable(object, name) {
-      var value = arguments.length <= 2 || arguments[2] === undefined ? null : arguments[2];
+      var value = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
 
       return this.defineProperty(object, name, value, true, true, false);
     }
