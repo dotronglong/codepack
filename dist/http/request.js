@@ -45,6 +45,7 @@ var Request = function (_Message) {
 
     var _this = _possibleConstructorReturn(this, (Request.__proto__ || Object.getPrototypeOf(Request)).call(this));
 
+    _this.setMethod(Request.METHOD_GET);
     _this.setQuery(new _bag2.default());
     _this.setServer(new _bag2.default());
     _this.setClient(new _bag2.default());
@@ -62,6 +63,28 @@ var Request = function (_Message) {
     key: 'setResource',
     value: function setResource(resource) {
       _get(Request.prototype.__proto__ || Object.getPrototypeOf(Request.prototype), 'setResource', this).call(this, resource);
+    }
+
+    /**
+     * Get request's method (GET|POST|PUT|PATCH|DELETE|OPTIONS)
+     * @returns {string}
+     */
+
+  }, {
+    key: 'getMethod',
+    value: function getMethod() {
+      return this._method;
+    }
+
+    /**
+     * Set request's method
+     * @param {!string} method
+     */
+
+  }, {
+    key: 'setMethod',
+    value: function setMethod(method) {
+      this._method = method;
     }
 
     /**

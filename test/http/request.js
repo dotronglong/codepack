@@ -54,7 +54,7 @@ describe('http/request.js',() => {
   })
 
   /** @test {Request.setClient} */
-  it('[set client] should allow to set some properties', () => {
+  it('[setClient] should allow to set some properties', () => {
     try {
       request.setClient('some-string')
     } catch (e) {
@@ -64,5 +64,16 @@ describe('http/request.js',() => {
     const data = {some_value: true}
     request.setClient(data)
     expect(request.getClient().all()).to.deep.equal(data)
+  })
+
+  /** @test {Request.getMethod} */
+  it('[getMethod] should return a string represents for request\'s method', () => {
+    expect(request.getMethod()).to.equal('GET')
+  })
+
+  /** @test {Request.setMethod} */
+  it('[setMethod] should allow to set method of request', () => {
+    request.setMethod(Request.METHOD_POST)
+    expect(request.getMethod()).to.equal(Request.METHOD_POST)
   })
 })
